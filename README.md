@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-# Univey_Front
-=======
 # Univey_Front
 
 <br></br>
