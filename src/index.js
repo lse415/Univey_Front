@@ -7,6 +7,9 @@ import App from './App';
 import Main from './pages/Main';
 import Board from './pages/Board';
 import Create from './pages/Create';
+import My from './pages/My';
+import Trend from './pages/Trend';
+import Search from './pages/Search';
 
 const router = createBrowserRouter([
   {
@@ -18,6 +21,9 @@ const router = createBrowserRouter([
       { path: 'main/board', element: <Board /> },
       { path: 'main/create', element: <Create /> },
       { path: 'main/create/detail', element: <Create /> },
+      { path: 'main/my', element: <My/> },
+      { path: 'main/trend', element: <Trend/> },
+      { path: 'main/search/:value', element: <Search/> },
     ],
   },
 ]);
