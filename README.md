@@ -22,4 +22,3 @@ Branch Convention
 | develop        | main 서브 브랜치     |
 | feat/#이슈번호-기능명 | 기능 추가용 feat 브랜치 |
 | fix/#이슈번호-브랜치명 | 기능 수정용 fix 브랜치  |
->>>>>>> upstream/develop
