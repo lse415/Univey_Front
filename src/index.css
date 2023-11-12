@@ -7,5 +7,10 @@
 body {
   font-family: 'Noto Sans KR', sans-serif;
   margin: 0;
+  width:100vw;
+  height:100vh;
+}
 
+.slick.arrow{
+  z-index:10
 }
