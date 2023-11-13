@@ -29,28 +29,31 @@ export default function Carousel() {
           speed: 1000,
           slidesToShow: 1,
           slidesToScroll: 1,
-        //   autoplay: true,
+          autoplay: true,
           autoplaySpeed: 2000,
             }   
     return (
-        <div>
-            <Slider {...settings} ref={slickRef} className='mt-5'>
-                {data.map((item) => (
-                    <div className='h-xxl relative'>
-                        <img src={item.url} className=" h-full absolute
-                        right-1/2 translate-x-1/2 " />
+        <div className='border-2 border-line_color'>
+            <article className=' m-24 h-96 relative'>
+                <Slider {...settings} ref={slickRef} >
+                    {data.map((item) => (
+                        <div className='h-96 relative'>
+                            <img src={item.url} className=" h-96 absolute
+                            right-1/2 translate-x-1/2 " />
+                        </div>
+                    ))}
+                </Slider>
+                <div>
+                    <div onClick={previous} className='text-4xl absolute top-1/2 left-16'>
+                        <SlArrowLeft />
                     </div>
-                ))}
-            </Slider>
-            <div>
-                <div onClick={previous} className='z-10'>
-                    <SlArrowLeft />
+                    <div onClick={next} className='text-4xl absolute top-1/2 right-16'>
+                        <SlArrowRight />
+                    </div>
                 </div>
-                <div onClick={next}>
-                    <SlArrowRight />
-                </div>
-            </div>
+            </article>
         </div>
+
     );
         
     }

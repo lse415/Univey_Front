@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import HandleSearch from './HandleSearch';
 export default function Header() {
   return (
-    <nav className=' relative h-24 px-36 '>
+    <nav className=' relative h-24 px-36 border-b-2 border-line_color'>
       <div className='text-sm absolute right-80 text-sub_text_color bottom-120 mt-3'>
         <span>로그인</span>
         <span className='m-3'> | </span>
