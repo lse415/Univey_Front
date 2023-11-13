@@ -8,6 +8,7 @@ module.exports = {
         sub_text_color:'#989EA8',
         main_color:'#00008A',
         highligth:'#F29F05',
+        line_color:'#C2C6CE'
       },
       height:{
         xxl: '34rem'
