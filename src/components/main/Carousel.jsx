@@ -33,7 +33,7 @@ export default function Carousel() {
           autoplaySpeed: 2000,
             }   
     return (
-        <div className='border-2 border-line_color'>
+        <div className='border-b-1 border-line_color'>
             <article className=' m-24 h-96 relative'>
                 <Slider {...settings} ref={slickRef} >
                     {data.map((item) => (
