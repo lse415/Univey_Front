@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-//import CustomDatePicker from "./CustomDatePicker";
+import CustomDatePicker from "./CustomDatePicker";
 
 const CreateSurvey = () => {
   const [topic, setTopic] = useState("");
@@ -7,7 +7,7 @@ const CreateSurvey = () => {
   const [category, setCategory] = useState("");
   const [age, setAge] = useState("");
   const [gender, setGender] = useState("");
-  const [deadline, setDeadline] = useState("");
+  const [deadline, setDeadline] = useState(new Date());
   const [targetRespondents, setTargetRespondents] = useState("");
 
   const handleSubmit = (e) => {
@@ -34,7 +34,7 @@ const CreateSurvey = () => {
   return (
     <div className="flex flex-col mx-60 mt-5">
       <form onSubmit={handleSubmit} className="flex flex-col ">
-        <label className="flex flex-col space-y-2 font-semibold text-main_color mb-3">
+        <label className="flex flex-col space-y-2 font-semibold text-main_color mb-5">
           주제 입력 *
         </label>
         <input
@@ -45,7 +45,7 @@ const CreateSurvey = () => {
           onChange={(e) => setTopic(e.target.value)}
         />
 
-        <label className="flex flex-col space-y-2 font-semibold text-main_color mt-5 mb-3">
+        <label className="flex flex-col space-y-2 font-semibold text-main_color mt-5 mb-5">
           상세설명 *
         </label>
         <input
@@ -57,7 +57,7 @@ const CreateSurvey = () => {
           onChange={(e) => setDescription(e.target.value)}
         />
 
-        <label className="flex flex-col space-y-2 font-semibold text-main_color mt-5 mb-3">
+        <label className="flex flex-col space-y-2 font-semibold text-main_color mt-5 mb-5">
           카테고리 *
         </label>
         <div className="flex space-x-2 mb-5">
@@ -120,7 +120,7 @@ const CreateSurvey = () => {
 
         <div className="flex flex-row space-x-4 mb-3">
           <div className="flex-1">
-            <label className="flex flex-col space-y-2 mt-3 mb-3 font-semibold text-main_color">
+            <label className="flex flex-col space-y-2 mt-3 mb-5 font-semibold text-main_color">
               연령대 *
             </label>
             <select
@@ -131,18 +131,19 @@ const CreateSurvey = () => {
               <option value="" disabled>
                 연령대 선택
               </option>
-              <option>10-19</option>
-              <option>20-29</option>
-              <option>30-39</option>
+              <option value={"all"}>전체</option>
+              <option value={"10s"}>10-19</option>
+              <option value={"20s"}>20-29</option>
+              <option value={"30s"}>30-39</option>
             </select>
           </div>
 
           <div className="flex-1" style={{ marginLeft: "50px" }}>
-            <label className="flex flex-col space-y-2 mt-3 mb-3 font-semibold text-main_color">
+            <label className="flex flex-col space-y-2 mt-3 mb-5 font-semibold text-main_color">
                 성별 *
             </label>
             <select
-              className="w-full mb-3 border-b border-gray-300 focus:outline-none"
+              className="w-full mb-3 border-b border-gray-300 focus:outline-none text-sub_text_color"
               value={gender}
               onChange={(e) => setGender(e.target.value)}
             >
@@ -155,25 +156,25 @@ const CreateSurvey = () => {
           </div>
         </div>
 
-        <div className="flex flex-row space-x-4 mb-3">
+        <div className="flex flex-row space-x-4 mb-5">
           <div className="flex-1">
-            <label className="flex flex-col space-y-2 mt-3 mb-3 font-semibold text-main_color">
+            <label className="flex flex-col space-y-2 mt-3 mb-5 font-semibold text-main_color">
               마감 기한 *
             </label>
-            <input
+            {/* <input
               className="w-full border-b border-gray-300 focus:outline-none mb-3"
               type="date"
               value={deadline}
               onChange={(e) => setDeadline(e.target.value)}
-            />
-            {/* <CustomDatePicker
-              selectedDate={new Date(deadline)}
-              handleChange={(date) => setDeadline(date.toISOString())} // ISO 형식의 문자열로 변환
             /> */}
+            <CustomDatePicker
+      selectedDate={deadline}
+      handleChange={(date) => setDeadline(date)}
+    />
           </div>
 
           <div className="flex-1" style={{ marginLeft: "50px" }}>
-            <label className="flex flex-col space-y-2 mt-3 mb-3 font-semibold text-main_color">
+            <label className="flex flex-col space-y-2 mt-3 mb-5 font-semibold text-main_color">
               목표 응답자 수
             </label>
             <input
