@@ -7,6 +7,7 @@ import GoParticipate from '../components/main/GoParticipate';
 import axios from 'axios';
 import MainTrendItem from '../components/main/MainTrendItem';
 import { useQuery } from '@tanstack/react-query';
+import { RxDoubleArrowDown } from "react-icons/rx";
 
 export default function Main() {
   const [data,setData]=useState(null); 
@@ -27,6 +28,18 @@ export default function Main() {
     })
   }
 
+
+  function scrollToTrend (){
+    const targetElement = document.getElementById('Trend');
+
+    if (targetElement) {
+      window.scrollTo({
+        top: targetElement.offsetTop,
+        behavior: 'smooth',
+      });
+    }
+  }
+
   return (
     <div >
       <Carousel/>
@@ -41,18 +54,19 @@ export default function Main() {
             <p className='text-sub_text_color '>해보세요!</p>
           </div>
         </div>
-        <div className='flex flex-col justify-center'>
-          <div className='flex w-screen ml-leftsm '>
+        <div className=''>
+          <div className='flex w-screen ml-leftsm'>
             <Link to='/main/create'><GoCreate/></Link>
+            <a href="#Trend" className=''><RxDoubleArrowDown className='w-12 h-12 z-10 mt-32 ml-12  mr-12 hover:cursor-pointer custom-bounce'/></a>
             <Link to='/main/Board'><GoParticipate/></Link>
           </div>
         </div>
       </article>
 
       <article>
-        <div className='flex text-xl font-bold ml-left my-4'>
+        <div id='Trend' className='flex text-xl font-bold ml-left my-4'>
           <FiCheckSquare className='text-3xl text-main_color mt-1'/>
-          <div className='flex mt-1'> 
+          <div className='flex mt-4'> 
             <p className='text-sub_text_color '>&nbsp;&nbsp;이 달의</p>
             <p className='text-main_color'>설문조사 트렌드</p>
             <p className='text-sub_text_color '>를 확인해보세요!</p>
@@ -60,14 +74,13 @@ export default function Main() {
         </div>
       </article>
       
-      <article className='h-1/3 mb-4 flex flex-col items-center '>
-        
+      <article className='h-1/3 mb-4 flex flex-col items-center' >
       <div className=' w-screen flex flex-col items-center h-full'>
           {data &&
           data.filter(item => item.trend === true).map((item)=>{
             return(
             <div className='w-screen flex flex-col items-center'>
-            <MainTrendItem data={item}/>
+            <MainTrendItem key={item.id} data={item}/>
           </div>
           )
           })
