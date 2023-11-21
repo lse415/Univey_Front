@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import CustomDatePicker from "./CustomDatePicker";
 
 const CreateSurvey = () => {
@@ -26,6 +27,8 @@ const CreateSurvey = () => {
     newValidationStatus[index] = !!value;
     setValidationStatus(newValidationStatus);
   };
+
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -60,6 +63,10 @@ const CreateSurvey = () => {
         targetRespondents,
       };
       console.log(surveyData);
+
+      const newPath = "./detail"; 
+      
+      navigate(newPath);
     } else {
       alert("모든 필수 입력 항목을 작성해주세요.");
     }
@@ -255,6 +262,7 @@ const CreateSurvey = () => {
               <option className="text-text_color" value="" disabled>
                 성별 선택
               </option>
+              <option className="text-text_color" value="all">전체</option>
               <option className="text-text_color" value="male">남자</option>
               <option className="text-text_color" value="female">여자</option>
             </select>
