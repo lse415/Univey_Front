@@ -36,6 +36,10 @@ body {
   }
 }
 
+.click_highlight{
+  @apply hover:text-highligth cursor-pointer
+}
+
 .custom-bounce {
   animation: custom-bounce 3s infinite;
 }

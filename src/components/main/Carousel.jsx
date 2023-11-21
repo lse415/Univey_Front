@@ -34,7 +34,7 @@ export default function Carousel() {
             }   
     return (
         <div className='border-b-1 border-line_color'>
-            <article className=' h-full relative'>
+            <article className=' h-carousel relative'>
                 <Slider {...settings} ref={slickRef} >
                     {data.map((item) => (
                         <div className='relative h-carousel'>
