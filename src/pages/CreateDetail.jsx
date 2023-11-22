@@ -31,9 +31,13 @@ const CreateDetail = () => {
       });
   }, []);
 
-  const handleAddQuestion = (question) => {
-    setUserQuestions([...userQuestions, question]);
+  const handleAddQuestion = (recommendedQuestion) => {
+    // Extract the necessary information from the recommendedQuestion object
+    const { question_num, question, answer } = recommendedQuestion;
+
+    setUserQuestions([...userQuestions, { question, answer, question_num }]);
   };
+
 
   const handleRemoveQuestion = (index) => {
     const updatedQuestions = [...userQuestions];
@@ -48,6 +52,7 @@ const CreateDetail = () => {
         onRemoveQuestion={handleRemoveQuestion}
         topic={topic} 
         description={description} 
+        onAddQuestion={handleAddQuestion}
       />
       <div className="border-l border-main_color mx-4 h-full"></div>
       <RecommendedQuestions
