@@ -13,6 +13,8 @@ Commit Convention
 
 ---
 
+---
+
 Branch Convention
 
 ---
