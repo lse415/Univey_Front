@@ -4,13 +4,32 @@ import BoardItem from '../components/Board/BoardItem';
 export default function Board() {
   const [data,setData]=useState(null);
   const [status,setStatus]=useState(['전체','전체']);
-  const [boardData, setboardDData] = useState(data);
+  const [boardData, setboardData] = useState(data);
   const [complete, setComplete] = useState(null);
   const [uncomplete, setUnComplete] = useState(null);
   useEffect(()=>{
     dataset()
   },[])
 
+  useEffect(()=>{
+    if(data){
+      if(status[0]=='전체' && status[1]=='전체'){
+        console.log(1)
+        setboardData(data)
+      }
+      else if(status[0]=='전체' && status[1]!='전체'){
+        console.log('2')
+        setboardData(data.filter((item)=>item.category ==status[1]))
+      }
+      else if(status[0]!='전체' && status[1]=='전체'){
+        setboardData(data.filter((item)=>item.status ==status[0]))
+      }
+      else if(status[0]!='전체' && status[1]!='전체'){
+        setboardData(data.filter((item)=>(item.category ==status[1] && item.status ==status[0])))
+      }
+    }
+    console.log(status)
+  },[status,data])
   
   async function dataset(){
     await fetch('/data/Board.json')
@@ -22,42 +41,27 @@ export default function Board() {
   }
 
   function handleStatus(state){
-    const newstate = [...state]
-    const fixstate = newstate[0]
-    setStatus(fixstate);
+    const newstate = [...status]
+    newstate[0]=state
+    setStatus(newstate);
   }
 
-  useEffect(()=>{
-    if(data){
-      const uncom = data.filter((item)=>
-        // console.log(item.status)
-        item.status=='uncomplete'
-      )
-      const com = data.filter((item)=>
-      item.status=='complete'
-    )
-    setComplete(com);
-    setUnComplete(uncom);
-
-    console.log('실행')
+  function handleItemClick(item){
+    const newstate = [...status]
+    newstate[1]=item
+    setStatus(newstate);
   }
-  
-  
-},[data])
 
-// handleItemClick(item){
-//   setStatus()
-// }
 
   return (
     <div>
       <nav>
       <ul className='flex space-x-12 ml-left my-7'>
-        {['IT', '교육', '경제', '사회', '문화'].map((item, index) => (
+        {['전체','IT', '교육', '경제', '사회', '문화'].map((item, index) => (
           <li
             key={index}
-            className={`click_highlight ${status[1] === index ? 'orange_bg' : ''}`}
-            // onClick={() => handleItemClick(index)}
+            onClick={() => handleItemClick(item)}
+            className={`click_highlight ${status[1]==item ? 'text-highligth' :''}`}
           >
             {item}
           </li>
@@ -68,22 +72,14 @@ export default function Board() {
       {/* onclick={()=>} */}
         <ul className='flex space-x-5 ml-left my-7'>
         <button onClick={()=>handleStatus('전체')} className={`${status[0] === "전체" ? 'select-list-item' : 'common-list-item'}`}>전체</button>
-        <button onClick={()=>handleStatus('진행중')}className={`${status[0] === '진행중' ? 'select-list-item' : 'common-list-item'}`}>진행중</button>
-        <button onClick={()=>handleStatus('완료')}className={`${status[0] === "완료" ? 'select-list-item' : 'common-list-item'}`}>완료</button>
+        <button onClick={()=>handleStatus('uncomplete')}className={`${status[0] === 'uncomplete' ? 'select-list-item' : 'common-list-item'}`}>진행중</button>
+        <button onClick={()=>handleStatus('complete')}className={`${status[0] === "complete" ? 'select-list-item' : 'common-list-item'}`}>완료</button>
         </ul>
       </nav>
 
       <main>
       <div className='w-screen flex flex-col items-center'>
-        {(data) &&
-          ((status[0] === '전체') ?
-            data.map((item) => <BoardItem key={item.id} data={item} />) :
-            (status[0] === '완료' ?
-              complete.map((item) => <BoardItem key={item.id} data={item} />) :
-              uncomplete.map((item) => <BoardItem key={item.id} data={item} />)
-            )
-          )
-        }
+        {(boardData) &&boardData.map((item) => <BoardItem key={item.id} data={item} />)}
         <hr className='  w-line border-1 border-main_color'/>
       </div>
 
