@@ -23,10 +23,8 @@ export default function Trend() {
 
   return (
     <div>
-      {/* <img src="https://lrl.kr/AzAR" alt="" /> */}
+      <article className='mb-12 mt-24' >
       <TrendCarousel/>
-      
-      {/* <article className='mb-12 mt-24' >
       </article>
 
       <main>
@@ -53,7 +51,7 @@ export default function Trend() {
             }
           </div>
         </article>
-      </main> */}
+      </main>
     </div>
   )
 }

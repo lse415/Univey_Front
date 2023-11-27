@@ -19,7 +19,6 @@ export default function TrendCarousel() {
             });
     }, []);
 
-    console.log(data)
 
     const previous = useCallback(() => slickRef.current.slickPrev(), []);
     const next = useCallback(() => slickRef.current.slickNext(), []);
