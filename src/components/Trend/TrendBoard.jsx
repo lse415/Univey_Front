@@ -26,6 +26,3 @@ export default function TrendBoard({data}) {
     </div>
   );
 }
-
-
-{/* <span key={item.id}>#{item}</span> */}
