@@ -16,7 +16,7 @@ const CreateDetail = () => {
 
         const flattenedRecommendedQuestions = surveyData
           .map(item => item.recommendedQuestions) 
-          .flat();
+          .flat();  //배열 병합. 
 
         setRecommendedQuestions(flattenedRecommendedQuestions);
 
@@ -46,20 +46,25 @@ const CreateDetail = () => {
   };
 
   return (
-    <div className="flex md:mx-32">
-      <UserQuestions 
-        userQuestions={userQuestions}
-        onRemoveQuestion={handleRemoveQuestion}
-        topic={topic} 
-        description={description} 
-        onAddQuestion={handleAddQuestion}
-      />
-      <div className="border-l border-main_color mx-4 h-full"></div>
-      <RecommendedQuestions
-        recommendedQuestions={recommendedQuestions}
-        onAddQuestion={handleAddQuestion}
-      />
+    <div className="flex items-stretch md:mx-24">
+      <div className="flex-1">
+        <UserQuestions 
+          userQuestions={userQuestions}
+          onRemoveQuestion={handleRemoveQuestion}
+          topic={topic} 
+          description={description} 
+          onAddQuestion={handleAddQuestion}
+        />
+      </div>
+      <div className="border-l border-main_color m-10"></div>
+      <div className="flex-1">
+        <RecommendedQuestions
+          recommendedQuestions={recommendedQuestions}
+          onAddQuestion={handleAddQuestion}
+        />
+      </div>
     </div>
+
   );
 };
 
