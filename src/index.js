@@ -11,6 +11,7 @@ import My from './pages/My';
 import Trend from './pages/Trend';
 import Search from './pages/Search';
 import Participate from './pages/Participate';
+import Login from './pages/Login';
 
 const router = createBrowserRouter([
   {
@@ -26,6 +27,7 @@ const router = createBrowserRouter([
       { path: 'main/trend', element: <Trend/> },
       { path: 'main/search/:value', element: <Search/> },
       { path: 'main/participate', element: <Participate/> },
+      { path: 'main/login', element: <Login/> },
     ],
   },
   {
