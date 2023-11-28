@@ -22,6 +22,12 @@ const UserQuestions = ({ userQuestions, onRemoveQuestion, onAddQuestion, topic, 
     setNewQuestion('');
   };
 
+  const handleAddAllQuestions = (questions) => {
+    questions.forEach((question) => {
+      handleAddQuestion(question);
+    });
+  };
+
   const handleClick = () => {
     setCreatingQuestion((prev) => !prev);
   };

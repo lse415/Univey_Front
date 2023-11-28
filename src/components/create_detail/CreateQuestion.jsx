@@ -77,11 +77,6 @@ const CreateQuestion = ({ onCancel, onAddQuestion }) => {
             ))}
           </div>
         )}
-        {/* <div className="pr-5 mt-2 text-right">
-          <button onClick={handleAddQuestion} className="text-blue-500 px-4 py-2 mr-2">
-            Add Question
-          </button>
-        </div> */}
       </div>
     </div>
   ) : null;

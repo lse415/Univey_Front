@@ -38,6 +38,11 @@ const CreateDetail = () => {
     setUserQuestions([...userQuestions, { question, answer, question_num }]);
   };
 
+  const handleAddAllQuestions = () => {
+    // 전체선택
+    setUserQuestions([...userQuestions, ...recommendedQuestions]);
+  };
+
 
   const handleRemoveQuestion = (index) => {
     const updatedQuestions = [...userQuestions];
@@ -61,6 +66,7 @@ const CreateDetail = () => {
         <RecommendedQuestions
           recommendedQuestions={recommendedQuestions}
           onAddQuestion={handleAddQuestion}
+          onAddAllQuestions={handleAddAllQuestions}
         />
       </div>
     </div>
