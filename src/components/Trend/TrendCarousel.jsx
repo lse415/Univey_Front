@@ -4,21 +4,17 @@ import Slider from "react-slick";
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { SlArrowLeft, SlArrowRight } from "react-icons/sl";
+import {useQuery} from '@tanstack/react-query'
 
 export default function TrendCarousel() {
-    const [data, setData] = useState([]);
-    const slickRef = useRef(null);
-    useEffect(() => {
-        axios.get('/data/TrendCarousel.json')
-            .then((res) => {
-                setData(res.data.items);
-            })
-            .catch((error) => {
-                // 에러 처리
-                console.error('Error fetching data:', error);
-            });
-    }, []);
+    const slickRef = useRef();
 
+    const {data, isLoading } = useQuery({ queryKey: ['TrendCarousels'], queryFn: CarouselData })
+
+    async function CarouselData(){
+        return await axios('/data/TrendCarousel.json')
+        .then((res)=>res.data.items)
+      }
 
     const previous = useCallback(() => slickRef.current.slickPrev(), []);
     const next = useCallback(() => slickRef.current.slickNext(), []);
@@ -37,7 +33,7 @@ export default function TrendCarousel() {
         <div className=''>
             <article className=' h-carousel relative w-screen '>
                 <Slider {...settings} ref={slickRef} >
-                    {data.map((item) => (
+                    {data && data.map((item) => (
                         <div className='relative h-trend_carousel  '>
                             <img key={item.id} src={item.url} alt="carousel" className='absolute right-1/2 translate-x-1/2 object-cover h-full rounded-2xl shadow-2xl'/>
                         </div>

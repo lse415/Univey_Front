@@ -2,24 +2,16 @@ import React, { useEffect, useState } from 'react'
 import TrendCarousel from '../components/Trend/TrendCarousel'
 import { LiaFireAltSolid } from "react-icons/lia";
 import TrendBoard from '../components/Trend/TrendBoard';
-
-
+import {useQuery} from '@tanstack/react-query'
+import axios from 'axios';
 export default function Trend() {
-  const [data,setData]=useState(null); 
+  const {data, isLoading } = useQuery({ queryKey: ['Trend'], queryFn: dataset })
 
-  useEffect(()=>{
-    dataset()
-  },[])
-
-  
   async function dataset(){
-    await fetch('/data/Board.json')
-    .then((res)=>res.json())
-    .then((res)=>setData(res.surveyData))
-    .catch((err)=>{
-      console.log(err)
-    })
+    return await axios('/data/Board.json')
+    .then((res)=>res.data.surveyData)
   }
+  data && console.log('Trend 페이지',data)
 
   return (
     <div>
@@ -42,12 +34,14 @@ export default function Trend() {
 
         <article className='flex w-screen justify-center'>
           <div className='flex w-3/4 h-trend_board mb-10'>
-          {data &&
+          
+          { isLoading? <p> 로딩 중입니다</p>:
+            data ?
             data.filter(item => item.trend === true).map((item)=>{
               return(
               <TrendBoard key={item.id} data={item}/>
             )
-            })
+            }):<p>로딩인가</p>
             }
           </div>
         </article>

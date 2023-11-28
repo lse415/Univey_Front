@@ -10,35 +10,15 @@ import { useQuery } from '@tanstack/react-query';
 import { RxDoubleArrowDown } from "react-icons/rx";
 
 export default function Main() {
-  const [data,setData]=useState(null); 
-  const [tren,setTrend]=useState(); 
+
+  const {data, isLoading } = useQuery({ queryKey: ['Trend'], queryFn: dataset })
 
 
-  useEffect(()=>{
-    dataset()
-  },[])
-
-  
   async function dataset(){
-    await fetch('/data/Board.json')
-    .then((res)=>res.json())
-    .then((res)=>setData(res.surveyData))
-    .catch((err)=>{
-      console.log(err)
-    })
+    return await axios('/data/Board.json')
+    .then((res)=>res.data.surveyData)
   }
-
-
-  function scrollToTrend (){
-    const targetElement = document.getElementById('Trend');
-
-    if (targetElement) {
-      window.scrollTo({
-        top: targetElement.offsetTop,
-        behavior: 'smooth',
-      });
-    }
-  }
+  console.log(data)
 
   return (
     <div >
