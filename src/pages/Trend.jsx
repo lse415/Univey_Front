@@ -5,13 +5,18 @@ import TrendBoard from '../components/Trend/TrendBoard';
 import {useQuery} from '@tanstack/react-query'
 import axios from 'axios';
 export default function Trend() {
-  const {data, isLoading } = useQuery({ queryKey: ['Trend'], queryFn: dataset })
+  const [trend, SetTrend] = useState();
+  // const {data, isLoading } = useQuery({ queryKey: ['Trend'], queryFn: dataset })
+  useEffect(()=>{
+    dataset();
+  },[])
 
   async function dataset(){
-    return await axios('/data/Board.json')
+    await axios('/data/Board.json')
     .then((res)=>res.data.surveyData)
+    .then((res)=>SetTrend(res))
   }
-  data && console.log('Trend 페이지',data)
+
 
   return (
     <div>
@@ -35,9 +40,9 @@ export default function Trend() {
         <article className='flex w-screen justify-center'>
           <div className='flex w-3/4 h-trend_board mb-10'>
           
-          { isLoading? <p> 로딩 중입니다</p>:
-            data ?
-            data.filter(item => item.trend === true).map((item)=>{
+          {/* { isLoading? <p> 로딩 중입니다</p>: */}
+            {trend ?
+            trend.filter(item => item.trend === true).map((item)=>{
               return(
               <TrendBoard key={item.id} data={item}/>
             )

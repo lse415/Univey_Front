@@ -37,7 +37,6 @@
       "react-app/jest"
     ]
   },
-  "proxy": "https://1ede-222-108-73-38.ngrok-free.app/",
   "browserslist": {
     "production": [
       ">0.2%",
