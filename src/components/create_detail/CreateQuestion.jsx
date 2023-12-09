@@ -1,37 +1,54 @@
 import React, { useState } from 'react';
-import { IoRadioButtonOff } from "react-icons/io5";
+import AddButtonIcon from "../icons/AddButtonIcon";
+import CopyButtonIcon from "../icons/CopyButtonIcon";
+import DeleteButtonIcon from "../icons/DeleteButtonIcon";
+import MultipleChoiceIcon from '../icons/MultipleChoiceIcon';
+import ShortAnswerIcon from '../icons/ShortAnswerIcon';
+import CreateCardTopAsset from '../icons/CreateCardTopAsset';
 
 const CreateQuestion = ({ onCancel, onAddQuestion }) => {
-  const [question, setQuestion] = useState('');
-  const [questionType, setQuestionType] = useState('multipleChoice');
+  const [question, setQuestion] = useState(''); //질문 내용
+  const [questionType, setQuestionType] = useState('multipleChoice'); //질문 유형
   const [showComponent, setShowComponent] = useState(true);
-  const [answers, setAnswers] = useState(['']); 
+  const [answers, setAnswers] = useState(['']); // 객관식일 때 각 응답 옵션
+  const [isRequired, setIsRequired] = useState(false); //필수질문 여부
 
+  //질문 추가
   const handleAddQuestion = () => {
+    //질문 있을 때만 추가
     if (question.trim() !== '') {
+      // 새로운 질문 객체 생성
       const newQuestion = {
         question,
         type: questionType,
         options: questionType === 'multipleChoice' ? answers : null,
+        answers 
       };
-
+  
+      // 부모 컴포넌트로 새로운 질문 추가
       onAddQuestion(newQuestion);
-
+  
       setQuestion('');
       setAnswers(['']); 
     }
   };
 
+  // 컴포넌트 삭제 버튼 클릭 시 실행되는 함수
   const handleDelete = () => {
+    // 컴포넌트 숨기기
     setShowComponent(false);
+    // 부모 컴포넌트로 취소 이벤트 전달
     onCancel();
   };
 
+  // 응답 옵션 업데이트
   const handleUpdateAnswer = (index, value) => {
+    // 기존 응답 배열 복사
     const updatedAnswers = [...answers];
+    // 주어진 인덱스의 응답 업데이트된 값으로 변경
     updatedAnswers[index] = value;
 
-    // 마지막 answer 칸이 empty하지 않은 상태면 input 하나 더 생성
+    // 마지막 응답이 비어 있지 않으면 새로운 응답 추가
     if (index === updatedAnswers.length - 1 && value.trim() !== '') {
       updatedAnswers.push('');
     }
@@ -41,25 +58,46 @@ const CreateQuestion = ({ onCancel, onAddQuestion }) => {
 
   return showComponent ? (
     <div className='flex w-full'>
+      {/* "+" 버튼 클릭 시 질문 추가 함수 호출 */}
       <button onClick={handleAddQuestion} className=" text-main_color pr-2 font-bold">
-            +
+            <AddButtonIcon />
       </button>
+      <div className="flex flex-col items-start">
+      <CreateCardTopAsset/>
       <div className="mb-2 w-full rounded p-5 bg-question_card_bg">
-        <div className="flex space-x-32">
+        <div className="flex items-center space-x-4">
           <input
-            className="w-full p-1 border-b border-question_card_grey bg-transparent text-text_color"
-            placeholder="질문1"
+            className="flex-grow p-1 border-b border-question_card_grey bg-transparent text-text_color"
+            placeholder="질문을 작성해주세요"
             value={question}
             onChange={(e) => setQuestion(e.target.value)}
           />
+          <div className="flex items-center space-x-2">
+            <input
+              id='checked'
+              type="checkbox"
+              value={''}
+              className="mr-1 mt-2 bg-transparent border border-text_color rounded w-4 h-4 "
+              checked={isRequired}
+              onChange={() => {
+                console.log('Checkbox clicked. Current value:', isRequired);
+                setIsRequired(!isRequired);
+              }}
+            />
+            <label className="mb-0 mt-1">필수</label>
+          </div>
           <div className="flex items-center mt-2">
-            <select
-              className="p-1 border-b border-question_card_grey bg-transparent text-text_color mr-2"
-              value={questionType}
-              onChange={(e) => setQuestionType(e.target.value)}
-            >
-              <option value="multipleChoice">객관식</option>
-              <option value="shortAnswer">주관식</option>
+          <select
+            className="border-b border-question_card_grey bg-transparent text-text_color ml-2 pr-8"
+            value={questionType}
+            onChange={(e) => setQuestionType(e.target.value)}
+          >
+            <option value="multipleChoice">
+              <MultipleChoiceIcon className='pr-1' />객관식
+            </option>
+            <option value="shortAnswer">
+              <ShortAnswerIcon className='pr-1' />주관식
+            </option>
             </select>
           </div>
         </div>
@@ -68,7 +106,7 @@ const CreateQuestion = ({ onCancel, onAddQuestion }) => {
             {answers.map((answer, index) => (
               <div key={index} className="flex items-center mt-2">
                 <input
-                  className="p-1 border-b border-question_card_grey bg-transparent text-text_color mr-2"
+                  className="p-1 border-none border-question_card_grey bg-transparent text-text_color mr-2"
                   placeholder={'응답 추가'} 
                   value={answer}
                   onChange={(e) => handleUpdateAnswer(index, e.target.value)}
@@ -77,6 +115,16 @@ const CreateQuestion = ({ onCancel, onAddQuestion }) => {
             ))}
           </div>
         )}
+        <hr className='my-4 py-2 border-question_card_grey'></hr>
+        <div className='flex justify-end mt-2'>
+          <button className='px-2'>
+            <CopyButtonIcon />
+          </button>
+          <button className='pl-2'>
+            <DeleteButtonIcon />
+          </button>
+        </div>
+      </div>
       </div>
     </div>
   ) : null;

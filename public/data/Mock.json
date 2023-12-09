@@ -12,6 +12,7 @@
                 {
                     "question_num" : 1,
                     "question" : " 인공지능 사용 빈도가 어떻게 되나요?",
+                    "question_type" : "select",
                     "answer" :{
                         "1" : "매우 자주",
                         "2" : "자주",
@@ -22,6 +23,7 @@
                 {
                     "question_num" : 2,
                     "question" : " 어떤 종류의 인공지능 기술을 사용하나요?",
+                    "question_type" : "select",
                     "answer" :{
                         "1" : "음성인식 기술 (ex) 음성 비서",
                         "2" : "자연어 처리 기술 (ex) 번역 앱",
@@ -33,12 +35,33 @@
                 {
                     "question_num" : 3,
                     "question" : " 어떤 목적으로 인공지능 기술을 사용하나요?",
+                    "question_type" : "select",
                     "answer" :{
                         "1" : "업무나 학업 효율 향상",
                         "2" : "엔터테인먼트 및 오락",
                         "3" : "커뮤니케이션",
                         "4" : "정보 검색",
                         "5" : "건강 및 헬스케어"
+                    }
+                }
+            ],
+            "finalQuestions":[
+                {
+                    "question_num" : 1,
+                    "question" : " 인공지능 사용 빈도가 어떻게 되나요?",
+                    "question_type" : "multipleChoice",
+                    "answer" :{
+                        "1" : "매우 자주",
+                        "2" : "자주",
+                        "3" : "가끔",
+                        "4" : "거의 사용하지 않음"
+                    }
+                },
+                {
+                    "question_num" : 2,
+                    "question" : " 어떤 종류의 인공지능 기술을 사용하나요?",
+                    "question_type" : "shortAnswer",
+                    "answer" :{
                     }
                 }
             ]

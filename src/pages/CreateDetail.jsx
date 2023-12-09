@@ -32,7 +32,7 @@ const CreateDetail = () => {
   }, []);
 
   const handleAddQuestion = (recommendedQuestion) => {
-    // Extract the necessary information from the recommendedQuestion object
+    // 추천질문에서 추출
     const { question_num, question, answer } = recommendedQuestion;
 
     setUserQuestions([...userQuestions, { question, answer, question_num }]);
@@ -51,7 +51,7 @@ const CreateDetail = () => {
   };
 
   return (
-    <div className="flex items-stretch md:mx-24">
+    <div className="flex items-stretch lg:mx-24">
       <div className="flex-1">
         <UserQuestions 
           userQuestions={userQuestions}

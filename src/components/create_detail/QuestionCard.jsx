@@ -1,15 +1,15 @@
 import React from 'react';
 import { IoRadioButtonOff } from "react-icons/io5";
 
-const QuestionCard = ({ question, question_num, answer, onClick }) => {
+const QuestionCard = ({ question, question_num, answers, onClick }) => {
   const renderAnswer = () => {
-    if (!answer) {
+    if (!answers) {
       return <p>No answer available</p>;
     }
 
     return (
       <div>
-        {Object.entries(answer).map(([key, value], index) => (
+        {Object.entries(answers).map(([key, value], index) => (
           <p key={index} className='flex items-center'>
             <IoRadioButtonOff className='mr-1'/> {value}
           </p>
