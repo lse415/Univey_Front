@@ -16,33 +16,31 @@ const CreateDetail = () => {
 
         const flattenedRecommendedQuestions = surveyData
           .map(item => item.recommendedQuestions) 
-          .flat();  //배열 병합. 
+          .flat();  // 배열 병합.
 
         setRecommendedQuestions(flattenedRecommendedQuestions);
 
-      if (surveyData.length > 0) {
-        setTopic(surveyData[0].topic);
-        setDescription(surveyData[0].description);
-      }
-    })
+        if (surveyData.length > 0) {
+          setTopic(surveyData[0].topic);
+          setDescription(surveyData[0].description);
+        }
+      })
       .catch((error) => {
         console.error('Error fetching data:', error);
-
       });
   }, []);
 
   const handleAddQuestion = (recommendedQuestion) => {
     // 추천질문에서 추출
-    const { question_num, question, answer } = recommendedQuestion;
+    const { question_num, question, question_type, answer } = recommendedQuestion;
 
-    setUserQuestions([...userQuestions, { question, answer, question_num }]);
+    setUserQuestions((prevUserQuestions) => [...prevUserQuestions, { question_num, question, question_type, answer }]);
   };
 
   const handleAddAllQuestions = () => {
     // 전체선택
-    setUserQuestions([...userQuestions, ...recommendedQuestions]);
+    setUserQuestions((prevUserQuestions) => [...prevUserQuestions, ...recommendedQuestions]);
   };
-
 
   const handleRemoveQuestion = (index) => {
     const updatedQuestions = [...userQuestions];
@@ -55,6 +53,8 @@ const CreateDetail = () => {
       <div className="flex-1">
         <UserQuestions 
           userQuestions={userQuestions}
+          // 추가
+          setUserQuestions={setUserQuestions} 
           onRemoveQuestion={handleRemoveQuestion}
           topic={topic} 
           description={description} 
@@ -70,7 +70,6 @@ const CreateDetail = () => {
         />
       </div>
     </div>
-
   );
 };
 

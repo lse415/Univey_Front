@@ -5,7 +5,7 @@ import MultipleChoiceIcon from '../icons/MultipleChoiceIcon';
 import ShortAnswerIcon from '../icons/ShortAnswerIcon';
 import CreateCardTopAsset from '../icons/CreateCardTopAsset';
 
-const EditQuestion = ({ onCancel, onEditQuestion, onRemoveQuestion, initialQuestion }) => {
+const EditQuestion = ({ onCancel, onEditQuestion, onRemoveQuestion, initialQuestion, index }) => {
   const [editedQuestion, setEditedQuestion] = useState({ ...initialQuestion });
   const [answers, setAnswers] = useState(initialQuestion.options || ['']);
   const [questionType, setQuestionType] = useState(initialQuestion.questionType); 

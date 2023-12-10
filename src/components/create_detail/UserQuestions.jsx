@@ -5,28 +5,49 @@ import EditQuestion from './EditQuestion';
 import { BiSolidQuoteAltLeft } from 'react-icons/bi';
 import { BiSolidQuoteAltRight } from 'react-icons/bi';
 
-const UserQuestions = ({ userQuestions, onRemoveQuestion, onAddQuestion, onEditQuestion, topic, description }) => {
+const userQuestionsToJson = (userQuestions) => {
+  return userQuestions.map((userQuestion) => ({
+    question_num: userQuestion.question_num,
+    question: userQuestion.question,
+    answers: userQuestion.answer,
+  }));
+};
+
+const UserQuestions = ({ userQuestions, setUserQuestions, onRemoveQuestion, onAddQuestion, onEditQuestion, topic, description }) => {
   const [creatingQuestion, setCreatingQuestion] = useState(false);
   const [editingIndex, setEditingIndex] = useState(null);
   const inputRef = useRef(null);
 
   const handleAddQuestion = (question) => {
-    if (editingIndex !== null) {
-      const updatedQuestions = [...userQuestions];
-      updatedQuestions[editingIndex] = { ...question, question_num: editingIndex + 1 };
-      onEditQuestion(updatedQuestions);
-    } else {
-      const newQuestion = {
-        ...question,
-        question_num: userQuestions.length + 1,
-        answers: question.answer || {},
-      };
+  if (editingIndex !== null) {
+    const updatedQuestions = [...userQuestions];
+    updatedQuestions[editingIndex] = { ...question, question_num: editingIndex + 1 };
+    onEditQuestion(updatedQuestions);
+  } else {
+    const newQuestion = {
+      question_num: userQuestions.length + 1,
+      ...question,
+      questionType: userQuestions.questionType,
+      answers: question.answers || {},
+    };
 
-      console.log('New Question:', newQuestion);
-      onAddQuestion([...userQuestions, newQuestion]);
+    console.log('New Question:', newQuestion);
+    onAddQuestion([...userQuestions, newQuestion]);
+  }
+
+  setCreatingQuestion(false);
+  setEditingIndex(null);
+};
+
+  const handleUpdateQuestion = (updatedQuestion, index) => {
+    const updatedQuestions = [...userQuestions];
+    updatedQuestions[index] = updatedQuestion;
+
+    // onEditQuestion 함수가 정의되어 있는지 확인
+    if (typeof onEditQuestion === 'function') {
+      onEditQuestion(updatedQuestions);
     }
 
-    setCreatingQuestion(false);
     setEditingIndex(null);
   };
 
@@ -35,11 +56,16 @@ const UserQuestions = ({ userQuestions, onRemoveQuestion, onAddQuestion, onEditQ
     setEditingIndex(index === editingIndex ? null : index);
   };
 
+  // 선택한 질문 삭제
   const handleRemoveQuestion = (index) => {
-    const updatedQuestions = [...userQuestions];
-    updatedQuestions.splice(index, 1);  // 복사한 배열에서 선택한 인덱스의 요소 1개 제거
-    onRemoveQuestion(updatedQuestions); // 변경된 배열을 콜백 함수를 통해 상위 컴포넌트로 전달
-    setEditingIndex(null); // 삭제 시 EditQuestion 컴포넌트를 닫기.
+    // userQuestions 배열에서 선택한 인덱스의 질문을 제외한 새로운 배열 생성 (splice 대신 filter 사용)
+    const updatedQuestions = userQuestions.filter((_, i) => i !== index);
+
+    // setUserQuestions 함수를 사용하여 상위 컴포넌트의 userQuestions 상태를 업데이트
+    setUserQuestions(updatedQuestions);
+
+    // 현재 편집 중인 질문이 있을 경우 편집 상태 종료
+    setEditingIndex(null);
   };
 
   const handleClick = () => {
@@ -69,6 +95,8 @@ const UserQuestions = ({ userQuestions, onRemoveQuestion, onAddQuestion, onEditQ
     };
   }, [creatingQuestion, editingIndex]);
 
+  console.log('userQuestions:', userQuestions); 
+
   return (
     <div className="flex-1 p-4 mt-20">
       <div className="flex justify-center">
@@ -83,7 +111,7 @@ const UserQuestions = ({ userQuestions, onRemoveQuestion, onAddQuestion, onEditQ
           {editingIndex === index ? (
             <EditQuestion
             onCancel={handleClick}
-            onEditQuestion={handleEditQuestion} 
+            onEditQuestion={(updatedQuestion) => handleUpdateQuestion(updatedQuestion, index)}
             onRemoveQuestion={() => handleRemoveQuestion(index)}
             initialQuestion={userQuestion}
           />
@@ -96,9 +124,6 @@ const UserQuestions = ({ userQuestions, onRemoveQuestion, onAddQuestion, onEditQ
               isEditing={editingIndex !== null}
             />
           )}
-          {console.log('userQuestion.question_num', userQuestion.question_num)}
-          {console.log('userQuestion.question', userQuestion.question)}
-          {console.log('userQuestion.answer', userQuestion.answer)}
         </div>
       ))}
       <div className="mt-4 flex" ref={inputRef}>
