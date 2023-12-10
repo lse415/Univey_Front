@@ -32,9 +32,9 @@ const CreateDetail = () => {
 
   const handleAddQuestion = (recommendedQuestion) => {
     // 추천질문에서 추출
-    const { question_num, question, question_type, answer } = recommendedQuestion;
+    const { question_num, question, question_type, isRequired, answer } = recommendedQuestion;
 
-    setUserQuestions((prevUserQuestions) => [...prevUserQuestions, { question_num, question, question_type, answer }]);
+    setUserQuestions((prevUserQuestions) => [...prevUserQuestions, { question_num, question, question_type, isRequired, answer }]);
   };
 
   const handleAddAllQuestions = () => {
@@ -53,7 +53,6 @@ const CreateDetail = () => {
       <div className="flex-1">
         <UserQuestions 
           userQuestions={userQuestions}
-          // 추가
           setUserQuestions={setUserQuestions} 
           onRemoveQuestion={handleRemoveQuestion}
           topic={topic} 

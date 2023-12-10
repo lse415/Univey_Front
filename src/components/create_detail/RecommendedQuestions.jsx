@@ -22,6 +22,7 @@ const RecommendedQuestions = ({ recommendedQuestions, onAddQuestion, onAddAllQue
           key={recommendedQuestion.question_num}
           question_num={recommendedQuestion.question_num.toString()}
           question={recommendedQuestion.question}
+          question_type={recommendedQuestion.question_type}
           answers={recommendedQuestion.answer}
           onClick={() => onAddQuestion(recommendedQuestion)}
         />

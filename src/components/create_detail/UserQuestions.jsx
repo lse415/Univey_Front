@@ -9,14 +9,24 @@ const userQuestionsToJson = (userQuestions) => {
   return userQuestions.map((userQuestion) => ({
     question_num: userQuestion.question_num,
     question: userQuestion.question,
-    answers: userQuestion.answer,
+    quesetion_type: userQuestion.question_type,
+    isRequired: userQuestion.isRequired,
+    answers: userQuestion.answers,
   }));
 };
 
-const UserQuestions = ({ userQuestions, setUserQuestions, onRemoveQuestion, onAddQuestion, onEditQuestion, topic, description }) => {
+const UserQuestions = ({
+    userQuestions,
+    setUserQuestions,
+    onRemoveQuestion, onAddQuestion, onEditQuestion,
+    topic, description 
+  }) => {
   const [creatingQuestion, setCreatingQuestion] = useState(false);
   const [editingIndex, setEditingIndex] = useState(null);
   const inputRef = useRef(null);
+
+  const [question, setQuestion] = useState('');
+  const [answers, setAnswers] = useState(['']); 
 
   const handleAddQuestion = (question) => {
   if (editingIndex !== null) {
@@ -27,12 +37,16 @@ const UserQuestions = ({ userQuestions, setUserQuestions, onRemoveQuestion, onAd
     const newQuestion = {
       question_num: userQuestions.length + 1,
       ...question,
-      questionType: userQuestions.questionType,
+      question_type: question.questionType,
+      isRequired: question.isRequired,
       answers: question.answers || {},
     };
 
     console.log('New Question:', newQuestion);
-    onAddQuestion([...userQuestions, newQuestion]);
+    onAddQuestion(newQuestion);  // 직접 newQuestion 전달
+
+    setQuestion('');
+    setAnswers(['']);
   }
 
   setCreatingQuestion(false);
@@ -119,6 +133,7 @@ const UserQuestions = ({ userQuestions, setUserQuestions, onRemoveQuestion, onAd
             <QuestionCard
               question={userQuestion.question}
               question_num={userQuestion.question_num}
+              question_type={userQuestion.question_type}
               answers={userQuestion.answer}
               onClick={() => handleEditQuestion(index)}
               isEditing={editingIndex !== null}

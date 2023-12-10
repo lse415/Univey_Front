@@ -1,7 +1,7 @@
 import React from 'react';
 import { IoRadioButtonOff } from "react-icons/io5";
 
-const QuestionCard = ({ question, question_num, answers, onClick }) => {
+const QuestionCard = ({ question, question_num, question_type, answers, onClick }) => {
   const renderAnswer = () => {
     if (!answers) {
       return <p>No answer available</p>;
@@ -21,7 +21,20 @@ const QuestionCard = ({ question, question_num, answers, onClick }) => {
   return (
     <div className="bg-question_card_bg p-4 mb-4 rounded cursor-pointer" onClick={onClick}>
       <p className='text-l font-semibold mb-2'>{question_num}.{question}</p>
-      <div className='text-l font-normal'>{renderAnswer()}</div>
+        {question_type === 'multipleChoice' && (
+            <div className='text-l font-normal'>{renderAnswer()}</div>
+        )}
+        {question_type === 'shortAnswer' && (
+            <div className="mt-2">
+            <input
+              type="text"
+              className="w-full p-1 border rounded border-question_card_grey bg-white text-text_color mr-2"
+              placeholder={'주관식 서술 문항입니다. 자유롭게 작성해주세요.'}
+              value={answers[0]}
+              disabled
+            />
+          </div>
+        )}
     </div>
   );
 };
