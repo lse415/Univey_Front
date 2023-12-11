@@ -32,14 +32,28 @@ const CreateDetail = () => {
 
   const handleAddQuestion = (recommendedQuestion) => {
     // 추천질문에서 추출
-    const { question_num, question, question_type, isRequired, answer } = recommendedQuestion;
+    const { question, question_type, isRequired, answer } = recommendedQuestion;
 
-    setUserQuestions((prevUserQuestions) => [...prevUserQuestions, { question_num, question, question_type, isRequired, answer }]);
+    const newUserQuestion = {
+      question_num: userQuestions.length + 1,
+      question,
+      question_type,
+      isRequired,
+      answer,
+    };
+
+    setUserQuestions((prevUserQuestions) => [...prevUserQuestions, newUserQuestion]);
   };
 
   const handleAddAllQuestions = () => {
     // 전체선택
-    setUserQuestions((prevUserQuestions) => [...prevUserQuestions, ...recommendedQuestions]);
+    setUserQuestions((prevUserQuestions) => [
+      ...prevUserQuestions,
+      ...recommendedQuestions.map((recommendedQuestion, index) => ({
+        ...recommendedQuestion,
+        question_num: prevUserQuestions.length + 1 + index,
+      })),
+    ]);
   };
 
   const handleRemoveQuestion = (index) => {

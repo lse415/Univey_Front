@@ -75,12 +75,19 @@ const UserQuestions = ({
     // userQuestions 배열에서 선택한 인덱스의 질문을 제외한 새로운 배열 생성 (splice 대신 filter 사용)
     const updatedQuestions = userQuestions.filter((_, i) => i !== index);
 
+    // 업데이트된 question_num 적용
+    const updatedQuestionsWithNum = updatedQuestions.map((question, i) => ({
+      ...question,
+      question_num: i + 1,
+    }));
+    
     // setUserQuestions 함수를 사용하여 상위 컴포넌트의 userQuestions 상태를 업데이트
-    setUserQuestions(updatedQuestions);
-
+    setUserQuestions(updatedQuestionsWithNum);
     // 현재 편집 중인 질문이 있을 경우 편집 상태 종료
     setEditingIndex(null);
   };
+
+  
 
   const handleClick = () => {
     setCreatingQuestion((prev) => !prev);

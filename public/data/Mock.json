@@ -37,7 +37,7 @@
                 {
                     "question_num" : 3,
                     "question" : "어떤 목적으로 인공지능 기술을 사용하나요?",
-                    "question_type" : "multipleChoice",
+                    "question_type" : "shortAnswer",
                     "isRequired" : true,
                     "answer" :{
                         "1" : "업무나 학업 효율 향상",
@@ -55,10 +55,6 @@
                     "question_type" : "multipleChoice",
                     "isRequired" : true,
                     "answer" :{
-                        "1" : "매우 자주",
-                        "2" : "자주",
-                        "3" : "가끔",
-                        "4" : "거의 사용하지 않음"
                     }
                 },
                 {
