@@ -23,14 +23,16 @@ module.exports = {
         trend_board:'40rem'
       },
       width:{
-        line: '71%'
+        line: '71%',
+        qr_cutting: '46%'
       },
       border:{
         xs : '5px'
       },     
       margin:{
         left : '14%',
-        leftsm : '6%'
+        leftsm : '6%',
+        leftxl : '19.5%'
       },
       borderWidth: {
         '1': '1px',

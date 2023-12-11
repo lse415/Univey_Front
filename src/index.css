@@ -43,3 +43,11 @@ body {
 .custom-bounce {
   animation: custom-bounce 3s infinite;
 }
+
+.bg_main{
+  @apply border-main_color bg-main_color text-white
+}
+
+.bg_white{
+  @apply border-main_color bg-white text-main_color
+}
