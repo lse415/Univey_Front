@@ -9,7 +9,7 @@ module.exports = {
         sub_text_color_2: '#ECE8E1',
         main_color:'#00008A',
         highligth:'#F29F05',
-        line_color:'#C2C6CE',
+        line_color:'#EDF1F5',
         box_color_1:'#4A4AB4',
         box_color_2:'#2E64B5',
         sub_text_color_4: "#F27F0C",
@@ -32,7 +32,7 @@ module.exports = {
       margin:{
         left : '14%',
         leftsm : '6%',
-        leftxl : '19.5%'
+        leftxl : '21.5%'
       },
       borderWidth: {
         '1': '1px',
