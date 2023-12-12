@@ -12,6 +12,7 @@ import My from "./pages/My";
 import Trend from "./pages/Trend";
 import Search from "./pages/Search";
 import Participate from "./pages/Participate";
+import ParticipateComplete from "./pages/ParticipateComplete";
 
 const router = createBrowserRouter([
   {
@@ -20,6 +21,7 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <Participate /> },
       { path: "participate", element: <Participate /> },
+      { path: "participate/complete", element: <ParticipateComplete /> },
       { path: "main", element: <Main /> },
       { path: "main/board", element: <Board /> },
       { path: "main/create", element: <Create /> },

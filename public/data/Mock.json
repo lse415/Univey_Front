@@ -55,7 +55,7 @@
                     "question_num" : 2,
                     "question" : "주관식 질문 확인해 보겠습니다?",
                     "question_type" : "shortAnswer",
-                    "isRequired" : false,
+                    "isRequired" : true,
                     "answer" :[]
                 },
                 {
