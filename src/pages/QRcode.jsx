@@ -3,10 +3,13 @@ import { QRCode } from 'react-qrcode-logo';
 import { IoSquareSharp } from "react-icons/io5";
 import { FaCircle } from "react-icons/fa";
 import { useState } from 'react';
+import { useEffect } from 'react';
 export default function QRcode() {
   const [qrCode,setqrCode] = useState({
-    size:'200',
+    size:'256',
     quietZone:'100',
+    eyeColor:['black','black','black'],
+    eyeRadius:0,
   });
   const [style,setStyle] =useState('squares')
   const [logoStyle, setLogoStyle] = useState('squares')
@@ -27,9 +30,7 @@ export default function QRcode() {
       setImg(reader.result)
       console.log(reader.result)
     }
-    reader.readAsDataURL(e.target.files[0])
-
- 
+    reader.readAsDataURL(e.target.files[0]) 
   }
 
   function handleChange(e){
@@ -39,7 +40,12 @@ export default function QRcode() {
       [name] : e.target.value
     }))
     console.log(e.target.value)
+    console.log(qrCode)
   }
+
+  useEffect(()=>{
+    console.log('update')
+  },[qrCode])
   
   return (
     <div>
@@ -52,35 +58,38 @@ export default function QRcode() {
         <section className='flex flex-col items-center mt-12'>
         <hr className='border-xs border-line_color w-line -mt-10 mb-10'/>
           
-          <div className='w-80 h-80 bg-gray-400 flex justify-center items-center mb-12 overflow-hidden'>
-            <QRCode 
-                value={"https://picturesofpeoplescanningqrcodes.tumblr.com/"}
-                size={qrCode.size}
-                quietZone={qrCode.quietZone}
-                fgColor={qrCode.fgColor}
-                bgColor={qrCode.bgColor}
-                qrStyle={style}
-                logoImage = {img} 
-                logoPaddingStyle = {logoStyle}
-                logoOpacity = {qrCode.logoOpacity/100}
-                logoWidth = {qrCode.logoWidth}
-                logoHeight = {qrCode.logoHeight}
-                logoPadding = {qrCode.logoPadding}
-                eyeRadius={5}
-                // eyeradius_0_outer_0 = {qrCode.topLeft}
-                // eyeradius_0_outer_1 = {qrCode.topLeft}
-                // eyeradius_0_outer_2 = {qrCode.topLeft}
-                // eyeradius_0_outer_3 = {qrCode.topLeft}
-            />
+          <div className='w-80 h-80 bg-gray-400 flex justify-center items-center mb-12 overflow-hidden border-1 border-black'>
+              <QRCode 
+                  value={"https://picturesofpeoplescanningqrcodes.tumblr.com/"}
+                  size={qrCode.size}
+                  quietZone={qrCode.quietZone}
+                  fgColor={qrCode.fgColor}
+                  bgColor={qrCode.bgColor}
+                  qrStyle={style}
+                  logoImage = {img} 
+                  logoPaddingStyle = {logoStyle}
+                  logoOpacity = {qrCode.logoOpacity/100}
+                  logoWidth = {qrCode.logoWidth}
+                  logoHeight = {qrCode.logoHeight}
+                  logoPadding = {qrCode.logoPadding}
+                  eyeRadius={qrCode.eyeRadius}
+                  eyeColor={qrCode.first_color}
+                  // eyeRadius={[5,5,15]}
+                  // eyeRadius={[25,25,5]}
+                  // eyeradius_0_outer_0 = {qrCode.topLeft}
+                  // eyeradius_0_outer_1 = {qrCode.topLeft}
+                  // eyeradius_0_outer_2 = {qrCode.topLeft}
+                  // eyeradius_0_outer_3 = {qrCode.topLeft}
+              />
           </div>
           <hr className='w-1/2 border-xs border-line_color mb-4'/>
             <p className='w-1/2 ml-20 mb-3 text-2xl text-main_color font-bold'>QR</p>
-          <article1 className='w-screen flex flex-col items-center pl-20 mb-10 text-main_color'>
+          <article className='w-screen flex flex-col items-center pl-20 mb-10 text-main_color'>
 
             <div className='flex w-1/2 mb-8'>
               <form action="" className=' w-1/2'>
                 <label className='block mb-1 '>크기</label>
-                <input name='size' onChange={handleChange} type="range" min={10} max={320} className='w-80 accent-main_color' />
+                <input name='size' onChange={handleChange} type="range" min={10} max={512} className='w-80 accent-main_color' />
               </form>
               <form action="" className=' w-1/2'>
                 <label className='block mb-1  '>배경 크기</label>
@@ -113,12 +122,12 @@ export default function QRcode() {
 
             </div>
 
-          </article1>
+          </article>
 
           <hr className='w-qr_cutting  border-xs border-line_color mb-5'/>
           <p className='w-1/2 ml-20 mb-3 text-2xl text-main_color font-bold'>Logo</p>
 
-          <article2 className='w-screen flex flex-col items-center pl-20 mb-10 text-main_color'>
+          <article className='w-screen flex flex-col items-center pl-20 mb-10 text-main_color'>
 
             <div className='flex w-1/2 mb-8'>
 
@@ -145,11 +154,11 @@ export default function QRcode() {
             <div className='flex w-1/2 mb-5'>
               <form action="" className=' w-1/2'>
                 <label className='block mb-1 '>가로</label>
-                <input type="range" min={0} max={320} className='w-80 accent-main_color' onChange={handleChange} name='logoWidth' />
+                <input type="range" min={0} max={256} className='w-80 accent-main_color' onChange={handleChange} name='logoWidth' />
               </form>
               <form action="" className=' w-1/2'>
                 <label className='block mb-1  '>세로</label>
-                <input type="range" min={0} max={320} className='w-80 accent-main_color' onChange={handleChange} name='logoHeight'/>
+                <input type="range" min={0} max={256} className='w-80 accent-main_color' onChange={handleChange} name='logoHeight'/>
               </form>
             </div>
 
@@ -166,96 +175,9 @@ export default function QRcode() {
 
             
 
-          </article2>
-
-          <hr className='w-qr_cutting  border-xs border-line_color mb-5'/>
-          <p className='w-1/2 ml-20 mb-2 text-2xl text-main_color font-bold'>EyeRadius</p>
-
-          <article3 className='w-screen flex flex-col items-center pl-20 mb-10 text-main_color'>
-          
-          <p className='w-1/2 mb-1 font-bold'>왼쪽 상단</p>
-
-            <div className='flex w-1/2 mb-2'>
-              <form action="" className=' w-1/2'>
-                <label className='block mb-1 '>OUTER</label>
-                <input type="range" min={0} max={25} onChange={handleChange} name='topLeft'  className='w-80 accent-main_color' />
-              </form>
-              <form action="" className=' w-1/2'>
-                <label className='block mb-1  '>INNER</label>
-                <input type="range" min={0} max={25} onChange={handleChange} name=''  className='w-80 accent-main_color' />
-              </form>
-            </div>
-          <p className='w-1/2 mb-1 font-bold'>오른쪽 상단</p>
-
-            <div className='flex w-1/2 mb-2'>
-              <form action="" className=' w-1/2'>
-                <label className='block mb-1 '>OUTER</label>
-                <input type="range" min={0} max={25} onChange={handleChange} name='' className='w-80 accent-main_color' />
-              </form>
-              <form action="" className=' w-1/2'>
-                <label className='block mb-1  '>INNER</label>
-                <input type="range" min={0} max={25} onChange={handleChange} name='' className='w-80 accent-main_color' />
-              </form>
-            </div>
-          <p className='w-1/2 mb-1 font-bold'>왼쪽 하단</p>
-
-            <div className='flex w-1/2 mb-2'>
-              <form action="" className=' w-1/2'>
-                <label className='block mb-1 '>OUTER</label>
-                <input type="range" min={0} max={25} onChange={handleChange} name='' className='w-80 accent-main_color' />
-              </form>
-              <form action="" className=' w-1/2'>
-                <label className='block mb-1  '>INNER</label>
-                <input type="range" min={0} max={25} onChange={handleChange} name='' className='w-80 accent-main_color' />
-              </form>
-            </div>
+          </article>
 
 
-          </article3>
-
-          <hr className='w-qr_cutting  border-xs border-line_color mb-5'/>
-          <p className='w-1/2 ml-20 mb-2 text-2xl text-main_color font-bold'>EyeColor</p>
-
-          <article4 className='w-screen flex flex-col items-center pl-20 mb-10 text-main_color'>
-          
-          <p className='w-1/2 mb-1 font-bold'>왼쪽 상단</p>
-
-            <div className='flex w-1/2 mb-2'>
-              <form action="" className=' w-1/2'>
-                <label className='block mb-1 '>OUTER</label>
-                <input type="color" className='w-20 rounded-md border-1 px-1  bg-white border-line_color hover:cursor-pointer'/>
-              </form>
-              <form action="" className=' w-1/2'>
-                <label className='block mb-1  '>INNER</label>
-                <input type="color" className='w-20 rounded-md border-1 px-1  bg-white border-line_color hover:cursor-pointer'/>
-              </form>
-            </div>
-          <p className='w-1/2 mb-1 font-bold'>오른쪽 상단</p>
-
-            <div className='flex w-1/2 mb-2'>
-              <form action="" className=' w-1/2'>
-                <label className='block mb-1 '>OUTER</label>
-                <input type="color" className='w-20 rounded-md border-1 px-1  bg-white border-line_color hover:cursor-pointer'/>
-              </form>
-              <form action="" className=' w-1/2'>
-                <label className='block mb-1  '>INNER</label>
-                <input type="color" className='w-20 rounded-md border-1 px-1  bg-white border-line_color hover:cursor-pointer'/>
-              </form>
-            </div>
-          <p className='w-1/2 mb-1 font-bold'>왼쪽 하단</p>
-
-            <div className='flex w-1/2 mb-2'>
-              <form action="" className=' w-1/2'>
-                <label className='block mb-1 '>OUTER</label>
-                <input type="color" className='w-20 rounded-md border-1 px-1  bg-white border-line_color hover:cursor-pointer'/>
-              </form>
-              <form action="" className=' w-1/2'>
-                <label className='block mb-1  '>INNER</label>
-                <input type="color" className='w-20 rounded-md border-1 px-1  bg-white border-line_color hover:cursor-pointer'/>
-              </form>
-            </div>
-
-          </article4>
           <div className='w-1/2 flex justify-end mb-24'>
             <button className='border-2 border-highligth text-highligth rounded-2xl w-36 h-12 font-bold '>설문생성</button>
           </div>
