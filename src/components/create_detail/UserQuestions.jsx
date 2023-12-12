@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import QuestionCard from './QuestionCard';
 import CreateQuestion from './CreateQuestion';
 import EditQuestion from './EditQuestion';
@@ -9,24 +10,29 @@ const userQuestionsToJson = (userQuestions) => {
   return userQuestions.map((userQuestion) => ({
     question_num: userQuestion.question_num,
     question: userQuestion.question,
-    quesetion_type: userQuestion.question_type,
+    question_type: userQuestion.question_type,
     isRequired: userQuestion.isRequired,
     answers: userQuestion.answers,
   }));
 };
 
 const UserQuestions = ({
-    userQuestions,
-    setUserQuestions,
-    onRemoveQuestion, onAddQuestion, onEditQuestion,
-    topic, description 
-  }) => {
+  userQuestions,
+  setUserQuestions,
+  onRemoveQuestion,
+  onAddQuestion,
+  onEditQuestion,
+  topic,
+  description,
+}) => {
   const [creatingQuestion, setCreatingQuestion] = useState(false);
   const [editingIndex, setEditingIndex] = useState(null);
   const inputRef = useRef(null);
 
   const [question, setQuestion] = useState('');
   const [answers, setAnswers] = useState(['']); 
+
+  const navigate = useNavigate();
 
   const handleAddQuestion = (question) => {
   if (editingIndex !== null) {
@@ -53,22 +59,23 @@ const UserQuestions = ({
   setEditingIndex(null);
 };
 
-  const handleUpdateQuestion = (updatedQuestion, index) => {
-    const updatedQuestions = [...userQuestions];
-    updatedQuestions[index] = updatedQuestion;
+const handleUpdateQuestion = (updatedQuestion, index) => {
+  const updatedQuestions = [...userQuestions];
+  updatedQuestions[index] = updatedQuestion;
 
-    // onEditQuestion 함수가 정의되어 있는지 확인
-    if (typeof onEditQuestion === 'function') {
-      onEditQuestion(updatedQuestions);
-    }
+  setUserQuestions(updatedQuestions);
 
-    setEditingIndex(null);
-  };
+  if (typeof onEditQuestion === 'function') {
+    onEditQuestion(updatedQuestions);
+  }
 
-  const handleEditQuestion = (index) => {
-    setCreatingQuestion(false);
-    setEditingIndex(index === editingIndex ? null : index);
-  };
+  setEditingIndex(null);
+};
+
+const handleEditQuestion = (index) => {
+  setCreatingQuestion(false);
+  setEditingIndex(index === editingIndex ? null : index);
+};
 
   // 선택한 질문 삭제
   const handleRemoveQuestion = (index) => {
@@ -107,6 +114,13 @@ const UserQuestions = ({
       setEditingIndex(null);
     }
   };
+
+  // const handleMovePage = () => {
+
+  //     const newPath = "./participate"; 
+      
+  //     navigate(newPath);
+  // };
 
   useEffect(() => {
     document.addEventListener('mousedown', handleClickOutside);
@@ -162,6 +176,13 @@ const UserQuestions = ({
           </div>
         )}
       </div>
+      <div>
+    {/* <button 
+      className='p-1 rounded border border-sub_text_color_4 text-sub_text_color_4'
+      onClick={handleMovePage}>
+      다음
+    </button> */}
+  </div>
     </div>
   );
 };

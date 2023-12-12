@@ -4,6 +4,7 @@ import DeleteButtonIcon from "../icons/DeleteButtonIcon";
 import MultipleChoiceIcon from '../icons/MultipleChoiceIcon';
 import ShortAnswerIcon from '../icons/ShortAnswerIcon';
 import CreateCardTopAsset from '../icons/CreateCardTopAsset';
+import { IoRadioButtonOff } from "react-icons/io5";
 
 const EditQuestion = ({ onCancel, onEditQuestion, onRemoveQuestion, initialQuestion, index }) => {
   const [editedQuestion, setEditedQuestion] = useState({ ...initialQuestion });
@@ -20,7 +21,7 @@ const EditQuestion = ({ onCancel, onEditQuestion, onRemoveQuestion, initialQuest
         isRequired: isRequired,
       };
 
-      onEditQuestion(updatedQuestion);
+      onEditQuestion(updatedQuestion, index); // 수정된 내용과 인덱스 전달
     }
   };
 
@@ -31,12 +32,20 @@ const EditQuestion = ({ onCancel, onEditQuestion, onRemoveQuestion, initialQuest
   const handleUpdateAnswer = (index, value) => {
     setAnswers((prevAnswers) => {
       const updatedAnswers = [...prevAnswers];
+      
+      // 해당 인덱스의 응답을 업데이트
       updatedAnswers[index] = value;
-
+  
+      // 마지막 응답이 비어 있지 않으면 새로운 응답 추가
       if (index === updatedAnswers.length - 1 && value.trim() !== '') {
         updatedAnswers.push('');
       }
-
+  
+      // 모든 응답이 비어 있지 않으면 새로운 응답 추가
+      if (updatedAnswers.every(answer => answer.trim() !== '')) {
+        updatedAnswers.push('');
+      }
+  
       return updatedAnswers;
     });
   };
@@ -56,6 +65,16 @@ const EditQuestion = ({ onCancel, onEditQuestion, onRemoveQuestion, initialQuest
   };
 
   useEffect(() => {
+    // initialQuestion이 변경될 때마다 answers 초기화
+    setAnswers(initialQuestion.answers || ['']);
+  }, [initialQuestion]);
+
+  // questionType이 변경될 때 초기화
+  useEffect(() => {
+    setAnswers(['']);
+  }, [questionType]);
+
+  useEffect(() => {
     document.addEventListener('mousedown', handleClickOutside);
 
     return () => {
@@ -69,8 +88,8 @@ const EditQuestion = ({ onCancel, onEditQuestion, onRemoveQuestion, initialQuest
         <CreateCardTopAsset />
         <div ref={inputRef} className="mb-2 w-full rounded p-5 bg-question_card_bg">
           <div className="flex items-center space-x-4">
-            <input
-              className="w-full p-1 border-none border-question_card_grey bg-transparent text-text_color"
+            <input 
+              className="w-full p-1 border-none border-question_card_grey bg-transparent text-l font-semibold  text-text_color"
               placeholder="질문을 작성해주세요"
               value={editedQuestion.question}
               onChange={(e) => setEditedQuestion((prev) => ({ ...prev, question: e.target.value }))}
@@ -106,34 +125,34 @@ const EditQuestion = ({ onCancel, onEditQuestion, onRemoveQuestion, initialQuest
             </div>
           </div>
           {questionType === 'multipleChoice' && (
-            <div className="mt-2">
-              {Array.isArray(initialQuestion.answer) ? (
-                // 배열인 경우
-                initialQuestion.answer.map((answer, index) => (
-                  <div key={index} className="flex items-center mt-2">
-                    <input
-                      className="w-full p-1 border-none border-question_card_grey bg-transparent text-text_color mr-2"
-                      placeholder={'응답 추가'}
-                      value={answer}
-                      onChange={(e) => handleUpdateAnswer(index, e.target.value)}
-                    />
-                  </div>
-                ))
-              ) : (
-                // 객체인 경우
-                Object.values(initialQuestion.answer).map((answer, index) => (
-                  <div key={index} className="flex items-center mt-2">
-                    <input
-                      className="w-full p-1 border-none border-question_card_grey bg-transparent text-text_color mr-2"
-                      placeholder={'응답 추가'}
-                      value={answer}
-                      onChange={(e) => handleUpdateAnswer(index, e.target.value)}
-                    />
-                  </div>
-                ))
-              )}
-            </div>
-          )}
+  <div className="mt-2">
+    {Array.isArray(initialQuestion.answer) ? (
+      initialQuestion.answer.map((answer, index) => (
+        <div key={index} className="flex items-center mt-2">
+          <IoRadioButtonOff />
+          <input
+            className="w-full p-1 border-none border-question_card_grey bg-transparent text-text_color mr-2"
+            placeholder={'응답 추가'}
+            value={answers[index] || answer} 
+            onChange={(e) => handleUpdateAnswer(index, e.target.value)}
+          />
+          
+        </div>
+      ))
+    ) : (
+      <div className="flex items-center mt-2">
+        <IoRadioButtonOff />
+        <input
+          className="w-full p-1 border-none border-question_card_grey bg-transparent text-text_color mr-2"
+          placeholder={'응답 추가'}
+          value={answers[0] || ''}
+          onChange={(e) => handleUpdateAnswer(0, e.target.value)}
+        />
+      </div>
+    )}
+  </div>
+)}
+
           {questionType === 'shortAnswer' && (
             <div className="mt-4">
               <input

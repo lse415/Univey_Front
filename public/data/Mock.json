@@ -14,12 +14,10 @@
                     "question" : "인공지능 사용 빈도가 어떻게 되나요?",
                     "question_type" : "multipleChoice",
                     "isRequired" : true,
-                    "answer" :{
-                        "1" : "매우 자주",
-                        "2" : "자주",
-                        "3" : "가끔",
-                        "4" : "거의 사용하지 않음"
-                    }
+                    "answer" :["매우 자주",
+                    "자주",
+                    "가끔",
+                    "거의 사용하지 않음"]
                 },
                 {
                     "question_num" : 2,
@@ -38,26 +36,27 @@
                     "question" : "어떤 목적으로 인공지능 기술을 사용하나요?",
                     "question_type" : "shortAnswer",
                     "isRequired" : true,
-                    "answer" :{
-                    }
+                    "answer" :[
+                    ]
                 }
             ],
-            "finalQuestions":[
+            "userQuestions":[
                 {
                     "question_num" : 1,
                     "question" : " 인공지능 사용 빈도가 어떻게 되나요?",
                     "question_type" : "multipleChoice",
                     "isRequired" : true,
-                    "answer" :{
-                    }
+                    "answer" :["매우 자주",
+                    "자주",
+                    "가끔",
+                    "거의 사용하지 않음"]
                 },
                 {
                     "question_num" : 2,
                     "question" : " 어떤 종류의 인공지능 기술을 사용하나요?",
                     "question_type" : "shortAnswer",
-                    "isRequired" : true,
-                    "answer" :{
-                    }
+                    "isRequired" : false,
+                    "answer" :[]
                 }
             ]
         }

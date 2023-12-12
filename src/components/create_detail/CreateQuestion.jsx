@@ -67,7 +67,7 @@ const CreateQuestion = ({ onCancel, onAddQuestion }) => {
         <div className="mb-2 w-full rounded p-5 bg-question_card_bg">
           <div className="flex items-center space-x-4">
             <input
-              className="flex-grow p-1 border-b border-question_card_grey bg-transparent text-text_color"
+              className="flex-grow p-1 border-b border-question_card_grey bg-transparent text-l font-semibold text-text_color"
               placeholder="질문을 작성해주세요"
               value={question}
               onChange={(e) => setQuestion(e.target.value)}
