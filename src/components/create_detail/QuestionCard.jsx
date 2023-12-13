@@ -30,7 +30,7 @@ const QuestionCard = ({ question, question_num, question_type, answer, onClick }
               type="text"
               className="w-full p-1 border rounded border-question_card_grey bg-white text-text_color mr-2"
               placeholder={'주관식 서술 문항입니다. 자유롭게 작성해주세요.'}
-              value={answer[0]}
+              value={answer['']}
               disabled
             />
           </div>

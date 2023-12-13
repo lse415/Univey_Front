@@ -63,7 +63,7 @@ const CreateDetail = () => {
   };
 
   return (
-    <div className="flex items-stretch lg:mx-24">
+    <div className="flex items-stretch lg:mx-32">
       <div className="flex-1">
         <UserQuestions 
           userQuestions={userQuestions}

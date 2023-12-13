@@ -5,6 +5,7 @@ import CreateQuestion from './CreateQuestion';
 import EditQuestion from './EditQuestion';
 import { BiSolidQuoteAltLeft } from 'react-icons/bi';
 import { BiSolidQuoteAltRight } from 'react-icons/bi';
+import AddButtonIcon from '../icons/AddButtonIcon';
 
 const UserQuestions = ({
   userQuestions,
@@ -24,47 +25,47 @@ const UserQuestions = ({
   const navigate = useNavigate();
 
   const handleAddQuestion = (question) => {
-  if (editingIndex !== null) {
+    if (editingIndex !== null) {
+      const updatedQuestions = [...userQuestions];
+      updatedQuestions[editingIndex] = { ...question, question_num: editingIndex + 1 };
+      onEditQuestion(updatedQuestions);
+    } else {
+      const newQuestion = {
+        question_num: userQuestions.length + 1,
+        ...question,
+        question_type: question.questionType,
+        isRequired: question.isRequired,
+        answer: question.answer || {},
+      };
+
+      console.log('New Question:', newQuestion);
+      onAddQuestion(newQuestion);  // 직접 newQuestion 전달
+
+      setQuestion('');
+      setAnswer(['']);
+    }
+
+    setCreatingQuestion(false);
+    setEditingIndex(null);
+  };
+
+  const handleUpdateQuestion = (updatedQuestion, index) => {
     const updatedQuestions = [...userQuestions];
-    updatedQuestions[editingIndex] = { ...question, question_num: editingIndex + 1 };
-    onEditQuestion(updatedQuestions);
-  } else {
-    const newQuestion = {
-      question_num: userQuestions.length + 1,
-      ...question,
-      question_type: question.questionType,
-      isRequired: question.isRequired,
-      answer: question.answer || {},
-    };
+    updatedQuestions[index] = updatedQuestion;
 
-    console.log('New Question:', newQuestion);
-    onAddQuestion(newQuestion);  // 직접 newQuestion 전달
+    setUserQuestions(updatedQuestions);
 
-    setQuestion('');
-    setAnswer(['']);
-  }
+    if (typeof onEditQuestion === 'function') {
+      onEditQuestion(updatedQuestions);
+    }
 
-  setCreatingQuestion(false);
-  setEditingIndex(null);
-};
+    setEditingIndex(null);
+  };
 
-const handleUpdateQuestion = (updatedQuestion, index) => {
-  const updatedQuestions = [...userQuestions];
-  updatedQuestions[index] = updatedQuestion;
-
-  setUserQuestions(updatedQuestions);
-
-  if (typeof onEditQuestion === 'function') {
-    onEditQuestion(updatedQuestions);
-  }
-
-  setEditingIndex(null);
-};
-
-const handleEditQuestion = (index) => {
-  setCreatingQuestion(false);
-  setEditingIndex(index === editingIndex ? null : index);
-};
+  const handleEditQuestion = (index) => {
+    setCreatingQuestion(false);
+    setEditingIndex(index === editingIndex ? null : index);
+  };
 
   // 선택한 질문 삭제
   const handleRemoveQuestion = (index) => {
@@ -112,7 +113,7 @@ const handleEditQuestion = (index) => {
     setUserQuestions([]);
     
     // 다음 페이지로 이동
-    // navigate('/Qr'); 
+    // navigate('/qr'); 
   };
 
   useEffect(() => {
@@ -160,13 +161,16 @@ const handleEditQuestion = (index) => {
           <CreateQuestion onCancel={handleClick} onAddQuestion={handleAddQuestion} />
         ) : (
           <div className="flex items-center w-full">
+            <button className="text-main_color pr-2 font-bold p-2 mb-4">
+                <AddButtonIcon />
+            </button>
             <div
-              onClick={handleClick}
-              className="p-2 mb-4 w-full bg-question_card_bg rounded text-sub_text_color cursor-pointer"
+                onClick={handleClick}
+                className="flex-grow p-2 mb-4 bg-question_card_bg rounded text-sub_text_color cursor-pointer"
             >
-              문항을 선택해 주세요.
+                문항을 선택해 주세요.
             </div>
-          </div>
+        </div>
         )}
       </div>
       <div className='text-right mt-10'>
