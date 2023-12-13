@@ -23,7 +23,7 @@ const RecommendedQuestions = ({ recommendedQuestions, onAddQuestion, onAddAllQue
           question_num={recommendedQuestion.question_num.toString()}
           question={recommendedQuestion.question}
           question_type={recommendedQuestion.question_type}
-          answers={recommendedQuestion.answer}
+          answer={recommendedQuestion.answer}
           onClick={() => onAddQuestion(recommendedQuestion)}
         />
       ))}

@@ -6,20 +6,9 @@ import EditQuestion from './EditQuestion';
 import { BiSolidQuoteAltLeft } from 'react-icons/bi';
 import { BiSolidQuoteAltRight } from 'react-icons/bi';
 
-const userQuestionsToJson = (userQuestions) => {
-  return userQuestions.map((userQuestion) => ({
-    question_num: userQuestion.question_num,
-    question: userQuestion.question,
-    question_type: userQuestion.question_type,
-    isRequired: userQuestion.isRequired,
-    answers: userQuestion.answers,
-  }));
-};
-
 const UserQuestions = ({
   userQuestions,
   setUserQuestions,
-  onRemoveQuestion,
   onAddQuestion,
   onEditQuestion,
   topic,
@@ -30,7 +19,7 @@ const UserQuestions = ({
   const inputRef = useRef(null);
 
   const [question, setQuestion] = useState('');
-  const [answers, setAnswers] = useState(['']); 
+  const [answer, setAnswer] = useState(['']); 
 
   const navigate = useNavigate();
 
@@ -45,14 +34,14 @@ const UserQuestions = ({
       ...question,
       question_type: question.questionType,
       isRequired: question.isRequired,
-      answers: question.answers || {},
+      answer: question.answer || {},
     };
 
     console.log('New Question:', newQuestion);
     onAddQuestion(newQuestion);  // 직접 newQuestion 전달
 
     setQuestion('');
-    setAnswers(['']);
+    setAnswer(['']);
   }
 
   setCreatingQuestion(false);
@@ -94,8 +83,6 @@ const handleEditQuestion = (index) => {
     setEditingIndex(null);
   };
 
-  
-
   const handleClick = () => {
     setCreatingQuestion((prev) => !prev);
     setEditingIndex(null);
@@ -115,12 +102,18 @@ const handleEditQuestion = (index) => {
     }
   };
 
-  // const handleMovePage = () => {
+  const handleSubmit = () => {
 
-  //     const newPath = "./participate"; 
-      
-  //     navigate(newPath);
-  // };
+    // 서버로 post 로직 추가
+    
+    console.log('userQuestions check:', userQuestions);
+
+    //초기화
+    setUserQuestions([]);
+    
+    // 다음 페이지로 이동
+    // navigate('/Qr'); 
+  };
 
   useEffect(() => {
     document.addEventListener('mousedown', handleClickOutside);
@@ -139,8 +132,8 @@ const handleEditQuestion = (index) => {
         <h2 className="text-2xl font-semibold text-main_color mb-4 px-2">{topic}</h2>
         <BiSolidQuoteAltRight className="text-main_color" />
       </div>
-
       <p className="text-center text-sm mb-7">{description}</p>
+
       {userQuestions.map((userQuestion, index) => (
         <div key={index}>
           {editingIndex === index ? (
@@ -155,7 +148,7 @@ const handleEditQuestion = (index) => {
               question={userQuestion.question}
               question_num={userQuestion.question_num}
               question_type={userQuestion.question_type}
-              answers={userQuestion.answer}
+              answer={userQuestion.answer}
               onClick={() => handleEditQuestion(index)}
               isEditing={editingIndex !== null}
             />
@@ -176,13 +169,14 @@ const handleEditQuestion = (index) => {
           </div>
         )}
       </div>
-      <div>
-    {/* <button 
-      className='p-1 rounded border border-sub_text_color_4 text-sub_text_color_4'
-      onClick={handleMovePage}>
-      다음
-    </button> */}
-  </div>
+      <div className='text-right mt-10'>
+        <button 
+          className='px-9 py-1 rounded-xl border border-sub_text_color_4 text-sub_text_color_4'
+          onClick={handleSubmit}
+          >
+          다음
+        </button>
+    </div>
     </div>
   );
 };

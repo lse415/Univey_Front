@@ -8,46 +8,41 @@ import { IoRadioButtonOff } from "react-icons/io5";
 
 const EditQuestion = ({ onCancel, onEditQuestion, onRemoveQuestion, initialQuestion, index }) => {
   const [editedQuestion, setEditedQuestion] = useState({ ...initialQuestion });
-  const [answers, setAnswers] = useState(initialQuestion.answers || ['']);
+  const [answer, setAnswer] = useState(initialQuestion.answer || ['']);
   const [questionType, setQuestionType] = useState(initialQuestion.question_type);
   const inputRef = useRef(null);
   const [isRequired, setIsRequired] = useState(initialQuestion.isRequired);
+
+
+  const handleUpdateAnswer = (index, value, prevAnswer) => {
+    setAnswer((prevAnswer) => {
+      return prevAnswer.map((prevValue, prevIndex) => (prevIndex === index ? value : prevValue));
+    });
+  
+    // answer를 직접 업데이트
+    setEditedQuestion((prevQuestion) => ({
+      ...prevQuestion,
+      answer: [...prevAnswer],
+    }));
+  };
 
   const handleEditQuestion = () => {
     if (editedQuestion.question.trim() !== '') {
       const updatedQuestion = {
         ...editedQuestion,
-        answers: questionType === 'multipleChoice' ? answers : null,
+        question_type: questionType,
+        answer: answer || [''],
         isRequired: isRequired,
       };
 
-      onEditQuestion(updatedQuestion, index); // 수정된 내용과 인덱스 전달
+      onEditQuestion(updatedQuestion, index);
+
+      console.log('Updated Question:', updatedQuestion);
     }
   };
 
   const handleRemoveQuestion = () => {
     onRemoveQuestion();
-  };
-
-  const handleUpdateAnswer = (index, value) => {
-    setAnswers((prevAnswers) => {
-      const updatedAnswers = [...prevAnswers];
-      
-      // 해당 인덱스의 응답을 업데이트
-      updatedAnswers[index] = value;
-  
-      // 마지막 응답이 비어 있지 않으면 새로운 응답 추가
-      if (index === updatedAnswers.length - 1 && value.trim() !== '') {
-        updatedAnswers.push('');
-      }
-  
-      // 모든 응답이 비어 있지 않으면 새로운 응답 추가
-      if (updatedAnswers.every(answer => answer.trim() !== '')) {
-        updatedAnswers.push('');
-      }
-  
-      return updatedAnswers;
-    });
   };
 
   const handleClickOutside = (event) => {
@@ -59,20 +54,22 @@ const EditQuestion = ({ onCancel, onEditQuestion, onRemoveQuestion, initialQuest
         (event.target.className !== 'bg-question_card_bg' ||
           (event.target.className === 'bg-question_card_bg' && isInputEmpty))
       ) {
-        handleEditQuestion();
+        // handleEditQuestion를 호출하는 대신 여기에서 직접 onEditQuestion을 호출
+        if (editedQuestion.question.trim() !== '') {
+          const updatedQuestion = {
+            ...editedQuestion,
+            question_type: questionType,
+            answer: answer || [''],
+            isRequired: isRequired,
+          };
+
+          onEditQuestion(updatedQuestion, index);
+
+          console.log('Updated Question:', updatedQuestion);
       }
     }
-  };
-
-  useEffect(() => {
-    // initialQuestion이 변경될 때마다 answers 초기화
-    setAnswers(initialQuestion.answers || ['']);
-  }, [initialQuestion]);
-
-  // questionType이 변경될 때 초기화
-  useEffect(() => {
-    setAnswers(['']);
-  }, [questionType]);
+  }
+};
 
   useEffect(() => {
     document.addEventListener('mousedown', handleClickOutside);
@@ -87,14 +84,14 @@ const EditQuestion = ({ onCancel, onEditQuestion, onRemoveQuestion, initialQuest
       <div className="flex flex-col items-start">
         <CreateCardTopAsset />
         <div ref={inputRef} className="mb-2 w-full rounded p-5 bg-question_card_bg">
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-8">
             <input 
-              className="w-full p-1 border-none border-question_card_grey bg-transparent text-l font-semibold  text-text_color"
+              className="w-full p-1 border-b border-question_card_grey bg-transparent text-l font-semibold  text-text_color"
               placeholder="질문을 작성해주세요"
               value={editedQuestion.question}
               onChange={(e) => setEditedQuestion((prev) => ({ ...prev, question: e.target.value }))}
             />
-            <div className="flex items-center space-x-2">
+            <div className="ml-0 flex items-center space-x-2 ">
               <input
                 id="checked"
                 type="checkbox"
@@ -105,11 +102,11 @@ const EditQuestion = ({ onCancel, onEditQuestion, onRemoveQuestion, initialQuest
                   setIsRequired(!isRequired);
                 }}
               />
-              <label className="mb-0 mt-1">필수</label>
+              <label className="mb-0 mt-1 ">필수</label>
             </div>
             <div className="flex items-center mt-2">
               <select
-                className="p-1 border-b border-question_card_grey bg-transparent text-text_color mr-2"
+                className="p-1 border-b border-question_card_grey bg-transparent text-text_color ml-2 pr-8"
                 value={questionType}
                 onChange={(e) => setQuestionType(e.target.value)}
               >
@@ -125,41 +122,39 @@ const EditQuestion = ({ onCancel, onEditQuestion, onRemoveQuestion, initialQuest
             </div>
           </div>
           {questionType === 'multipleChoice' && (
-  <div className="mt-2">
-    {Array.isArray(initialQuestion.answer) ? (
-      initialQuestion.answer.map((answer, index) => (
-        <div key={index} className="flex items-center mt-2">
-          <IoRadioButtonOff />
-          <input
-            className="w-full p-1 border-none border-question_card_grey bg-transparent text-text_color mr-2"
-            placeholder={'응답 추가'}
-            value={answers[index] || answer} 
-            onChange={(e) => handleUpdateAnswer(index, e.target.value)}
-          />
-          
-        </div>
-      ))
-    ) : (
-      <div className="flex items-center mt-2">
-        <IoRadioButtonOff />
-        <input
-          className="w-full p-1 border-none border-question_card_grey bg-transparent text-text_color mr-2"
-          placeholder={'응답 추가'}
-          value={answers[0] || ''}
-          onChange={(e) => handleUpdateAnswer(0, e.target.value)}
-        />
-      </div>
-    )}
+          <div className="mt-2">
+            {Array.isArray(answer) ? (
+  answer.map((value, index) => (
+    <div key={index} className="flex items-center mt-2">
+      <IoRadioButtonOff />
+      <input
+        className="w-full p-1 border-none border-question_card_grey bg-transparent text-text_color mr-2"
+        placeholder={'응답 추가'}
+        value={value !== undefined ? value : ''}
+        onChange={(e) => handleUpdateAnswer(index, e.target.value, answer)}
+      />
+    </div>
+  ))
+) : (
+  <div className="flex items-center mt-2">
+    <IoRadioButtonOff />
+    <input
+      className="w-full p-1 border-none border-question_card_grey bg-transparent text-text_color mr-2"
+      placeholder={'응답 추가'}
+      value={answer[0] !== undefined ? answer[0] : ''}
+      onChange={(e) => handleUpdateAnswer(0, e.target.value, answer)}
+    />
   </div>
 )}
-
+          </div>
+        )}
           {questionType === 'shortAnswer' && (
             <div className="mt-4">
               <input
                 type="text"
                 className="w-full p-1 border rounded border-question_card_grey bg-white text-text_color mr-2"
                 placeholder={'주관식 서술 문항입니다. 자유롭게 작성해주세요.'}
-                value={answers[0]}
+                value={['']}
                 disabled
               />
             </div>

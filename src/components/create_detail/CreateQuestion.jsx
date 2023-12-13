@@ -5,6 +5,7 @@ import DeleteButtonIcon from '../icons/DeleteButtonIcon';
 import MultipleChoiceIcon from '../icons/MultipleChoiceIcon';
 import ShortAnswerIcon from '../icons/ShortAnswerIcon';
 import CreateCardTopAsset from '../icons/CreateCardTopAsset';
+import { IoRadioButtonOff } from "react-icons/io5";
 
 const CreateQuestion = ({ onCancel, onAddQuestion }) => {
   const [question, setQuestion] = useState(''); // 질문 내용
@@ -88,7 +89,7 @@ const CreateQuestion = ({ onCancel, onAddQuestion }) => {
             </div>
             <div className="flex items-center mt-2">
               <select
-                className="border-b border-question_card_grey bg-transparent text-text_color ml-2 pr-8"
+                className="p1 border-b border-question_card_grey bg-transparent text-text_color ml-2 pr-8"
                 value={questionType}
                 onChange={(e) => setQuestionType(e.target.value)}
               >
@@ -107,6 +108,7 @@ const CreateQuestion = ({ onCancel, onAddQuestion }) => {
             <div className="mt-2">
               {answers.map((answer, index) => (
                 <div key={index} className="flex items-center mt-2">
+                  <IoRadioButtonOff />
                   <input
                     className="w-full p-1 border-none border-question_card_grey bg-transparent text-text_color mr-2"
                     placeholder={'응답 추가'}

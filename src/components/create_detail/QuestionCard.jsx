@@ -1,15 +1,15 @@
 import React from 'react';
 import { IoRadioButtonOff } from "react-icons/io5";
 
-const QuestionCard = ({ question, question_num, question_type, answers, onClick }) => {
+const QuestionCard = ({ question, question_num, question_type, answer, onClick }) => {
   const renderAnswer = () => {
-    if (!answers) {
+    if (!answer) {
       return <p>No answer available</p>;
     }
 
     return (
       <div>
-        {Object.entries(answers).map(([key, value], index) => (
+        {Object.entries(answer).map(([key, value], index) => (
           <p key={index} className='flex items-center'>
             <IoRadioButtonOff className='mr-1'/> {value}
           </p>
@@ -30,7 +30,7 @@ const QuestionCard = ({ question, question_num, question_type, answers, onClick 
               type="text"
               className="w-full p-1 border rounded border-question_card_grey bg-white text-text_color mr-2"
               placeholder={'주관식 서술 문항입니다. 자유롭게 작성해주세요.'}
-              value={answers[0]}
+              value={answer[0]}
               disabled
             />
           </div>
