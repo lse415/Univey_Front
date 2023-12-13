@@ -10,6 +10,9 @@ export default function QRcode() {
     quietZone:'100',
     eyeColor:['black','black','black'],
     eyeRadius:0,
+    logoWidth: '66',
+    logoOpacity: '1',
+    logoPadding: '10'
   });
   const [style,setStyle] =useState('squares')
   const [logoStyle, setLogoStyle] = useState('squares')
@@ -89,7 +92,7 @@ export default function QRcode() {
             <div className='flex w-1/2 mb-8'>
               <form action="" className=' w-1/2'>
                 <label className='block mb-1 '>크기</label>
-                <input name='size' onChange={handleChange} type="range" min={10} max={512} className='w-80 accent-main_color' />
+                <input name='size' onChange={handleChange} type="range" min={10} max={512} className='w-80 accent-main_color' value={qrCode.size} />
               </form>
               <form action="" className=' w-1/2'>
                 <label className='block mb-1  '>배경 크기</label>
@@ -154,7 +157,7 @@ export default function QRcode() {
             <div className='flex w-1/2 mb-5'>
               <form action="" className=' w-1/2'>
                 <label className='block mb-1 '>가로</label>
-                <input type="range" min={0} max={256} className='w-80 accent-main_color' onChange={handleChange} name='logoWidth' />
+                <input type="range" min={0} max={256} className='w-80 accent-main_color' onChange={handleChange} name='logoWidth' value='66'/>
               </form>
               <form action="" className=' w-1/2'>
                 <label className='block mb-1  '>세로</label>
@@ -165,11 +168,12 @@ export default function QRcode() {
             <div className='flex w-1/2'>
               <form action="" className=' w-1/2'>
                 <label className='block mb-1 '>투명도</label>
-                <input type="range" min={0} max={100} className='w-80 accent-main_color' onChange={handleChange} name='logoOpacity' />
+                <input type="range" min={0} max={100} className='w-80 accent-main_color' onChange={handleChange} name='logoOpacity' value={qrCode.logoOpacity}/>
               </form>
               <form action="" className=' w-1/2'>
                 <label className='block mb-1  '>패딩</label>
-                <input type="range" min={10} max={20} className='w-80 accent-main_color' onChange={handleChange} name='logoPadding' />
+                <input type="range" min={10} max={20} className='w-80 accent-main_color' onChange={handleChange} name='logoPadding' 
+                value={qrCode.logoPadding}/>
               </form>
             </div>
 
