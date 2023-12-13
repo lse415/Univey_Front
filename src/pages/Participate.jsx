@@ -63,13 +63,15 @@ const Participate = () => {
       if (question.isRequired && !responses[question.question_num]) {
         // 응답하지 않은 isRequired 질문에 대해 경고 메시지를 표시
         acc[question.question_num] = true;
+
+        alert("모든 필수 입력 항목을 작성해주세요.");
+        
       }
       return acc;
     }, {});
   
+    //제출 안되게
     if (Object.keys(missingRequired).length > 0) {
-      // 필수 질문에 답하지 않은 상태에서 제출하면 해당 질문에 대한 경고 메시지를 표시
-      // 객체 대신 배열로 업데이트
       setShowWarning((prevShowWarning) => {
         const updatedShowWarning = prevShowWarning.map((value, index) => missingRequired[index] || false);
         return updatedShowWarning;
@@ -80,7 +82,7 @@ const Participate = () => {
     setSubmitting(true);
     console.log('전체 응답:', responses);
   
-    const newPath = "./complete";
+    const newPath = "complete";
     navigate(newPath);
   };
 

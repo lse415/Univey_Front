@@ -37,9 +37,8 @@ const ParticipateCard = ({ question, question_num, question_type, answers, isReq
 
     return (
         <div>
-          <div className={
-            `bg-question_card_bg p-4 mt-3 rounded cursor-pointer
-              ${showWarning && hasError ? 'border-red-500' : ''}`}>
+          <div className={`bg-question_card_bg p-4 mt-3 rounded cursor-pointer 
+          ${hasError ? 'border border-red-500' : ''}`}>
             <p className="text-left text-l font-semibold mb-2">
               {question_num}.{question}
               {isRequired && <span className="text-red-500 pl-1"> *</span>}
