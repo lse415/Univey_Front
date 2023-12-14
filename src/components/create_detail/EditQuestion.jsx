@@ -9,7 +9,7 @@ import { IoRadioButtonOff } from "react-icons/io5";
 const EditQuestion = ({ onCancel, onEditQuestion, onRemoveQuestion, initialQuestion, index }) => {
   const [editedQuestion, setEditedQuestion] = useState({ ...initialQuestion });
   const [answer, setAnswer] = useState(initialQuestion.answer || ['']);
-  const [questionType, setQuestionType] = useState(initialQuestion.question_type);
+  const [questionType, setQuestionType] = useState(initialQuestion.question_type || 'multipleChoice');
   const inputRef = useRef(null);
   const [isRequired, setIsRequired] = useState(initialQuestion.isRequired);
 
@@ -49,6 +49,20 @@ const EditQuestion = ({ onCancel, onEditQuestion, onRemoveQuestion, initialQuest
     if (index === answer.length - 1 && value !== '') {
       handleAddAnswer();
     }
+  };
+
+  // questionType을 업데이트하는 함수
+  const handleUpdateQuestionType = (value) => {
+    setQuestionType(value);
+  
+     // question_type 직접 업데이트
+    setEditedQuestion((prevQuestion) => ({
+      ...prevQuestion,
+      question_type: value,
+    }));
+
+    setAnswer(['']);
+
   };
 
   const handleRemoveQuestion = () => {
@@ -118,7 +132,7 @@ const EditQuestion = ({ onCancel, onEditQuestion, onRemoveQuestion, initialQuest
               <select
                 className="p-1 border-b border-question_card_grey bg-transparent text-text_color ml-2 pr-8"
                 value={questionType}
-                onChange={(e) => setQuestionType(e.target.value)}
+                onChange={(e) => handleUpdateQuestionType(e.target.value)}
               >
                 <option value="multipleChoice">
                   <MultipleChoiceIcon className='pr-1' />
