@@ -82,7 +82,7 @@ const Participate = () => {
     setSubmitting(true);
     console.log('전체 응답:', responses);
   
-    const newPath = "complete";
+    const newPath = "./complete";
     navigate(newPath);
   };
 

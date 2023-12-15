@@ -19,9 +19,7 @@ const router = createBrowserRouter([
     path: "/",
     element: <App />,
     children: [
-      { index: true, element: <Participate /> },
-      { path: "participate", element: <Participate /> },
-      { path: "complete", element: <ParticipateComplete /> },
+      { index: true, element: <Main /> },
       { path: "main", element: <Main /> },
       { path: "main/board", element: <Board /> },
       { path: "main/create", element: <Create /> },
@@ -29,6 +27,8 @@ const router = createBrowserRouter([
       { path: "main/my", element: <My /> },
       { path: "main/trend", element: <Trend /> },
       { path: "main/search/:value", element: <Search /> },
+      { path: "participate", element: <Participate /> },
+      { path: "participate/complete", element: <ParticipateComplete /> },
     ],
   },
 ]);
