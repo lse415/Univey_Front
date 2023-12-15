@@ -4,12 +4,14 @@ import CopyButtonIcon from '../icons/CopyButtonIcon';
 import DeleteButtonIcon from '../icons/DeleteButtonIcon';
 import MultipleChoiceIcon from '../icons/MultipleChoiceIcon';
 import ShortAnswerIcon from '../icons/ShortAnswerIcon';
+import ClickedAnswerIcon from '../icons/ClickedAnswerIcon';
 import CreateCardTopAsset from '../icons/CreateCardTopAsset';
 import { IoRadioButtonOff } from "react-icons/io5";
 
 const CreateQuestion = ({ onCancel, onAddQuestion }) => {
   const [question, setQuestion] = useState(''); // 질문 내용
   const [questionType, setQuestionType] = useState('multipleChoice'); // 질문 유형
+  const [selectedAnswerIndex, setSelectedAnswerIndex] = useState('');
   const [showComponent, setShowComponent] = useState(true);
   const [answers, setAnswers] = useState(['']); // 객관식일 때 각 응답 옵션
   const [isRequired, setIsRequired] = useState(false); // 필수질문 여부
@@ -54,6 +56,7 @@ const CreateQuestion = ({ onCancel, onAddQuestion }) => {
       updatedAnswers.push('');
     }
 
+    setSelectedAnswerIndex(index);
     setAnswers(updatedAnswers);
   };
 
@@ -68,7 +71,7 @@ const CreateQuestion = ({ onCancel, onAddQuestion }) => {
         <div className="mb-2 w-full rounded p-5 bg-question_card_bg">
           <div className="flex items-center space-x-4">
             <input
-              className="flex-grow p-1 border-b border-question_card_grey bg-transparent text-l font-semibold text-text_color"
+              className="flex-grow p-1 outline-none border-b border-question_card_grey bg-transparent text-l font-semibold text-text_color"
               placeholder="질문을 작성해주세요"
               value={question}
               onChange={(e) => setQuestion(e.target.value)}
@@ -79,7 +82,6 @@ const CreateQuestion = ({ onCancel, onAddQuestion }) => {
                 type="checkbox"
                 value={''}
                 className="mr-1 mt-2 bg-transparent border border-text_color rounded w-4 h-4 "
-                // checked={isRequired}
                 onChange={() => {
                   console.log('Checkbox clicked. Current value:', !isRequired);
                   setIsRequired(!isRequired);
@@ -89,7 +91,7 @@ const CreateQuestion = ({ onCancel, onAddQuestion }) => {
             </div>
             <div className="flex items-center mt-2">
               <select
-                className="p1 border-b border-question_card_grey bg-transparent text-text_color ml-2 pr-8"
+                className="border-b border-question_card_grey bg-transparent text-text_color ml-2 pr-8"
                 value={questionType}
                 onChange={(e) => setQuestionType(e.target.value)}
               >
@@ -108,11 +110,15 @@ const CreateQuestion = ({ onCancel, onAddQuestion }) => {
             <div className="mt-2">
               {answers.map((answer, index) => (
                 <div key={index} className="flex items-center mt-2">
-                  <IoRadioButtonOff />
+                  <div className='flex space-x-1'>
+                    {index === selectedAnswerIndex && <ClickedAnswerIcon />}
+                    <IoRadioButtonOff />
+                    </div>
                   <input
-                    className="w-full p-1 border-none border-question_card_grey bg-transparent text-text_color mr-2"
+                    className="w-full p-1 outline-none border-none border-question_card_grey bg-transparent text-text_color mr-2"
                     placeholder={'응답 추가'}
                     value={answer}
+                    onClick={() => setSelectedAnswerIndex(index)}
                     onChange={(e) => handleUpdateAnswer(index, e.target.value)}
                   />
                 </div>
@@ -125,7 +131,7 @@ const CreateQuestion = ({ onCancel, onAddQuestion }) => {
                 type="text"
                 className="w-full p-1 border rounded border-question_card_grey bg-white text-text_color mr-2"
                 placeholder={'주관식 서술 문항입니다. 자유롭게 작성해주세요.'}
-                value={answers[0]}
+                value={answers['']}
                 disabled
               />
             </div>

@@ -3,6 +3,7 @@ import CopyButtonIcon from "../icons/CopyButtonIcon";
 import DeleteButtonIcon from "../icons/DeleteButtonIcon";
 import MultipleChoiceIcon from '../icons/MultipleChoiceIcon';
 import ShortAnswerIcon from '../icons/ShortAnswerIcon';
+import ClickedAnswerIcon from '../icons/ClickedAnswerIcon';
 import CreateCardTopAsset from '../icons/CreateCardTopAsset';
 import { IoRadioButtonOff } from "react-icons/io5";
 
@@ -10,6 +11,7 @@ const EditQuestion = ({ onCancel, onEditQuestion, onRemoveQuestion, initialQuest
   const [editedQuestion, setEditedQuestion] = useState({ ...initialQuestion });
   const [answer, setAnswer] = useState(initialQuestion.answer || ['']);
   const [questionType, setQuestionType] = useState(initialQuestion.question_type || 'multipleChoice');
+  const [selectedAnswerIndex, setSelectedAnswerIndex] = useState('');
   const inputRef = useRef(null);
   const [isRequired, setIsRequired] = useState(initialQuestion.isRequired);
 
@@ -49,6 +51,8 @@ const EditQuestion = ({ onCancel, onEditQuestion, onRemoveQuestion, initialQuest
     if (index === answer.length - 1 && value !== '') {
       handleAddAnswer();
     }
+
+    setSelectedAnswerIndex(index);
   };
 
   // questionType을 업데이트하는 함수
@@ -60,9 +64,6 @@ const EditQuestion = ({ onCancel, onEditQuestion, onRemoveQuestion, initialQuest
       ...prevQuestion,
       question_type: value,
     }));
-
-    setAnswer(['']);
-
   };
 
   const handleRemoveQuestion = () => {
@@ -110,36 +111,37 @@ const EditQuestion = ({ onCancel, onEditQuestion, onRemoveQuestion, initialQuest
         <div ref={inputRef} className="mb-2 w-full rounded p-5 bg-question_card_bg">
           <div className="flex items-center space-x-8">
             <input
-              className="w-full p-1 border-b border-question_card_grey bg-transparent text-l font-semibold  text-text_color"
+              className="flex-grow outline-none border-b border-question_card_grey bg-transparent text-l font-semibold  text-text_color"
               placeholder="질문을 작성해주세요"
               value={editedQuestion.question}
               onChange={(e) => setEditedQuestion((prev) => ({ ...prev, question: e.target.value }))}
             />
-            <div className="ml-0 flex items-center space-x-2 ">
+            <div className="flex items-center space-x-2 ">
               <input
                 id="checked"
                 type="checkbox"
                 checked={isRequired}
                 className="mr-1 mt-2 bg-transparent border border-text_color rounded w-4 h-4 "
                 onChange={() => {
-                  console.log('Checkbox clicked. Current value:', !isRequired);
                   setIsRequired(!isRequired);
                 }}
               />
-              <label className="mb-0 mt-1 ">필수</label>
+              <label className="mb-0 mt-1">필수</label>
             </div>
             <div className="flex items-center mt-2">
               <select
-                className="p-1 border-b border-question_card_grey bg-transparent text-text_color ml-2 pr-8"
+                className="border-b border-question_card_grey bg-transparent text-text_color ml-2 pr-8"
                 value={questionType}
                 onChange={(e) => handleUpdateQuestionType(e.target.value)}
               >
-                <option value="multipleChoice">
-                  <MultipleChoiceIcon className='pr-1' />
-                  객관식
+                <option 
+                  value="multipleChoice">
+                    <MultipleChoiceIcon />
+                    객관식
                 </option>
-                <option value="shortAnswer">
-                  <ShortAnswerIcon className='pr-1' />
+                <option 
+                  value="shortAnswer">
+                  <ShortAnswerIcon />
                   주관식
                 </option>
               </select>
@@ -147,29 +149,22 @@ const EditQuestion = ({ onCancel, onEditQuestion, onRemoveQuestion, initialQuest
           </div>
           {questionType === 'multipleChoice' && (
             <div className="mt-2">
-              {Array.isArray(answer) ? (
-                answer.map((value, index) => (
+              
+                {answer.map((value, index) => (
                   <div key={index} className="flex items-center mt-2">
+                    <div className='flex space-x-1'>
+                    {index === selectedAnswerIndex && <ClickedAnswerIcon />}
                     <IoRadioButtonOff />
+                    </div>
                     <input
-                      className="w-full p-1 border-none border-question_card_grey bg-transparent text-text_color mr-2"
+                      className="w-full p-1 outline-none border-none border-question_card_grey bg-transparent text-text_color mr-2"
                       placeholder={'응답 추가'}
                       value={value !== undefined ? value : ''}
+                      onClick={() => setSelectedAnswerIndex(index)}
                       onChange={(e) => handleUpdateAnswer(index, e.target.value, answer)}
                     />
                   </div>
-                ))
-              ) : (
-                <div className="flex items-center mt-2">
-                  <IoRadioButtonOff />
-                  <input
-                    className="w-full p-1 border-none border-question_card_grey bg-transparent text-text_color mr-2"
-                    placeholder={'응답 추가'}
-                    value={answer[0] !== undefined ? answer[0] : ''}
-                    onChange={(e) => handleUpdateAnswer(0, e.target.value, answer)}
-                  />
-                </div>
-              )}
+                ))}
             </div>
           )}
           {questionType === 'shortAnswer' && (
