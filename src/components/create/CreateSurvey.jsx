@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import CustomDatePicker from "./CustomDatePicker";
 
@@ -64,9 +65,16 @@ const CreateSurvey = () => {
       };
       console.log(surveyData);
 
-      const newPath = "./detail"; 
-      
-      navigate(newPath);
+      axios.post('/surveys/create', surveyData)
+      .then((response) => {
+        console.log('백엔드 응답:', response.data);
+        // 성공적으로 제출되었을 때 페이지 이동
+        const newPath = "./detail";
+        navigate(newPath);
+      })
+      .catch((error) => {
+        console.error('에러 발생:', error);
+      });
     } else {
       alert("모든 필수 입력 항목을 작성해주세요.");
     }
