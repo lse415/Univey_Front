@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import QuestionCard from './QuestionCard';
 import CreateQuestion from './CreateQuestion';
@@ -126,17 +127,22 @@ const UserQuestions = ({
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    try {
+      const response = 
+        await axios.post('/surveys/create/details', { userQuestions });
 
-    // 서버로 post 로직 추가
-    
-    console.log('userQuestions check:', userQuestions);
+      // 서버 응답 확인
+      console.log('서버 응답:', response.data);
 
-    //초기화
-    setUserQuestions([]);
-    
-    // 다음 페이지로 이동
-    // navigate('/qr'); 
+      // userQuestions 초기화
+      setUserQuestions([]);
+
+      // 다음 페이지로 이동
+      // navigate('/qr');
+    } catch (error) {
+      console.error('서버에 데이터를 전송하는 중 에러 발생:', error);
+    }
   };
 
   useEffect(() => {

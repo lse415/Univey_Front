@@ -67,12 +67,13 @@ const EditQuestion = ({
       question_num: userQuestions.length + 1,
       ...initialQuestion,
       question_type: questionType,
-      answer: answer.filter((value) => value !== ''),
+      answer: answer.filter((value) => value.trim() !== ''),
       isRequired: isRequired,
     };
-
+  
     onCopyQuestion(copiedQuestion);
   };
+  
 
   const handleClickOutside = (event) => {
     if (inputRef.current) {
