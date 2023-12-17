@@ -7,7 +7,15 @@ import ClickedAnswerIcon from '../icons/ClickedAnswerIcon';
 import CreateCardTopAsset from '../icons/CreateCardTopAsset';
 import { IoRadioButtonOff } from "react-icons/io5";
 
-const EditQuestion = ({ onCancel, onEditQuestion, onRemoveQuestion, initialQuestion, index }) => {
+const EditQuestion = ({ 
+  onCancel,
+  onEditQuestion,
+  onRemoveQuestion,
+  onCopyQuestion,
+  initialQuestion,
+  index,
+  userQuestions,
+}) => {
   const [editedQuestion, setEditedQuestion] = useState({ ...initialQuestion });
   const [answer, setAnswer] = useState(initialQuestion.answer || ['']);
   const [questionType, setQuestionType] = useState(initialQuestion.question_type || 'multipleChoice');
@@ -15,39 +23,25 @@ const EditQuestion = ({ onCancel, onEditQuestion, onRemoveQuestion, initialQuest
   const inputRef = useRef(null);
   const [isRequired, setIsRequired] = useState(initialQuestion.isRequired);
 
-  // 초기 렌더링 시 빈 입력 필드 추가
-  // **** 두개나 나타나는 이슈 ㅠㅠ ****
   useEffect(() => {
     handleAddAnswer();
   }, []);
 
   const handleAddAnswer = () => {
-    // 새로운 빈 입력 필드 추가
     setAnswer((prevAnswer) => [...prevAnswer, '']);
   };
 
-  /*// 마지막 빈 입력필드에 문자를 입력하면~ 코드 없을 때
-  // 문자 두개 이상 입력해야 새 입력필드  생기는 이슈..
-  const handleAddAnswer = (index, value) => {
-    // 모든 입력 값이 비어 있지 않으면 새로운 빈 입력 필드 추가
-    if (answer.every((value) => value !== '')) {
-      setAnswer((prevAnswer) => [...prevAnswer, '']);
-    }
-  }; */
-
-  const handleUpdateAnswer = (index, value, prevAnswer) => {
+  const handleUpdateAnswer = (index, value) => {
     setAnswer((prevAnswer) => {
       return prevAnswer.map((prevValue, prevIndex) => (
         prevIndex === index ? value : prevValue));
     });
 
-    // answer를 직접 업데이트
     setEditedQuestion((prevQuestion) => ({
       ...prevQuestion,
       answer: [...answer],
     }));
 
-    // 마지막 빈 입력 필드에 문자를 입력하면 새로운 빈 입력 필드 추가
     if (index === answer.length - 1 && value !== '') {
       handleAddAnswer();
     }
@@ -55,11 +49,9 @@ const EditQuestion = ({ onCancel, onEditQuestion, onRemoveQuestion, initialQuest
     setSelectedAnswerIndex(index);
   };
 
-  // questionType을 업데이트하는 함수
   const handleUpdateQuestionType = (value) => {
     setQuestionType(value);
   
-     // question_type 직접 업데이트
     setEditedQuestion((prevQuestion) => ({
       ...prevQuestion,
       question_type: value,
@@ -68,6 +60,18 @@ const EditQuestion = ({ onCancel, onEditQuestion, onRemoveQuestion, initialQuest
 
   const handleRemoveQuestion = () => {
     onRemoveQuestion();
+  };
+
+  const handleCopyQuestion = () => {
+    const copiedQuestion = {
+      question_num: userQuestions.length + 1,
+      ...initialQuestion,
+      question_type: questionType,
+      answer: answer.filter((value) => value !== ''),
+      isRequired: isRequired,
+    };
+
+    onCopyQuestion(copiedQuestion);
   };
 
   const handleClickOutside = (event) => {
@@ -79,18 +83,15 @@ const EditQuestion = ({ onCancel, onEditQuestion, onRemoveQuestion, initialQuest
         (event.target.className !== 'bg-question_card_bg' ||
           (event.target.className === 'bg-question_card_bg' && isInputEmpty))
       ) {
-        // handleEditQuestion를 호출하는 대신 여기서 직접 onEditQuestion을 호출
         if (editedQuestion.question.trim() !== '') {
           const updatedQuestion = {
             ...editedQuestion,
             question_type: questionType,
-            answer: answer.filter((value) => value !== ''), // 비어 있는 값을 필터링하여 answer에 포함하지 않음
+            answer: answer.filter((value) => value !== ''),
             isRequired: isRequired,
           };
 
           onEditQuestion(updatedQuestion, index);
-
-          console.log('Updated Question:', updatedQuestion);
         }
       }
     }
@@ -180,10 +181,12 @@ const EditQuestion = ({ onCancel, onEditQuestion, onRemoveQuestion, initialQuest
           )}
           <hr className='mt-4 mb-2 py-2 border-question_card_grey'></hr>
           <div className='flex justify-end'>
-            <button className='px-2'>
+            <button className='px-2'
+              onClick={handleCopyQuestion}>
               <CopyButtonIcon />
             </button>
-            <button className='pl-2' onClick={handleRemoveQuestion}>
+            <button className='pl-2'
+              onClick={handleRemoveQuestion}>
               <DeleteButtonIcon />
             </button>
           </div>
