@@ -11,10 +11,11 @@ const EditQuestion = ({
   onCancel,
   onEditQuestion,
   onRemoveQuestion,
-  onCopyQuestion,
+  onCopyEditQuestion,
   initialQuestion,
   index,
   userQuestions,
+  setUserQuestions,
 }) => {
   const [editedQuestion, setEditedQuestion] = useState({ ...initialQuestion });
   const [answer, setAnswer] = useState(initialQuestion.answer || ['']);
@@ -52,28 +53,42 @@ const EditQuestion = ({
   const handleUpdateQuestionType = (value) => {
     setQuestionType(value);
   
+    // shortAnswer로 변경될 때만 answer 초기화
+  if (value === 'shortAnswer') {
+    setAnswer(['']);
+    setEditedQuestion((prevQuestion) => ({
+      ...prevQuestion,
+      question_type: value,
+      answer: [],
+    }));
+  } else {
     setEditedQuestion((prevQuestion) => ({
       ...prevQuestion,
       question_type: value,
     }));
+  }
   };
 
   const handleRemoveQuestion = () => {
     onRemoveQuestion();
   };
 
-  const handleCopyQuestion = () => {
+  const handleCopyEditQuestion = () => {
+    // 새로운 질문 추가
     const copiedQuestion = {
-      question_num: userQuestions.length + 1,
-      ...initialQuestion,
+      ...editedQuestion,
       question_type: questionType,
-      answer: answer.filter((value) => value.trim() !== ''),
+      answer: answer.filter((value) => value !== ''),
       isRequired: isRequired,
     };
+
+    copiedQuestion.question_num = userQuestions.length + 1;
   
-    onCopyQuestion(copiedQuestion);
+    setUserQuestions((prevUserQuestions) => [...prevUserQuestions, copiedQuestion]);
+  
+    // 복사 이벤트 발생
+    onCopyEditQuestion(copiedQuestion, index);
   };
-  
 
   const handleClickOutside = (event) => {
     if (inputRef.current) {
@@ -104,7 +119,7 @@ const EditQuestion = ({
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [onCancel, editedQuestion, isRequired]);
+  }, [onCancel, editedQuestion, isRequired, questionType]);
 
   return (
     <div className="flex w-full">
@@ -183,7 +198,7 @@ const EditQuestion = ({
           <hr className='mt-4 mb-2 py-2 border-question_card_grey'></hr>
           <div className='flex justify-end'>
             <button className='px-2'
-              onClick={handleCopyQuestion}>
+              onClick={handleCopyEditQuestion}>
               <CopyButtonIcon />
             </button>
             <button className='pl-2'

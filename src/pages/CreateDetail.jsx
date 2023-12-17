@@ -10,7 +10,7 @@ const CreateDetail = () => {
   const [description, setDescription] = useState('');
 
   useEffect(() => {
-    axios.get('/data/Mock.json')
+    axios.get('/data/Mock.json') // /surveys/create/details/${surveyId}
       .then((response) => {
         const surveyData = response.data.surveyData;
 

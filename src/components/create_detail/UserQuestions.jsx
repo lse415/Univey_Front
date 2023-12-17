@@ -13,7 +13,6 @@ const UserQuestions = ({
   setUserQuestions,
   onAddQuestion,
   onEditQuestion,
-  onCopyQuestion,
   topic,
   description,
 }) => {
@@ -51,7 +50,7 @@ const UserQuestions = ({
     setEditingIndex(null);
   };
 
-  const handleCopyQuestion = (question) => {
+  const handleCopyCreateQuestion = (question) => {
     if (editingIndex !== null) {
       const updatedQuestions = [...userQuestions];
       updatedQuestions[editingIndex] = { ...question, question_num: editingIndex + 1 };
@@ -65,12 +64,15 @@ const UserQuestions = ({
         answer: question.answer || {},
       };
 
-      console.log('New Question:', newQuestion);
       onAddQuestion(newQuestion);  // 직접 newQuestion 전달
 
     }
 
     setCreatingQuestion(true);
+  };
+
+  const handleCopyEditQuestion = () => {
+
   };
 
   const handleUpdateQuestion = (updatedQuestion, index) => {
@@ -170,10 +172,13 @@ const UserQuestions = ({
             <EditQuestion
             onCancel={handleClick}
             onEditQuestion={(updatedQuestion) => handleUpdateQuestion(updatedQuestion, index)}
-            onCopyQuestion={handleCopyQuestion}
-            onRemoveQuestion={() => handleRemoveQuestion(index)}
+            onCopyEditQuestion={(copiedQuestion) => 
+              handleCopyEditQuestion(copiedQuestion, index)
+            }       
+            onRemoveQuestion={() => handleRemoveQuestion(index)}     
             initialQuestion={userQuestion}
             userQuestions={userQuestions}
+            setUserQuestions={setUserQuestions}
           />
           ) : (
             <QuestionCard
@@ -192,7 +197,7 @@ const UserQuestions = ({
           <CreateQuestion 
             onCancel={handleClick} 
             onAddQuestion={handleAddQuestion} 
-            onCopyQuestion={handleCopyQuestion}/>
+            onCopyCreateQuestion={handleCopyCreateQuestion}/>
         ) : (
           <div className="flex items-center w-full">
             <button className="text-main_color pr-2 font-bold p-2 mb-4">

@@ -8,7 +8,7 @@ import ClickedAnswerIcon from '../icons/ClickedAnswerIcon';
 import CreateCardTopAsset from '../icons/CreateCardTopAsset';
 import { IoRadioButtonOff } from "react-icons/io5";
 
-const CreateQuestion = ({ onCancel, onAddQuestion, onCopyQuestion }) => {
+const CreateQuestion = ({ onCancel, onAddQuestion, onCopyCreateQuestion }) => {
   const [question, setQuestion] = useState(''); // 질문 내용
   const [questionType, setQuestionType] = useState('multipleChoice'); // 질문 유형
   const [selectedAnswerIndex, setSelectedAnswerIndex] = useState('');
@@ -37,7 +37,7 @@ const CreateQuestion = ({ onCancel, onAddQuestion, onCopyQuestion }) => {
   };
 
   // 복사 버튼 클릭 시 실행되는 함수
-  const handleCopyQuestion = () => {
+  const handleCopyCreateQuestion = () => {
     // 복사된 질문 객체 생성
     const copiedQuestion = {
       question,
@@ -47,7 +47,7 @@ const CreateQuestion = ({ onCancel, onAddQuestion, onCopyQuestion }) => {
     };
 
     // 부모 컴포넌트로 복사된 질문 추가
-    onCopyQuestion(copiedQuestion);
+    onCopyCreateQuestion(copiedQuestion);
   };
 
   // 컴포넌트 삭제 버튼 클릭 시 실행되는 함수
@@ -154,7 +154,7 @@ const CreateQuestion = ({ onCancel, onAddQuestion, onCopyQuestion }) => {
           <div className="flex justify-end mt-2">
             <button 
               className="px-2"
-              onClick={handleCopyQuestion}>
+              onClick={handleCopyCreateQuestion}>
               <CopyButtonIcon />
             </button>
             <button className="pl-2"
