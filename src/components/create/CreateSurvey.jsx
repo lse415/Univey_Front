@@ -239,9 +239,9 @@ const CreateSurvey = () => {
                 연령대 선택
               </option>
               <option className="text-text_color" value={"all"}>전체</option>
-              <option className="text-text_color" value={"10s"}>10-19</option>
-              <option className="text-text_color" value={"20s"}>20-29</option>
-              <option className="text-text_color" value={"30s"}>30-39</option>
+              <option className="text-text_color" value={"10"}>10-19</option>
+              <option className="text-text_color" value={"20"}>20-29</option>
+              <option className="text-text_color" value={"30"}>30-39</option>
             </select>
             {!validationStatus[3] && (
               <span className="text-red-400 text-sm">필수 항목을 입력해주세요.</span>
