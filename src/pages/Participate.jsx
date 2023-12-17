@@ -40,8 +40,6 @@ const Participate = () => {
   }, []);
 
   const handleCardSubmit = (questionNum, selectedAnswer) => {
-    console.log('질문 번호:', questionNum);
-    console.log('선택한 답변:', selectedAnswer);
 
     setResponses((prevResponses) => ({
       ...prevResponses,
@@ -56,34 +54,45 @@ const Participate = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     const missingRequired = userQuestions.reduce((acc, question) => {
       if (question.isRequired && !responses[question.question_num]) {
-        // 응답하지 않은 isRequired 질문에 대해 경고 메시지를 표시
         acc[question.question_num] = true;
-
         alert("모든 필수 입력 항목을 작성해주세요.");
-        
       }
       return acc;
     }, {});
-  
-    //제출 안되게
+
     if (Object.keys(missingRequired).length > 0) {
       setShowWarning((prevShowWarning) => {
-        const updatedShowWarning = prevShowWarning.map((value, index) => missingRequired[index] || false);
+        const updatedShowWarning = prevShowWarning.map(
+          (value, index) => missingRequired[index] || false
+        );
         return updatedShowWarning;
       });
       return;
     }
-  
+
     setSubmitting(true);
     console.log('전체 응답:', responses);
-  
-    const newPath = "./complete";
-    navigate(newPath);
+
+    const formattedResponses = userQuestions.map((question) => ({
+      surveyQuestionId: question.question_num,
+      content: responses[question.question_num] || null,
+    }));
+
+    try {
+      const data = await axios.post('/surveys/participation', {
+        answers: formattedResponses,
+      });
+
+      const newPath = "./complete";
+      navigate(newPath);
+    } catch (error) {
+      console.error('에러 발생:', error);
+    }
   };
 
   return (
