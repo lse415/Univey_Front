@@ -77,12 +77,6 @@ export default function QRcode() {
                   logoPadding = {qrCode.logoPadding}
                   eyeRadius={qrCode.eyeRadius}
                   eyeColor={qrCode.first_color}
-                  // eyeRadius={[5,5,15]}
-                  // eyeRadius={[25,25,5]}
-                  // eyeradius_0_outer_0 = {qrCode.topLeft}
-                  // eyeradius_0_outer_1 = {qrCode.topLeft}
-                  // eyeradius_0_outer_2 = {qrCode.topLeft}
-                  // eyeradius_0_outer_3 = {qrCode.topLeft}
               />
           </div>
           <hr className='w-1/2 border-xs border-line_color mb-4'/>
@@ -176,11 +170,7 @@ export default function QRcode() {
                 value={qrCode.logoPadding}/>
               </form>
             </div>
-
-            
-
           </article>
-
 
           <div className='w-1/2 flex justify-end mb-24'>
             <button className='border-2 border-highligth text-highligth rounded-2xl w-36 h-12 font-bold '>설문생성</button>

@@ -14,7 +14,8 @@ module.exports = {
         box_color_2:'#2E64B5',
         sub_text_color_4: "#F27F0C",
         holiday: "#17A1FA",
-        
+        background: "#E8ECF2",
+        sub_line_color:'#C0D0EF'
       },
       height:{
         xxl: '34rem',

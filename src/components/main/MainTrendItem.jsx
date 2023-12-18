@@ -5,6 +5,7 @@ export default function MainTrendItem({data}) {
 
 
   return (
+
     <div className='overflow-hidden border-t-2 border-main_color w-line h-full'>
       <div className='flex'>
         <img src="https://url.kr/3q7cgd" alt="" />
@@ -24,5 +25,6 @@ export default function MainTrendItem({data}) {
         </div>
       </div>
     </div>
+    
   )
 }

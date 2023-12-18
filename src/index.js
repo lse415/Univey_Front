@@ -13,6 +13,7 @@ import Search from './pages/Search';
 import Participate from './pages/Participate';
 import LoginHandle from './pages/LoginHandle';
 import QRcode from './pages/QRcode';
+import Result from './pages/Result';
 
 const router = createBrowserRouter([
   {
@@ -29,7 +30,8 @@ const router = createBrowserRouter([
       { path: 'main/search/:value', element: <Search/> },
       { path: 'main/participate', element: <Participate/> },
       { path: 'user/kakao/callback', element: <LoginHandle/>},
-      { path: 'main/create/qr', element: <QRcode/>}
+      { path: 'main/create/qr', element: <QRcode/>},
+      { path: 'main/result', element: <Result/>},
     ],
   },
   {

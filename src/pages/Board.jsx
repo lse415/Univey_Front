@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import BoardItem from '../components/Board/BoardItem';
+import BoardItem from '../components/board/BoardItem';
 
 export default function Board() {
   const [data,setData]=useState(null);
