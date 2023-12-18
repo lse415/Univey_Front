@@ -13,7 +13,7 @@ export default function ParticipateComplete() {
   };
 
   return (
-    <div className='lg:w-full lg:h-screen flex flex-col justify-center items-center'>
+    <div className='realative h-screen flex flex-col justify-center items-center'>
       <div className='flex justify-center items-center mb-5'>
         <CheckIcon/> 
         <h1 className='ml-5 text-main_color text-4xl mb-1'>응답 제출 완료!</h1>

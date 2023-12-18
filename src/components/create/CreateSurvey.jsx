@@ -81,7 +81,7 @@ const CreateSurvey = () => {
   };
 
   return (
-    <div className="flex flex-col mx-4 md:mx-72 mt-8">
+    <div className="flex flex-col mx-4 lg:mx-72 mt-8">
       <form onSubmit={handleSubmit} className="flex flex-col ">
         <label className="flex flex-col space-y-2 text-xl font-semibold text-main_color mb-5">
         <span className="flex items-center">

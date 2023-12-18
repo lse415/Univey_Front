@@ -114,8 +114,9 @@ const Participate = () => {
           <BiSolidQuoteAltRight />
         </div>
         <p className="text-center text-sm mb-10">{description}</p>
-        <form onSubmit={handleSubmit}>
-          <div className="flex-1 mx-80">
+        <form 
+          onSubmit={handleSubmit}>
+          <div className="flex-1 mx-80" >
             {userQuestions.map((question, index) => (
               <ParticipateCard
                 key={index}
@@ -131,14 +132,13 @@ const Participate = () => {
             ))}
           </div>
           <div className='mx-32 text-right'>
-          <button
+            <button
               type="submit"
               className="px-7 py-2 mt-24 mb-60 bg-sub_text_color_4 text-white rounded-xl"
             >
               응답 제출
             </button>
           </div>
-          
         </form>
       </div>
     </div>

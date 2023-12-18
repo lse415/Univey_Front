@@ -9,8 +9,8 @@ const Create = () => {
 
   return (
     <div>
-      <div className="relative">
-        <div className="flex items-center md:mx-60 mt-7">
+      <div>
+        <div className="flex items-center lg:mx-60 lg:mt-7">
           <GoPencil className="mr-4 text-main_color text-3xl" />
           <h1 className="text-main_color text-3xl">설문 생성</h1>
         </div>
@@ -24,8 +24,9 @@ const Create = () => {
         </div>
         <hr className="mt-5"></hr>
       </div>
-      
+      <div>
       <CreateSurvey />
+      </div>
     </div>
   );
 };

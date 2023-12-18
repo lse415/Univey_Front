@@ -14,12 +14,6 @@ const CreateDetail = () => {
       .then((response) => {
         const surveyData = response.data.surveyData;
 
-        const flattenedRecommendedQuestions = surveyData
-          .map(item => item.recommendedQuestions) 
-          .flat();  // 배열 병합.
-
-        setRecommendedQuestions(flattenedRecommendedQuestions);
-
         if (surveyData.length > 0) {
           setTopic(surveyData[0].topic);
           setDescription(surveyData[0].description);
@@ -29,6 +23,28 @@ const CreateDetail = () => {
         console.error('Error fetching data:', error);
       });
   }, []);
+
+  useEffect(() => {
+    axios.get('/data/recommend.json')  //post('/chat-gpt/question') 
+      .then((response) => {
+        const recommendedQuestions = response.data.recommendedQuestions;
+        //response.data.recommendedQuestions -> response.data
+        const flattenedRecommendedQuestions = recommendedQuestions.map(recommendedQuestion => ({
+          question_num: recommendedQuestion[0],
+          question: recommendedQuestion[1],
+          question_type: 'multipleChoice', 
+          isRequired: true,
+          answer: recommendedQuestion.slice(2),  
+        }));
+
+        setRecommendedQuestions(flattenedRecommendedQuestions);
+        
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+      });
+  }, []);
+
 
   const handleAddQuestion = (recommendedQuestion) => {
     // 추천질문에서 추출
