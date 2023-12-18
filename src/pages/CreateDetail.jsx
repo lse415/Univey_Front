@@ -25,10 +25,10 @@ const CreateDetail = () => {
   }, []);
 
   useEffect(() => {
-    axios.get('/data/recommend.json') 
+    axios.get('/data/recommend.json')  //post('/chat-gpt/question') 
       .then((response) => {
         const recommendedQuestions = response.data.recommendedQuestions;
-
+        //response.data.recommendedQuestions -> response.data
         const flattenedRecommendedQuestions = recommendedQuestions.map(recommendedQuestion => ({
           question_num: recommendedQuestion[0],
           question: recommendedQuestion[1],
@@ -78,7 +78,7 @@ const CreateDetail = () => {
   };
 
   return (
-    <div className="flex items-stretch lg:mx-32">
+    <div className="flex items-stretch lg:mx-28">
       <div className="flex-1">
         <UserQuestions 
           userQuestions={userQuestions}

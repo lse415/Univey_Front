@@ -17,6 +17,7 @@ const RecommendedQuestions = ({ recommendedQuestions, onAddQuestion, onAddAllQue
           전체 선택
         </button>
       </div>
+      <div className='overflow-x-hidden'>
       {recommendedQuestions.map((recommendedQuestion) => (
         <QuestionCard
           key={recommendedQuestion.question_num}
@@ -26,7 +27,8 @@ const RecommendedQuestions = ({ recommendedQuestions, onAddQuestion, onAddAllQue
           answer={recommendedQuestion.answer}
           onClick={() => onAddQuestion(recommendedQuestion)}
         />
-      ))}
+        ))}
+      </div>
     </div>
   );
 };
