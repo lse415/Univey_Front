@@ -27,8 +27,8 @@ const router = createBrowserRouter([
       { path: "main/my", element: <My /> },
       { path: "main/trend", element: <Trend /> },
       { path: "main/search/:value", element: <Search /> },
-      { path: "participate", element: <Participate /> },
-      { path: "participate/complete", element: <ParticipateComplete /> },
+      { path: "main/participate", element: <Participate /> },
+      { path: "main/participate/complete", element: <ParticipateComplete /> },
     ],
   },
 ]);
