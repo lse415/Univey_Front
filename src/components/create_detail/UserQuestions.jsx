@@ -19,9 +19,9 @@ const UserQuestions = ({
   const [creatingQuestion, setCreatingQuestion] = useState(false);
   const [editingIndex, setEditingIndex] = useState(null);
   const inputRef = useRef(null);
-
   const [question, setQuestion] = useState('');
   const [answer, setAnswer] = useState(['']); 
+  const [accessToken, setAccessToken] = useState("");
 
   const navigate = useNavigate();
 
@@ -63,16 +63,13 @@ const UserQuestions = ({
         isRequired: question.isRequired,
         answer: question.answer || {},
       };
-
       onAddQuestion(newQuestion);  // 직접 newQuestion 전달
-
     }
 
     setCreatingQuestion(true);
   };
 
   const handleCopyEditQuestion = () => {
-
   };
 
   const handleUpdateQuestion = (updatedQuestion, index) => {
@@ -129,22 +126,25 @@ const UserQuestions = ({
     }
   };
 
-  const handleSubmit = async () => {
-    try {
-      const response = 
-        await axios.post('/surveys/create/details', { userQuestions });
-
-      // 서버 응답 확인
-      console.log('서버 응답:', response.data);
-
-      // userQuestions 초기화
-      setUserQuestions([]);
-
-      // 다음 페이지로 이동
-      // navigate('/qr');
-    } catch (error) {
-      console.error('서버에 데이터를 전송하는 중 에러 발생:', error);
-    }
+  const handleSubmit = () => {
+    axios.post(
+      '/surveys/create/details/${surveyId}',
+      { userQuestions },
+      { headers: { Authorization: `Bearer ${accessToken}` } }
+    )
+      .then((response) => {
+        // 서버 응답 확인
+        console.log('백엔드 응답:', response.data);
+  
+        // userQuestions 초기화
+        setUserQuestions([]);
+  
+        // 다음 페이지로 이동
+        // navigate('/qr');
+      })
+      .catch((error) => {
+        console.error('에러 발생:', error);
+      });
   };
 
   useEffect(() => {

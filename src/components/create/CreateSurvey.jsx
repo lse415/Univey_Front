@@ -22,12 +22,15 @@ const CreateSurvey = () => {
 
   const [deadlineIsRequired, setDeadlineIsRequired] = useState(false);
   const [initialSubmission, setInitialSubmission] = useState(false);
+  const [surveyId, setSurveyId] = useState(null);
 
   const handleValidation = (index, value) => {
     const newValidationStatus = [...validationStatus];
     newValidationStatus[index] = !!value;
     setValidationStatus(newValidationStatus);
   };
+
+  const [accessToken, setAccessToken] = useState("");
 
   const navigate = useNavigate();
 
@@ -65,9 +68,13 @@ const CreateSurvey = () => {
       };
       console.log(surveyData);
 
-      axios.post('/surveys/create', surveyData)
-      .then((response) => {
-        console.log('백엔드 응답:', response.data);
+      axios.post(
+        '/surveys/create',
+        surveyData, 
+        { headers: { Authorization: `Bearer ${accessToken}` } }
+      ).then((response) => {
+        const newSurveyId = response.data.surveyId;
+        setSurveyId(newSurveyId);
         // 성공적으로 제출되었을 때 페이지 이동
         const newPath = "./detail";
         navigate(newPath);

@@ -13,11 +13,18 @@ const Participate = () => {
   const [responses, setResponses] = useState({});
   const [submitting, setSubmitting] = useState(false);
   const [showWarning, setShowWarning] = useState([]);
+  const [accessToken, setAccessToken] = useState("");
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get('/data/Mock.json')
+
+    //렌더링될 때 accesstoken?
+    
+    axios.get(
+      '/data/Mock.json',
+      { headers: { Authorization: `Bearer ${accessToken}` } }
+      ) // /surveys/participation/${surveyId}
       .then((response) => {
         const surveyData = response.data.surveyData;
 
@@ -54,9 +61,9 @@ const Participate = () => {
     });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-
+  
     const missingRequired = userQuestions.reduce((acc, question) => {
       if (question.isRequired && !responses[question.question_num]) {
         acc[question.question_num] = true;
@@ -64,7 +71,7 @@ const Participate = () => {
       }
       return acc;
     }, {});
-
+  
     if (Object.keys(missingRequired).length > 0) {
       setShowWarning((prevShowWarning) => {
         const updatedShowWarning = prevShowWarning.map(
@@ -74,26 +81,30 @@ const Participate = () => {
       });
       return;
     }
-
+  
     setSubmitting(true);
-    console.log('전체 응답:', responses);
-
+  
     const formattedResponses = userQuestions.map((question) => ({
       surveyQuestionId: question.question_num,
       content: responses[question.question_num] || null,
     }));
 
-    try {
-      const data = await axios.post('/surveys/participation', {
-        answers: formattedResponses,
+    console.log('서버에 보낼 응답 데이터:', formattedResponses);
+  
+    axios
+      .post('/surveys/participation/${surveyId}', 
+        formattedResponses,
+        { headers: { Authorization: `Bearer ${accessToken}` } }
+    )
+      .then((response) => {
+        const newPath = "./complete";
+        navigate(newPath);
+      })
+      .catch((error) => {
+        console.error('에러 발생:', error);
       });
-
-      const newPath = "./complete";
-      navigate(newPath);
-    } catch (error) {
-      console.error('에러 발생:', error);
-    }
   };
+  
 
   return (
     <div className="flex lg:mx-24">

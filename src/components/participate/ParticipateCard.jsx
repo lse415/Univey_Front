@@ -25,7 +25,7 @@ const ParticipateCard = ({ question, question_num, question_type, answers, isReq
                     <div className={"mt-2"}>
                         <input
                             type="text"
-                            className="w-full p-1 border rounded border-question_card_grey bg-white text-text_color mr-2"
+                            className="w-full p-1 outline-none border rounded border-question_card_grey bg-white text-text_color mr-2"
                             placeholder={'주관식 서술 문항입니다. 자유롭게 작성해주세요.'}
                             onChange={(e) => onCardSubmit(question_num, e.target.value)}
                         />

@@ -8,11 +8,15 @@ const CreateDetail = () => {
   const [recommendedQuestions, setRecommendedQuestions] = useState([]);
   const [topic, setTopic] = useState('');
   const [description, setDescription] = useState('');
+  const [accessToken, setAccessToken] = useState("");
 
   useEffect(() => {
-    axios.get('/data/Mock.json') // /surveys/create/details/${surveyId}
+    axios.get(
+      '/data/Mock.json',
+      { headers: { Authorization: `Bearer ${accessToken}` } }
+      ) // /surveys/create/details/${surveyId}
       .then((response) => {
-        const surveyData = response.data.surveyData;
+        const surveyData = response.data;
 
         if (surveyData.length > 0) {
           setTopic(surveyData[0].topic);
@@ -25,7 +29,9 @@ const CreateDetail = () => {
   }, []);
 
   useEffect(() => {
-    axios.get('/data/recommend.json')  //post('/chat-gpt/question') 
+    axios.get('/data/recommend.json',
+    { headers: { Authorization: `Bearer ${accessToken}` } }
+    )  //post('/chat-gpt/question') 
       .then((response) => {
         const recommendedQuestions = response.data.recommendedQuestions;
         //response.data.recommendedQuestions -> response.data
