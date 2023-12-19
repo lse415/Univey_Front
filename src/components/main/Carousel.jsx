@@ -9,6 +9,7 @@ import { SlArrowLeft, SlArrowRight } from "react-icons/sl";
 export default function Carousel() {
     const {data, isLoading } = useQuery({ queryKey: ['Carousel'], queryFn: CarouselData })
     const slickRef = useRef(null);
+    
     function CarouselData(){
         return axios('/data/Carousel.json')
             .then((res) => res.data.items)
@@ -30,7 +31,9 @@ export default function Carousel() {
           autoplaySpeed: 2000,
             }   
     return (
+        
         <div className='border-b-1 border-line_color'>
+
             <article className=' h-carousel relative'>
                 <Slider {...settings} ref={slickRef} >
                     {data && data.map((item) => (

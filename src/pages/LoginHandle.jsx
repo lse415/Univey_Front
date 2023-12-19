@@ -8,25 +8,22 @@ export default function LoginHandle() {
         useEffect(() => {
         const queryParams = new URLSearchParams(location.search);
         const code = queryParams.get('code');
-        axios.post('https://1ede-222-108-73-38.ngrok-free.app/user/kakao/callback', {
-            code: code
-        }, {
+        axios.get(`https://6a67-222-108-73-38.ngrok-free.app/user/kakao/callback?code=${code}`, 
+        {
             headers: {
                 'Content-Type': 'application/json',
                 'ngrok-skip-browser-warning': '69420',
                 'Accept': 'application/json'
             }
         })
-        .then((response) => {
-            console.log(response);
-        })
         .then((res)=>{
-            localStorage.setItem("name",res.data.account.kakaoName);
+            const userName = res.data.data.userName
+            localStorage.setItem("name", userName);
             Navigate('/main')
-        })
+        })  
         .catch((error) => {
             console.error(error);
-        });
+        }); 
       }, []);
 
   return (
