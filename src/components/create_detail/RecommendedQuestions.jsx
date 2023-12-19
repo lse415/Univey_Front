@@ -1,10 +1,15 @@
 import React from 'react';
 import QuestionCard from './QuestionCard';
+import GreaterThanIcon from '../icons/GreaterThanIcon';
 
 const RecommendedQuestions = ({ recommendedQuestions, onAddQuestion, onAddAllQuestions }) => {
   return (
     <div className="flex-1 p-4 mt-12">
-      <div className="text-xl font-semibold text-main_color mb-4">추천질문</div>
+      <div className='flex'>
+        <div className='pt-1 pl-1 '><GreaterThanIcon/></div>
+        <div className="text-xl font-semibold text-main_color mb-5 ml-4">추천질문</div>
+      </div>
+      <div className='ml-8'>
       <p className="mb-1 text-sm">
         AI가 입력받은 주제를 바탕으로 질문을 추천해줍니다. 어떤 질문을 구성해야 할지 고민이 된다면 참고해보세요!
         원하는 질문을 선택해보세요! 자동으로 문항에 추가됩니다.
@@ -27,6 +32,7 @@ const RecommendedQuestions = ({ recommendedQuestions, onAddQuestion, onAddAllQue
           onClick={() => onAddQuestion(recommendedQuestion)}
         />
       ))}
+    </div>
     </div>
   );
 };

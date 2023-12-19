@@ -75,11 +75,11 @@ const CreateQuestion = ({ onCancel, onAddQuestion, onCopyCreateQuestion }) => {
   };
 
   return showComponent ? (
-    <div className="flex w-full">
-      {/* "+" 버튼 클릭 시 질문 추가 함수 호출 */}
+    <div className='flex'>
       <button onClick={handleAddQuestion} className=" text-main_color pr-2 font-bold">
         <AddButtonIcon />
       </button>
+    <div className="flex w-full">
       <div className="flex flex-col items-start">
         <CreateCardTopAsset />
         <div className="mb-2 w-full rounded p-5 bg-question_card_bg">
@@ -164,6 +164,7 @@ const CreateQuestion = ({ onCancel, onAddQuestion, onCopyCreateQuestion }) => {
           </div>
         </div>
       </div>
+    </div>
     </div>
   ) : null;
 };

@@ -138,7 +138,7 @@ const EditQuestion = ({
                 id="checked"
                 type="checkbox"
                 checked={isRequired}
-                className="mr-1 mt-2 bg-transparent border border-text_color rounded w-4 h-4 "
+                className="mr-1 mt-2 bg-transparent border border-text_color rounded w-4 h-4 " 
                 onChange={() => {
                   setIsRequired(!isRequired);
                 }}
@@ -147,7 +147,7 @@ const EditQuestion = ({
             </div>
             <div className="flex items-center mt-2">
               <select
-                className="border-b border-question_card_grey bg-transparent text-text_color ml-2 pr-8"
+                className="border-b outline-none border-question_card_grey bg-transparent text-text_color ml-2 pr-8"
                 value={questionType}
                 onChange={(e) => handleUpdateQuestionType(e.target.value)}
               >
@@ -158,8 +158,8 @@ const EditQuestion = ({
                 </option>
                 <option 
                   value="shortAnswer">
-                  <ShortAnswerIcon />
-                  주관식
+                    <ShortAnswerIcon />
+                    주관식
                 </option>
               </select>
             </div>

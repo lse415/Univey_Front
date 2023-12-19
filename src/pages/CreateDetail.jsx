@@ -74,7 +74,7 @@ const CreateDetail = () => {
           onAddQuestion={handleAddQuestion}
         />
       </div>
-      <div className="border-l border-main_color m-10"></div>
+      <div className="border-l border-main_color my-10 ml-10 mr-2"></div>
       <div className="flex-1">
         <RecommendedQuestions
           recommendedQuestions={recommendedQuestions}
