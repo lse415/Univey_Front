@@ -16,7 +16,7 @@ const CreateDetail = () => {
       { headers: { Authorization: `Bearer ${accessToken}` } }
       ) // /surveys/create/details/${surveyId}
       .then((response) => {
-        const surveyData = response.data;
+        const surveyData = response.data.surveyData;
 
         if (surveyData.length > 0) {
           setTopic(surveyData[0].topic);
@@ -85,7 +85,7 @@ const CreateDetail = () => {
   };
 
   return (
-    <div className="flex items-stretch lg:mx-32">
+    <div className="flex items-stretch lg:mx-28">
       <div className="flex-1">
         <UserQuestions 
           userQuestions={userQuestions}
