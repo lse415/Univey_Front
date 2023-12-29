@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { SlArrowRight } from "react-icons/sl";
 import { Link } from 'react-router-dom';
+import robot from '../assets/robot.svg'
 
 export default function BoardItem({data}) {
 
@@ -36,7 +37,7 @@ export default function BoardItem({data}) {
             <span>설문 참여하러 가기  &nbsp; </span> 
             <span className='mb-1'><SlArrowRight/></span> 
             </Link>
-            <img className='float-right' src="https://url.kr/3q7cgd" alt="" />
+            <img className='float-right' src={robot} alt="" />
           </div>
       </div>
     </div>

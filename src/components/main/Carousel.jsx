@@ -5,6 +5,7 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import {useQuery} from '@tanstack/react-query'
 import { SlArrowLeft, SlArrowRight } from "react-icons/sl";
+import carouselImg from '../assets/carousel.svg'
 
 export default function Carousel() {
     const {data, isLoading } = useQuery({ queryKey: ['Carousel'], queryFn: CarouselData })
@@ -36,11 +37,21 @@ export default function Carousel() {
 
             <article className=' h-carousel relative'>
                 <Slider {...settings} ref={slickRef} >
-                    {data && data.map((item) => (
-                        <div className='relative h-carousel'>
-                            <img key={item.id} src={item.url} alt="carousel" className='absolute right-1/2 translate-x-1/2 object-cover h-full'/>
-                        </div>
-                    ))}
+                    <div className='relative h-carousel'>
+                        <img src={carouselImg} alt="carousel" className='absolute right-1/2 translate-x-1/2 object-cover h-full'/>
+                    </div>
+                    <div className='relative h-carousel'>
+                        <img src={carouselImg} alt="carousel" className='absolute right-1/2 translate-x-1/2 object-cover h-full'/>
+                    </div>
+                    <div className='relative h-carousel'>
+                        <img src={carouselImg} alt="carousel" className='absolute right-1/2 translate-x-1/2 object-cover h-full'/>
+                    </div>
+                    <div className='relative h-carousel'>
+                        <img src={carouselImg} alt="carousel" className='absolute right-1/2 translate-x-1/2 object-cover h-full'/>
+                    </div>
+                    <div className='relative h-carousel'>
+                        <img src={carouselImg} alt="carousel" className='absolute right-1/2 translate-x-1/2 object-cover h-full'/>
+                    </div>
                 </Slider>
                 <div>
                     <div onClick={previous} className='text-3xl absolute top-1/2 left-48 hover:cursor-pointer'>

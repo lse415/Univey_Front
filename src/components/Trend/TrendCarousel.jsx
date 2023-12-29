@@ -5,6 +5,7 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { SlArrowLeft, SlArrowRight } from "react-icons/sl";
 import {useQuery} from '@tanstack/react-query'
+import trend_carousel from '../assets/trend_carousel.svg'
 
 export default function TrendCarousel() {
     const slickRef = useRef();
@@ -33,11 +34,18 @@ export default function TrendCarousel() {
         <div className=''>
             <article className=' h-carousel relative w-screen '>
                 <Slider {...settings} ref={slickRef} >
-                    {data && data.map((item) => (
-                        <div className='relative h-trend_carousel  '>
-                            <img key={item.id} src={item.url} alt="carousel" className='absolute right-1/2 translate-x-1/2 object-cover h-full rounded-2xl shadow-2xl'/>
-                        </div>
-                    ))}
+                    <div className='relative h-trend_carousel  '>
+                        <img src={trend_carousel} alt="carousel" className='absolute right-1/2 translate-x-1/2 object-cover h-full rounded-2xl shadow-2xl'/>
+                    </div>
+                    <div className='relative h-trend_carousel  '>
+                        <img src={trend_carousel} alt="carousel" className='absolute right-1/2 translate-x-1/2 object-cover h-full rounded-2xl shadow-2xl'/>
+                    </div>
+                    <div className='relative h-trend_carousel  '>
+                        <img src={trend_carousel} alt="carousel" className='absolute right-1/2 translate-x-1/2 object-cover h-full rounded-2xl shadow-2xl'/>
+                    </div>
+                    <div className='relative h-trend_carousel  '>
+                        <img src={trend_carousel} alt="carousel" className='absolute right-1/2 translate-x-1/2 object-cover h-full rounded-2xl shadow-2xl'/>
+                    </div>
                 </Slider>
                 <div>
                     <div onClick={previous} className='text-3xl absolute top-1/2 left-80 -translate-y-full hover:cursor-pointer'>

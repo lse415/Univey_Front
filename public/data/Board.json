@@ -2,7 +2,6 @@
     "surveyData":[
         {
             "id" : 1,
-            "thumbnails" : "https://url.kr/3q7cgd",
             "topic" : "CHAT - GPT 활용 실태 조사",
             "description": "과연 사람들은 얼마나 CHAT-GPT를 활용하고 있는가",
             "category" : "IT",
@@ -13,24 +12,12 @@
             "point": 100,
             "status": "uncomplete",
             "trend" : true,
-            "hash" : ["대학생","얼마나써?","gpt 믿어?", "#제발 해줘"],
-            "question":[
-                {
-                    "question_num" : 1,
-                    "question" : "GPT를 사용해보신 경험이 있나요?",
-                    "answer" :{
-                        "1" : "아예 없다",
-                        "2" : "거의 없다",
-                        "3" : "보통 이다",
-                        "4" : "자주 있다",
-                        "5" : "항상 있다"
-                    }
-                }
-            ]
+            "hash" : ["대학생","얼마나써?","gpt 믿어?", "#제발 해줘"]
         },
+   
+
         {
             "id" : 2,
-            "thumbnails" : "",
             "topic" : "식사에 따른 뇌 영향",
             "description": "아침식사를 한 사람들은 뇌가 빨리 활성화될까?",
             "category" : "IT",

@@ -14,6 +14,7 @@ import Participate from './pages/Participate';
 import LoginHandle from './pages/LoginHandle';
 import QRcode from './pages/QRcode';
 import Result from './pages/Result';
+import Board2 from './pages/Board2';
 
 const router = createBrowserRouter([
   {
@@ -22,7 +23,7 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <Main/> },
       { path: 'main', element: <Main /> },
-      { path: 'main/board', element: <Board /> },
+      { path: 'main/board', element: <Board2 /> },
       { path: 'main/create', element: <Create /> },
       { path: 'main/create/detail', element: <Create /> },
       { path: 'main/my', element: <My/> },

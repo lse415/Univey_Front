@@ -3,9 +3,6 @@ import { FaUserCircle } from "react-icons/fa";
 import { Link } from 'react-router-dom';
 import HandleSearch from './HandleSearch';
 import Logo from './Logo';
-import { KAKAO_AUTH_URL } from '../../api/OAuth';
-import { useEffect } from 'react';
-import axios from 'axios';
 
 export default function Header() {
   const url = 'https://kauth.kakao.com/oauth/authorize?client_id=a7112c7855122c19ace78f063bcce15a&redirect_uri=http://localhost:3000/user/kakao/callback&response_type=code'
@@ -13,12 +10,10 @@ export default function Header() {
     <nav className=' relative h-1/7  px-36 border-b-1 border-line_color'>
       <div className='text-sm absolute right-80 text-sub_text_color bottom-120 mt-3'>
         <a href={ url }>로그인</a>
-        <span className='m-3'> | </span>
-        <span>회원가입</span>
       </div>
       <div className=' flex justify-evenly h-28 items-center pt-4'>
-        <div className='flex'>
-          <Link to='/main' className='mb-5'>
+        <div className='flex items-center'>
+          <Link to='/main'>
             <Logo/>
           </Link>
         <ul className=' text-lg flex font-semibold text-text_color justify-around w-72 ml-16 mt-2'>

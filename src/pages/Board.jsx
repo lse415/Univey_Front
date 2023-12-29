@@ -5,6 +5,7 @@ export default function Board() {
   const [data,setData]=useState(null);
   const [status,setStatus]=useState(['전체','전체']);
   const [boardData, setboardData] = useState(data);
+
   useEffect(()=>{
     dataset()
   },[])

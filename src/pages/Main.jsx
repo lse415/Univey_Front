@@ -28,7 +28,7 @@ export default function Main() {
 
   return (
     <div >
-      {/* <svg width="1920" height="600" viewBox="0 0 1920 600" fill="none" xmlns="http://www.w3.org/2000/svg"/> */}
+
       <article className='h-6/7'>
       <Carousel/>
         <div className='flex text-xl font-bold ml-left my-4'>
