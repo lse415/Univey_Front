@@ -16,37 +16,38 @@ const Participate = () => {
   const [accessToken, setAccessToken] = useState("");
 
   const navigate = useNavigate();
-
-  useEffect(() => {
-
-    //렌더링될 때 accesstoken?
+//렌더링될 때 accesstoken?
     
-    axios.get(
-      '/data/Mock.json',
-      { headers: { Authorization: `Bearer ${accessToken}` } }
-      ) // /surveys/participation/${surveyId}
-      .then((response) => {
-        const surveyData = response.data.surveyData;
+useEffect(() => {
+  axios.get(
+    '/data/ParticipatePost.json'
+    //{ headers: { Authorization: `Bearer ${accessToken}` } }
+    )
+    .then((response) => {
+      const surveyData = response.data.data.surveyData;
+      const flattenedUserQuestions = surveyData.userQuestions;
 
-        const flattenedUserQuestions = surveyData
-          .map(item => item.userQuestions)
-          .flat();
+      setUserQuestions(flattenedUserQuestions);
 
-        setUserQuestions(flattenedUserQuestions);
+      if (flattenedUserQuestions.length > 0) {
+        setTopic(surveyData.topic);
+        setDescription(surveyData.description);
+        // 초기에 모든 질문에 대한 경고를 숨기도록 빈 배열로 초기화
+        setShowWarning(Array(flattenedUserQuestions.length).fill(false));
+      }
+    })
+    .catch((error) => {
+      console.error('데이터를 불러오는 동안 에러 발생:', error);
+    });
+}, []);
 
-        if (surveyData.length > 0) {
-          setTopic(surveyData[0].topic);
-          setDescription(surveyData[0].description);
-          // 초기에 모든 질문에 대한 경고를 숨기도록 빈 배열로 초기화
-          setShowWarning(Array(flattenedUserQuestions.length).fill(false));
-        }
-      })
-      .catch((error) => {
-        console.error('데이터를 불러오는 동안 에러 발생:', error);
-      });
-  }, []);
+    
+
+    
 
   const handleCardSubmit = (questionNum, selectedAnswer) => {
+
+    const question = userQuestions.find((q) => q.question_num === questionNum);
 
     setResponses((prevResponses) => ({
       ...prevResponses,
@@ -56,7 +57,7 @@ const Participate = () => {
     // 사용자가 응답한 질문에 대한 경고를 숨기도록 업데이트
     setShowWarning((prevShowWarning) => {
       const updatedShowWarning = [...prevShowWarning];
-      updatedShowWarning[questionNum] = false;
+      updatedShowWarning[questionNum] = question.required && !selectedAnswer;
       return updatedShowWarning;
     });
   };
@@ -65,7 +66,7 @@ const Participate = () => {
     e.preventDefault();
   
     const missingRequired = userQuestions.reduce((acc, question) => {
-      if (question.isRequired && !responses[question.question_num]) {
+      if (question.required && !responses[question.question_num]) {
         acc[question.question_num] = true;
         alert("모든 필수 입력 항목을 작성해주세요.");
       }
@@ -84,15 +85,21 @@ const Participate = () => {
   
     setSubmitting(true);
   
-    const formattedResponses = userQuestions.map((question) => ({
-      surveyQuestionId: question.question_num,
-      content: responses[question.question_num] || null,
-    }));
+    const formattedResponses = userQuestions.map((question) => {
+      const userAnswer = responses[question.question_num];
+    
+      return {
+        surveyQuestionId: question.question_num,
+        content: question.question_type === 'SHORT_ANSWER' ? userAnswer : null,
+        answer_id: question.question_type === 'MULTIPLE_CHOICE' ? userAnswer : null,
+      };
+    });
+    
 
     console.log('서버에 보낼 응답 데이터:', formattedResponses);
-  
+
     axios
-      .post('/surveys/participation/${surveyId}', 
+      .post('/surveys/answerSubmit/${surveyId}', 
         formattedResponses,
         { headers: { Authorization: `Bearer ${accessToken}` } }
     )
@@ -134,8 +141,8 @@ const Participate = () => {
                 question={question.question}
                 question_num={question.question_num}
                 question_type={question.question_type}
-                answers={question.answer}
-                isRequired={question.isRequired}
+                answers={question.answers || []}
+                required={question.required}
                 response={responses[question.question_num]}
                 showWarning={showWarning[question.question_num]}
                 onCardSubmit={(questionNum, selectedAnswer) => handleCardSubmit(questionNum, selectedAnswer)}
