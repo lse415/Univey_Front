@@ -13,33 +13,40 @@ const Participate = () => {
   const [responses, setResponses] = useState({});
   const [submitting, setSubmitting] = useState(false);
   const [showWarning, setShowWarning] = useState([]);
+  const [accessToken, setAccessToken] = useState("");
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    axios.get('/data/Mock.json')
-      .then((response) => {
-        const surveyData = response.data.surveyData;
+    //렌더링될 때 accesstoken?
+    
+    useEffect(() => {
+      axios.get(
+        '/data/ParticipatePost.json'
+        //{ headers: { Authorization: `Bearer ${accessToken}` } }
+        )
+        .then((response) => {
+          const surveyData = response.data.data.surveyData;
+          const flattenedUserQuestions = surveyData.userQuestions;
+    
+          setUserQuestions(flattenedUserQuestions);
+    
+          if (flattenedUserQuestions.length > 0) {
+            setTopic(surveyData.topic);
+            setDescription(surveyData.description);
+            // 초기에 모든 질문에 대한 경고를 숨기도록 빈 배열로 초기화
+            setShowWarning(Array(flattenedUserQuestions.length).fill(false));
+          }
+        })
+        .catch((error) => {
+          console.error('데이터를 불러오는 동안 에러 발생:', error);
+        });
+    }, []);
 
-        const flattenedUserQuestions = surveyData
-          .map(item => item.userQuestions)
-          .flat();
-
-        setUserQuestions(flattenedUserQuestions);
-
-        if (surveyData.length > 0) {
-          setTopic(surveyData[0].topic);
-          setDescription(surveyData[0].description);
-          // 초기에 모든 질문에 대한 경고를 숨기도록 빈 배열로 초기화
-          setShowWarning(Array(flattenedUserQuestions.length).fill(false));
-        }
-      })
-      .catch((error) => {
-        console.error('데이터를 불러오는 동안 에러 발생:', error);
-      });
-  }, []);
+    
 
   const handleCardSubmit = (questionNum, selectedAnswer) => {
+
+    const question = userQuestions.find((q) => q.question_num === questionNum);
 
     setResponses((prevResponses) => ({
       ...prevResponses,
@@ -49,22 +56,22 @@ const Participate = () => {
     // 사용자가 응답한 질문에 대한 경고를 숨기도록 업데이트
     setShowWarning((prevShowWarning) => {
       const updatedShowWarning = [...prevShowWarning];
-      updatedShowWarning[questionNum] = false;
+      updatedShowWarning[questionNum] = question.required && !selectedAnswer;
       return updatedShowWarning;
     });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-
+  
     const missingRequired = userQuestions.reduce((acc, question) => {
-      if (question.isRequired && !responses[question.question_num]) {
+      if (question.required && !responses[question.question_num]) {
         acc[question.question_num] = true;
         alert("모든 필수 입력 항목을 작성해주세요.");
       }
       return acc;
     }, {});
-
+  
     if (Object.keys(missingRequired).length > 0) {
       setShowWarning((prevShowWarning) => {
         const updatedShowWarning = prevShowWarning.map(
@@ -74,26 +81,36 @@ const Participate = () => {
       });
       return;
     }
-
+  
     setSubmitting(true);
-    console.log('전체 응답:', responses);
+  
+    const formattedResponses = userQuestions.map((question) => {
+      const userAnswer = responses[question.question_num];
+    
+      return {
+        surveyQuestionId: question.question_num,
+        content: question.question_type === 'SHORT_ANSWER' ? userAnswer : null,
+        answer_id: question.question_type === 'MULTIPLE_CHOICE' ? userAnswer : null,
+      };
+    });
+    
 
-    const formattedResponses = userQuestions.map((question) => ({
-      surveyQuestionId: question.question_num,
-      content: responses[question.question_num] || null,
-    }));
+    console.log('서버에 보낼 응답 데이터:', formattedResponses);
 
-    try {
-      const data = await axios.post('/surveys/participation', {
-        answers: formattedResponses,
+    axios
+      .post('/surveys/answerSubmit/${surveyId}', 
+        formattedResponses,
+        { headers: { Authorization: `Bearer ${accessToken}` } }
+    )
+      .then((response) => {
+        const newPath = "./complete";
+        navigate(newPath);
+      })
+      .catch((error) => {
+        console.error('에러 발생:', error);
       });
-
-      const newPath = "./complete";
-      navigate(newPath);
-    } catch (error) {
-      console.error('에러 발생:', error);
-    }
   };
+  
 
   return (
     <div className="flex lg:mx-24">
@@ -114,16 +131,17 @@ const Participate = () => {
           <BiSolidQuoteAltRight />
         </div>
         <p className="text-center text-sm mb-10">{description}</p>
-        <form onSubmit={handleSubmit}>
-          <div className="flex-1 mx-80">
+        <form 
+          onSubmit={handleSubmit}>
+          <div className="flex-1 mx-80" >
             {userQuestions.map((question, index) => (
               <ParticipateCard
                 key={index}
                 question={question.question}
                 question_num={question.question_num}
                 question_type={question.question_type}
-                answers={question.answer}
-                isRequired={question.isRequired}
+                answers={question.answers || []}
+                required={question.required}
                 response={responses[question.question_num]}
                 showWarning={showWarning[question.question_num]}
                 onCardSubmit={(questionNum, selectedAnswer) => handleCardSubmit(questionNum, selectedAnswer)}
@@ -131,14 +149,13 @@ const Participate = () => {
             ))}
           </div>
           <div className='mx-32 text-right'>
-          <button
+            <button
               type="submit"
               className="px-7 py-2 mt-24 mb-60 bg-sub_text_color_4 text-white rounded-xl"
             >
               응답 제출
             </button>
           </div>
-          
         </form>
       </div>
     </div>
