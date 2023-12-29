@@ -10,6 +10,11 @@ import Create from './pages/Create';
 import My from './pages/My';
 import Trend from './pages/Trend';
 import Search from './pages/Search';
+import Participate from './pages/Participate';
+import LoginHandle from './pages/LoginHandle';
+import QRcode from './pages/QRcode';
+import Result from './pages/Result';
+import Board2 from './pages/Board2';
 
 const router = createBrowserRouter([
   {
@@ -18,20 +23,29 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <Main/> },
       { path: 'main', element: <Main /> },
-      { path: 'main/board', element: <Board /> },
+      { path: 'main/board', element: <Board2 /> },
       { path: 'main/create', element: <Create /> },
       { path: 'main/create/detail', element: <Create /> },
       { path: 'main/my', element: <My/> },
       { path: 'main/trend', element: <Trend/> },
       { path: 'main/search/:value', element: <Search/> },
+      { path: 'main/participate', element: <Participate/> },
+      { path: 'user/kakao/callback', element: <LoginHandle/>},
+      { path: 'main/create/qr', element: <QRcode/>},
+      { path: 'main/result', element: <Result/>},
     ],
   },
+  {
+    path: '/login',
+    element: <Trend/>
+  }
 ]);
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
 root.render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <RouterProvider router={router} />
-  </React.StrictMode>
+  // </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function
