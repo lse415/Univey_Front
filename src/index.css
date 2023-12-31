@@ -12,3 +12,9 @@ body {
   overflow-x: hidden;
   color:#5A4978;
 }
+
+@layer components {
+  .info-input {
+    @apply w-full py-2 pl-5 rounded-2xl bg-question_card_bg outline-none;
+  }
+}
