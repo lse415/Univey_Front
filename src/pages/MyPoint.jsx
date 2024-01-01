@@ -84,7 +84,7 @@ return (
         </div>
         <div className='flex flex-col items-center mx-36'>
             <div className='w-full'>
-                <hr className='w-line border-1 mt-10 border-main_color'/>
+                <hr className='w-full border-1 mt-10 border-main_color'/>
                 <div className='flex justify-end'>
                 <select 
                     name="" 
@@ -99,7 +99,7 @@ return (
                     <option value="usage">사용 내역</option>
                 </select>
                 </div>
-                <hr className='w-line border-1 border-question_card_bg'/>
+                <hr className='w-full border-1 border-question_card_bg'/>
                 {pointData &&
                     pointData.map((item) => (
                     <PointBoard key={item.pointId} data={item} />

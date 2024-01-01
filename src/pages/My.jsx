@@ -33,7 +33,7 @@ export default function My() {
   
 
   return (
-    <div className='lg:mx-56 lg:mt-7'>
+    <div className='lg:mx-56 lg:mt-7 mb-40'>
       <div className="flex items-center ">
         <MyHomeIcon className="mr-4 text-main_color" />
         <h1 className="text-main_color text-2xl px-3">마이페이지 > </h1>

@@ -7,7 +7,6 @@ import App from "./App";
 import Main from "./pages/Main";
 import Board from "./pages/Board";
 import Create from "./pages/Create";
-import My from "./pages/My";
 import Trend from "./pages/Trend";
 import Search from "./pages/Search";
 import Participate from "./pages/Participate";
@@ -20,9 +19,6 @@ import My from "./pages/My";
 import MyInfo from "./pages/MyInfo";
 import MySurveys from "./pages/MySurveys";
 import MyPoint from "./pages/MyPoint";
-import Trend from "./pages/Trend";
-import Search from "./pages/Search";
-import Participate from "./pages/Participate";
 import ParticipateComplete from "./pages/ParticipateComplete";
 
 const router = createBrowserRouter([

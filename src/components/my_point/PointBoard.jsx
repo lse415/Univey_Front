@@ -20,7 +20,7 @@ export default function PointBoard({ data })  {
                     <div className='text-sm text-sub_text_color'>{remainingPoint} point</div>
                 </div>
             </div>
-            <hr className='w-line border-1 border-question_card_bg'/>
+            <hr className='w-full border-1 border-question_card_bg'/>
         </div>
         );
     };

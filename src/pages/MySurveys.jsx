@@ -24,13 +24,14 @@ return (
         <div className='mt-10 flex'>
             <nav>
                 <div>
-                    <ul className='flex space-x-6 ml-left text-2xl cursor-default'>
+                    <ul className='flex space-x-16 ml-left text-xl cursor-default'>
                     {['생성한 설문','참여한 설문'].map((item, index) => (
                         <li
-                        key={index}
-                        onClick={() => handleItemClick(index === 0 ? 'created' : 'participated')}
-                        className={`${selectedType === (index === 0 ? 'created' : 'participated') ? 'text-main_color' : 'text-sub_text_color'}`}                        >
-                        {item}
+                            key={index}
+                            onClick={() => handleItemClick(index === 0 ? 'created' : 'participated')}
+                            className={`${selectedType === (index === 0 ? 'created' : 'participated') ? 'text-main_color' : 'text-sub_text_color'}`} 
+                        >
+                            {item}
                         </li>
                     ))}
                     </ul>
