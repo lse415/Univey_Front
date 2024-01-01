@@ -7,13 +7,6 @@ const Create = () => {
 
     
 
-<<<<<<< HEAD
-
-export default function Create() {
-  return (
-    <div>
-       
-=======
   return (
     <div>
       <div>
@@ -34,7 +27,6 @@ export default function Create() {
       <div>
       <CreateSurvey />
       </div>
->>>>>>> 600cdf67b214d13f7aae50b4099d16ec92a41796
     </div>
   );
 };

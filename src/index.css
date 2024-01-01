@@ -9,7 +9,6 @@ body {
   margin: 0;
   width:100vw;
   height:100vh;
-<<<<<<< HEAD
   color:#5A4978;
   overflow-x:hidden;
   scroll-behavior: smooth;
@@ -51,8 +50,6 @@ body {
 
 .bg_white{
   @apply border-main_color bg-white text-main_color
-=======
   overflow-x: hidden;
   color:#5A4978;
->>>>>>> 600cdf67b214d13f7aae50b4099d16ec92a41796
 }

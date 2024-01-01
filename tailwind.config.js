@@ -4,7 +4,6 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-<<<<<<< HEAD
         text_color:'#5A4978',
         sub_text_color:'#989EA8',
         sub_text_color_2: '#ECE8E1',
@@ -38,7 +37,6 @@ module.exports = {
       },
       borderWidth: {
         '1': '1px',
-=======
         text_color: "#5A4978",
         sub_text_color: "#989EA8",
         sub_text_color_2: "#ECE8E1",
@@ -49,7 +47,6 @@ module.exports = {
         survey_border_color: "#777B83",
         question_card_bg: "#E8ECF2",
         question_card_grey: "#C2C6CE",
->>>>>>> 600cdf67b214d13f7aae50b4099d16ec92a41796
       },
     },
   },

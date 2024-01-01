@@ -8,14 +8,10 @@
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
-<<<<<<< HEAD
-    "axios": "^1.6.1",
     "chart.js": "^4.4.1",
     "http-proxy-middleware": "^2.0.6",
-=======
     "axios": "^1.6.2",
     "date-fns": "^2.30.0",
->>>>>>> 600cdf67b214d13f7aae50b4099d16ec92a41796
     "localforage": "^1.10.0",
     "match-sorter": "^6.3.1",
     "qrcode.react": "^3.1.0",
