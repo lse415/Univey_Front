@@ -47,6 +47,7 @@ module.exports = {
         survey_border_color: "#777B83",
         question_card_bg: "#E8ECF2",
         question_card_grey: "#C2C6CE",
+        sub_3: "#C0D0EF",
       },
     },
   },
