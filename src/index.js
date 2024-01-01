@@ -15,9 +15,7 @@ import LoginHandle from './pages/LoginHandle';
 import QRcode from './pages/QRcode';
 import Result from './pages/Result';
 import Board2 from './pages/Board2';
-import Create from "./pages/Create";
 import CreateDetail from "./pages/CreateDetail";
-import Participate from "./pages/Participate";
 import ParticipateComplete from "./pages/ParticipateComplete";
 
 const router = createBrowserRouter([

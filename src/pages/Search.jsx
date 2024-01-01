@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
-import BoardItem from '../components/board/BoardItem';
+import BoardItem from '../components/Board/BoardItem';
 
 export default function Search() {  
     const [data,setData]=useState(null);

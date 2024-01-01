@@ -48,8 +48,8 @@ body {
   @apply border-main_color bg-main_color text-white
 }
 
-.bg_white{
+/* .bg_white{
   @apply border-main_color bg-white text-main_color
   overflow-x: hidden;
   color:#5A4978;
-}
+} */
