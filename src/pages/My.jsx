@@ -10,17 +10,19 @@ import { GoPencil } from "react-icons/go";
 export default function My() {
 
   const [userName, setUserName] = useState('');
+  const [email, setEmail] = useState('');
+  const [accessToken, setAccessToken] = useState("");
 
   useEffect(() => {
     axios.get(
-      '/data/my.json'
+      '/data/my.json',
       // /mypage
-      //{ headers: { Authorization: `Bearer ${accessToken}` } }
+        { headers: { Authorization: `Bearer ${accessToken}` } }
       )
       .then((response) => {
-        console.log('API 응답 데이터:', response.data); 
         const data = response.data.data;
         setUserName(data.userName);
+        setEmail(data.email);
       })
       .catch((error) => {
         console.error('데이터를 불러오는 동안 에러 발생:', error);
@@ -48,7 +50,7 @@ export default function My() {
                 </div>
               </Link>
             </div>
-            <p className="text-l px-2">email@email.com</p>
+            <p className="text-l px-2">{email}</p>
           </div>
         </div>
       </div>

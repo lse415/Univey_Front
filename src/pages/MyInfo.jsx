@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import axios from 'axios';
 import MyHomeIcon from '../components/icons/MyHomeIcon';
 import ProfileIcon from '../components/icons/ProfileIcon';
 import { GoPencil } from "react-icons/go";
-// import GoRecord from '../components/icons/GoRecord';
-// import GoPoint from '../components/icons/GoPoint';
 
 export default function MyInfo({name, nickName, email, phoneNumber}) {
 
@@ -14,13 +11,14 @@ export default function MyInfo({name, nickName, email, phoneNumber}) {
     const [nickNameValue, setNickNameValue] = useState(nickName);
     const [phoneNumberValue, setPhoneNumberValue] = useState(phoneNumber);
     const [category, setCategory] = useState('');
+    const [accessToken, setAccessToken] = useState("");
 
 
     useEffect(() => {
     axios.get(
-        '/data/myInfo.json'
+        '/data/myInfo.json',
       // /mypage/info
-      //{ headers: { Authorization: `Bearer ${accessToken}` } }
+        { headers: { Authorization: `Bearer ${accessToken}` } }
     )
     .then((response) => {
         const data = response.data.data;
@@ -58,7 +56,7 @@ const handleSubmit = () => {
 
 return (
     <div className='lg:mx-52 lg:mt-7 mb-20'>
-        <div className="flex">
+        <div className="flex items-center">
             <MyHomeIcon className="mr-4 text-main_color" />
             <h1 className="text-main_color text-2xl px-3">마이페이지 > </h1>
             <div className='text-main_color pt-1 text-3xl font-thin'>

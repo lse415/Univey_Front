@@ -10,6 +10,8 @@ import Create from "./pages/Create";
 import CreateDetail from "./pages/CreateDetail";
 import My from "./pages/My";
 import MyInfo from "./pages/MyInfo";
+import MySurveys from "./pages/MySurveys";
+import MyPoint from "./pages/MyPoint";
 import Trend from "./pages/Trend";
 import Search from "./pages/Search";
 import Participate from "./pages/Participate";
@@ -27,6 +29,8 @@ const router = createBrowserRouter([
       { path: "main/create/detail", element: <CreateDetail /> },
       { path: "main/my", element: <My /> },
       { path: "main/my/info", element: <MyInfo /> },
+      { path: "main/my/surveys", element: <MySurveys /> },
+      { path: "main/my/point", element: <MyPoint /> },
       { path: "main/trend", element: <Trend /> },
       { path: "main/search/:value", element: <Search /> },
       { path: "main/participate", element: <Participate /> },
