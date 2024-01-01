@@ -31,11 +31,12 @@ export default function Mypoint() {
     useEffect(() => {
         let apiEndpoint = '';
         if (selectedOption === 'gain') {
-            apiEndpoint = '/data/PointAll.json';    //임시
+            apiEndpoint = '/data/PointAll.json';  
         } else if (selectedOption === 'purchase') {
-            apiEndpoint = '/data/PointAll.json'; //임시
+            apiEndpoint = '/data/PointAll.json'; 
         } else if (selectedOption === 'usage') {
             apiEndpoint = '/data/PointUsage.json';
+            // /mypage/points?type=usage
         } else {
             apiEndpoint = '/data/PointAll.json';
         }
@@ -57,7 +58,7 @@ export default function Mypoint() {
     };
 
 return (
-    <div className='lg:mx-52 lg:mt-7 mb-20'>
+    <div className='lg:mx-56 lg:mt-7 mb-20'>
         <div className="flex items-center">
             <MyHomeIcon className="mr-4 text-main_color" />
             <h1 className="text-main_color text-2xl px-3">마이페이지 > </h1>

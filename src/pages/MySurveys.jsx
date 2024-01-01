@@ -12,7 +12,7 @@ export default function MySurveys({}) {
     };
 
 return (
-    <div className='lg:mx-52 lg:mt-7 mb-20'>
+    <div className='lg:mx-56 lg:mt-7 mb-20'>
         <div className="flex">
             <MyHomeIcon className="mr-4 text-main_color" />
             <h1 className="text-main_color text-2xl px-3">마이페이지 > </h1>

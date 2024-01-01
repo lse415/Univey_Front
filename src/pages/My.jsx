@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import MyHomeIcon from '../components/icons/MyHomeIcon';
 import ProfileIcon from '../components/icons/ProfileIcon';
+import GoRecord from '../components/my/GoRecord';
+import GoPoint from '../components/my/GoPoint';
 import { GoPencil } from "react-icons/go";
-// import GoRecord from '../components/icons/GoRecord';
-// import GoPoint from '../components/icons/GoPoint';
 
 export default function My() {
 
@@ -33,7 +33,7 @@ export default function My() {
   
 
   return (
-    <div className='lg:mx-52 lg:mt-7'>
+    <div className='lg:mx-56 lg:mt-7'>
       <div className="flex items-center ">
         <MyHomeIcon className="mr-4 text-main_color" />
         <h1 className="text-main_color text-2xl px-3">마이페이지 > </h1>
@@ -54,9 +54,11 @@ export default function My() {
           </div>
         </div>
       </div>
-      <div className="flex items-center lg:mx-52 lg:mt-7">
-        {/* <GoRecord className="mr-4 text-main_color text-3xl" />
-        <GoPoint className="mr-4 text-main_color text-3xl" /> */}
+      <div className="flex items-center lg:mt-7">
+          <div className='flex mt-10 w-full justify-center space-x-20'>
+            <Link to='/main/my/surveys'><GoRecord/></Link>
+            <Link to='/main/my/point'><GoPoint/></Link>
+          </div>
       </div>
       
       
