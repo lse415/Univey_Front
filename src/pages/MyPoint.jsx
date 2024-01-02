@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 import PointBoard from '../components/my_point/PointBoard';
 import MyHomeIcon from '../components/icons/MyHomeIcon';
 import PointIcon from '../components/icons/PointIcon';
@@ -61,7 +62,9 @@ return (
     <div className='lg:mx-56 lg:mt-7 mb-20'>
         <div className="flex items-center">
             <MyHomeIcon className="mr-4 text-main_color" />
-            <h1 className="text-main_color text-2xl px-3">마이페이지 > </h1>
+            <Link to="/main/my">
+                <h1 className="text-main_color text-2xl px-3">마이페이지 > </h1>
+            </Link>
             <div className= 'text-main_color pt-1 text-3xl font-thin'>
                 <GoPencil/>
             </div>
