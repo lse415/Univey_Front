@@ -89,7 +89,7 @@ useEffect(() => {
       const userAnswer = responses[question.question_num];
     
       return {
-        surveyQuestionId: question.question_num,
+        question_id: question.question_id,
         content: question.question_type === 'SHORT_ANSWER' ? userAnswer : null,
         answer_id: question.question_type === 'MULTIPLE_CHOICE' ? userAnswer : null,
       };
