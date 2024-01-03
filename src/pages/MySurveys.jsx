@@ -20,7 +20,7 @@ export default function MySurveys({}) {
             if (selectedType === 'created') {
                 endpoint = '/data/MyParticipateSurvey.json';      ///mypage/surveys?type=created
             } else if (selectedType === 'participated') {
-                endpoint = '/data/MyParticipateSurvey.json'; ///mypage/surveys?type=participated
+                endpoint = '/data/MyCreatedSurvey.json'; ///mypage/surveys?type=participated
             }
         
             axios

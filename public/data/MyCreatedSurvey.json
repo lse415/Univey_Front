@@ -17,7 +17,7 @@
     },
     {
     "surveyId": 2,
-    "status": "COMPLETE",
+    "status": "IN_PROGRESS",
     "topic": "test2",
     "description": "hihihi",
     "age": 0,

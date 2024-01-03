@@ -13,6 +13,7 @@ export default function MyInfo({name, nickName, email, phoneNumber}) {
     const [phoneNumberValue, setPhoneNumberValue] = useState(phoneNumber);
     const [category, setCategory] = useState('');
     const [accessToken, setAccessToken] = useState("");
+    const [isNickNameValid, setIsNickNameValid] = useState(true);
 
 
     useEffect(() => {
@@ -33,9 +34,21 @@ export default function MyInfo({name, nickName, email, phoneNumber}) {
     });
 } , []);
 
+const handleNickNameChange = (value) => {
+    setNickNameValue(value);
+    
+    axios.get('/data/Nickname.json',     
+                { headers: { Authorization: `Bearer ${accessToken}` } }) //`/mypage/info/${value}/exists`
+        .then((response) => {
+            const isAvailable = response.data.data;
+            setIsNickNameValid(isAvailable);
+        })
+        .catch((error) => {
+            console.error('닉네임 중복 확인 중 에러 발생:', error);
+        });
+};
+
 const handleSubmit = () => {
-    //중복확인 api
-    //if (isNickNameValid) {}
     const formData = {
         name: nameValue,
         email: emailValue,
@@ -44,7 +57,9 @@ const handleSubmit = () => {
         category: category,
     };
 
-    axios.post('/api/submitData', formData)
+    axios.patch('/mypage/info',
+                formData,
+                { headers: { Authorization: `Bearer ${accessToken}` } })
         .then((response) => {
         console.log('서버 응답:', response.data);
         })
@@ -52,7 +67,7 @@ const handleSubmit = () => {
         console.error('데이터 전송 중 에러 발생:', error);
         });
 
-    console.log('post:', formData);
+    console.log('patch:', formData);
     };
 
 return (
@@ -96,11 +111,14 @@ return (
                     </span>
                     </label>
                     <input
-                        className='info-input'
+                        className={`info-input ${!isNickNameValid ? 'border border-red-500' : ''}`}
                         type="text"
                         value={nickNameValue}
-                        onChange={(e) => setNickNameValue(e.target.value)}
+                        onChange={(e) => handleNickNameChange(e.target.value)}
                     />
+                    {!isNickNameValid && (
+                        <p className="text-red-500 text-sm mt-1 pl-3">중복된 닉네임입니다.</p>
+                    )}
                 </div>
             </div>
             
