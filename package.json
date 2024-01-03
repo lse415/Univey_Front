@@ -52,7 +52,8 @@
       "last 1 chrome version",
       "last 1 firefox version",
       "last 1 safari version"
-    ]
+    ],
+    "proxy" : "http://15.164.216.144"
   },
   "devDependencies": {
     "tailwindcss": "^3.3.5"
