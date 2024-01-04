@@ -64,9 +64,9 @@ export default function Main() {
             {main_data &&
             main_data.filter(item => item.trend === true).map((item)=>{
               return(
-              <div className='w-screen flex flex-col items-center'>
+              <Link to={`/main/participate/${item.id}`} className='w-screen flex flex-col items-center'>
               <MainTrendItem key={item.id} data={item}/>
-            </div>
+            </Link>
             )
             })
             }

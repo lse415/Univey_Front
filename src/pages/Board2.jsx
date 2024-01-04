@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import BoardItem from '../components/Board/BoardItem';
+import BoardItem from '../components/board/BoardItem';
 
 
 export default function Board2() {
@@ -15,12 +15,6 @@ export default function Board2() {
     fetch(`/surveys/list?category=${category}&postType=${postType}&orderTpye=${orderType}`)
     .then((res)=>res.data)
     .then((res)=>setData(res))
-
-    console.log(category)
-    console.log(postType)
-    console.log(orderType)
-
-    console.log()
   },[category,postType,orderType])
   
   return (

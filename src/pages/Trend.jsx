@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import TrendCarousel from '../components/Trend/TrendCarousel'
+import TrendCarousel from '../components/trend/TrendCarousel'
 import { LiaFireAltSolid } from "react-icons/lia";
-import TrendBoard from '../components/Trend/TrendBoard';
+import TrendBoard from '../components/trend/TrendBoard';
 import {useQuery} from '@tanstack/react-query'
 import axios from 'axios';
 export default function Trend() {
@@ -44,7 +44,7 @@ export default function Trend() {
             {trend ?
             trend.filter(item => item.trend === true).map((item)=>{
               return(
-              <TrendBoard key={item.id} data={item}/>
+                <TrendBoard key={item.id} data={item}/>
             )
             }):<p>로딩인가</p>
             }
