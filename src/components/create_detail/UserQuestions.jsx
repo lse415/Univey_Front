@@ -127,7 +127,7 @@ const UserQuestions = ({
   };
 
   const handleSubmit = () => {
-    localStorage.setItem('userQuestions', JSON.stringify(userQuestions));
+    localStorage.setItem('userQuestions', JSON.stringify({userQuestions}));
 
     navigate('main/create/qr');
   };
