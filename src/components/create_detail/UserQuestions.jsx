@@ -127,9 +127,24 @@ const UserQuestions = ({
   };
 
   const handleSubmit = () => {
-    localStorage.setItem('userQuestions', JSON.stringify(userQuestions));
-
-    navigate('main/create/qr');
+    axios.post(
+      '/surveys/create/details/${surveyId}',
+      { userQuestions },
+      { headers: { Authorization: `Bearer ${accessToken}` } }
+    )
+      .then((response) => {
+        // 서버 응답 확인
+        console.log('백엔드 응답:', response.data);
+  
+        // userQuestions 초기화
+        setUserQuestions([]);
+  
+        // 다음 페이지로 이동
+        // navigate('/qr');
+      })
+      .catch((error) => {
+        console.error('에러 발생:', error);
+      });
   };
 
   useEffect(() => {
