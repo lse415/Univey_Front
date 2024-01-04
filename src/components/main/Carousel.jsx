@@ -5,7 +5,7 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import {useQuery} from '@tanstack/react-query'
 import { SlArrowLeft, SlArrowRight } from "react-icons/sl";
-import carouselImg from '../assets/carousel.svg'
+import carouselImg from '../../assets/carousel.svg'
 
 export default function Carousel() {
     const {data, isLoading } = useQuery({ queryKey: ['Carousel'], queryFn: CarouselData })
