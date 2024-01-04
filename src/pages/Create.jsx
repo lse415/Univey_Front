@@ -1,6 +1,6 @@
 import React from "react";
 
-import CreateSurvey from "../components/create/CreateSurvey"
+import CreateSurvey from "../components/Create/CreateSurvey"
 import { GoPencil } from "react-icons/go";
 
 const Create = () => {
