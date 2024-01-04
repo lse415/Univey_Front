@@ -29,7 +29,7 @@ export default function Board() {
     }
     console.log(status)
   },[status,data])
-  
+  //ㄹㅇㅎㄴㄹ
   async function dataset(){
     await fetch('/data/Board.json')
     .then((res)=>res.json())

@@ -47,16 +47,9 @@ body {
 .bg_main{
   @apply border-main_color bg-main_color text-white
 }
-@layer components {
-  .info-input {
-    @apply w-full py-2 pl-5 rounded-2xl bg-question_card_bg outline-none;
-  }
-}
+
 /* .bg_white{
   @apply border-main_color bg-white text-main_color
   overflow-x: hidden;
   color:#5A4978;
-}
-*/
-
-
+} */
