@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import trend from '../../assets/trend.svg'
+import trend from '../assets/trend.svg'
 
 export default function TrendBoard({data}) {
 
@@ -22,7 +22,7 @@ export default function TrendBoard({data}) {
           </p>
         </main>
         <div className='mb-6 font-semibold text-main_color w-full'>
-          <Link to={`/main/participate/${data.id}`} className='float-right mr-10'>트렌드 참여하기 &nbsp; &gt; </Link> 
+          <span className='float-right mr-10'>트렌드 참여하기 &nbsp; &gt; </span> 
         </div>
     </div>
   );

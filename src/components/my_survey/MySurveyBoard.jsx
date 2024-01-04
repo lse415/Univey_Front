@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import robot from '../../assets/robot.svg';
+import robot from '../assets/robot.svg';
 import CloseSurveyModal from './CloseSurveyModal';
 
 export default function MySurveyBoard({ surveys, selectedType }) {

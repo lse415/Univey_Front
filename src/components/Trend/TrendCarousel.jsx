@@ -5,7 +5,7 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { SlArrowLeft, SlArrowRight } from "react-icons/sl";
 import {useQuery} from '@tanstack/react-query'
-import trend_carousel from '../../assets/trend_carousel.svg'
+import trend_carousel from '../assets/trend_carousel.svg'
 
 export default function TrendCarousel() {
     const slickRef = useRef();

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import TrendCarousel from '../components/trend/TrendCarousel'
+import TrendCarousel from '../components/Trend/TrendCarousel'
 import { LiaFireAltSolid } from "react-icons/lia";
-import TrendBoard from '../components/trend/TrendBoard';
+import TrendBoard from '../components/Trend/TrendBoard';
 import {useQuery} from '@tanstack/react-query'
 import axios from 'axios';
 export default function Trend() {

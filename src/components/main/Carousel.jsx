@@ -5,7 +5,7 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import {useQuery} from '@tanstack/react-query'
 import { SlArrowLeft, SlArrowRight } from "react-icons/sl";
-import carouselImg from '../../assets/carousel.svg'
+import carouselImg from '../assets/carousel.svg'
 
 export default function Carousel() {
     const {data, isLoading } = useQuery({ queryKey: ['Carousel'], queryFn: CarouselData })
@@ -16,6 +16,7 @@ export default function Carousel() {
             .then((res) => res.data.items)
     }
     
+    console.log(data)
 
     const previous = useCallback(() => slickRef.current.slickPrev(), []);
     const next = useCallback(() => slickRef.current.slickNext(), []);

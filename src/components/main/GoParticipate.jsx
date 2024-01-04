@@ -1,5 +1,5 @@
 import React from 'react'
-import go_part from '../../assets/go_part.svg'
+import go_part from '../assets/go_part.svg'
 
 export default function GoParticipate() {
   return (

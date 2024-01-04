@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react'
-import robot from '../../assets/robot.svg'
+import robot from '../assets/robot.svg'
 
 export default function MainTrendItem({data}) {
+  console.log(data);
 
 
   return (

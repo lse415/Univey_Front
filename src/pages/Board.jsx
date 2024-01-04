@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import BoardItem from '../components/board/BoardItem';
+import BoardItem from '../components/Board/BoardItem';
 
 export default function Board() {
   const [data,setData]=useState(null);
@@ -29,7 +29,7 @@ export default function Board() {
     }
     console.log(status)
   },[status,data])
-  //ㄹㅇㅎㄴㄹ
+  
   async function dataset(){
     await fetch('/data/Board.json')
     .then((res)=>res.json())
