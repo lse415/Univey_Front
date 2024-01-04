@@ -63,7 +63,7 @@ return (
         <div className="flex items-center">
             <MyHomeIcon className="mr-4 text-main_color" />
             <Link to="/main/my">
-                <h1 className="text-main_color text-2xl px-3">마이페이지 </h1>
+                <h1 className="text-main_color text-2xl px-3">마이페이지 > </h1>
             </Link>
             <div className= 'text-main_color pt-1 text-3xl font-thin'>
                 <GoPencil/>

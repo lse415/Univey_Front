@@ -1,5 +1,5 @@
 import React from 'react'
-import go_create from '../../assets/go_create.svg'
+import go_create from '../assets/go_create.svg'
 
 export default function GoCreate() {
   return (

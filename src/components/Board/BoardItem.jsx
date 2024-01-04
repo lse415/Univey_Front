@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { SlArrowRight } from "react-icons/sl";
 import { Link } from 'react-router-dom';
-import robot from '../../assets/robot.svg'
+import robot from '../assets/robot.svg'
 
 export default function BoardItem({data}) {
 
