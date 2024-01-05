@@ -1,44 +1,71 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import ParticipateCard from '../components/participate/ParticipateCard';
 import CheckIcon from '../components/icons/CheckIcon';
 import { BiSolidQuoteAltLeft } from 'react-icons/bi';
 import { BiSolidQuoteAltRight } from 'react-icons/bi';
+import { useRecoilState } from "recoil";
+import { userState } from "../recoil/atoms/userState";
 
 const Participate = () => {
+  const [userInfo,setUserInfo] = useRecoilState(userState)
   const [userQuestions, setUserQuestions] = useState([]);
   const [topic, setTopic] = useState('');
   const [description, setDescription] = useState('');
   const [responses, setResponses] = useState({});
   const [submitting, setSubmitting] = useState(false);
   const [showWarning, setShowWarning] = useState([]);
-  const [accessToken, setAccessToken] = useState("");
-
+  const {surveyId} = useParams();
   const navigate = useNavigate();
 //렌더링될 때 accesstoken?
     
 useEffect(() => {
-  axios.get(
-    '/data/ParticipatePost.json'
-    //{ headers: { Authorization: `Bearer ${accessToken}` } }
-    )
-    .then((response) => {
-      const surveyData = response.data.data.surveyData;
-      const flattenedUserQuestions = surveyData.userQuestions;
 
-      setUserQuestions(flattenedUserQuestions);
+  axios.get(`https://353a-222-108-73-38.ngrok-free.app/surveys/participation/${surveyId}`,
+  {
+    headers: {
+      Authorization: `${userInfo.accesstoken}`,
+      'ngrok-skip-browser-warning': '69420',
+      'Accept': 'application/json'
+  }
+  })
+  .then((res)=>{
+    const surveyData=res.data.data.surveyData
+    const flattenedUserQuestions=res.data.data.surveyData.userQuestions
 
-      if (flattenedUserQuestions.length > 0) {
-        setTopic(surveyData.topic);
-        setDescription(surveyData.description);
-        // 초기에 모든 질문에 대한 경고를 숨기도록 빈 배열로 초기화
-        setShowWarning(Array(flattenedUserQuestions.length).fill(false));
-      }
-    })
-    .catch((error) => {
-      console.error('데이터를 불러오는 동안 에러 발생:', error);
-    });
+    console.log(surveyData)
+    console.log(flattenedUserQuestions)
+
+    if (flattenedUserQuestions.length > 0) {
+      setTopic(surveyData.topic);
+      setDescription(surveyData.description);
+      // 초기에 모든 질문에 대한 경고를 숨기도록 빈 배열로 초기화
+      setShowWarning(Array(flattenedUserQuestions.length).fill(false));
+      setUserQuestions(flattenedUserQuestions)
+    }
+  })
+
+  // axios.get(
+  //   '/data/ParticipatePost.json'
+  //   //{ headers: { Authorization: `Bearer ${accessToken}` } }
+  //   )
+  //   .then((response) => {
+  //     const surveyData = response.data.data.surveyData;
+  //     const flattenedUserQuestions = surveyData.userQuestions;
+
+  //     setUserQuestions(flattenedUserQuestions);
+
+  //     if (flattenedUserQuestions.length > 0) {
+  //       setTopic(surveyData.topic);
+  //       setDescription(surveyData.description);
+  //       // 초기에 모든 질문에 대한 경고를 숨기도록 빈 배열로 초기화
+  //       setShowWarning(Array(flattenedUserQuestions.length).fill(false));
+  //     }
+  //   })
+  //   .catch((error) => {
+  //     console.error('데이터를 불러오는 동안 에러 발생:', error);
+  //   });
 }, []);
 
     
@@ -94,16 +121,19 @@ useEffect(() => {
         answer_id: question.question_type === 'MULTIPLE_CHOICE' ? userAnswer : null,
       };
     });
+    const answer123 = {"answers" : formattedResponses}
     
 
     console.log('서버에 보낼 응답 데이터:', formattedResponses);
 
-    axios
-      .post('/surveys/answerSubmit/${surveyId}', 
-        formattedResponses,
-        { headers: { Authorization: `Bearer ${accessToken}` } }
+    axios.post(`https://353a-222-108-73-38.ngrok-free.app/surveys/answerSubmit/${surveyId}`, 
+        answer123,
+        { headers: { Authorization: `${userInfo.accesstoken}`,
+                      'Accept': 'application/json' } }
     )
       .then((response) => {
+        const point = response.data.data
+        setUserInfo((prev)=>({...prev, point:point})) 
         const newPath = "./complete";
         navigate(newPath);
       })

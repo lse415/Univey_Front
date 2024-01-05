@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import CustomDatePicker from "./CustomDatePicker";
+import { useRecoilState } from "recoil";
+import { userState } from "../../recoil/atoms/userState";
 
 const CreateSurvey = () => {
+  const [userInfo,setUserInfo] = useRecoilState(userState)
   const [topic, setTopic] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
@@ -67,16 +70,16 @@ const CreateSurvey = () => {
         targetRespondents,
       };
       console.log(surveyData);
-
+      console.log(userInfo.accesstoken)
       axios.post(
-        '/surveys/create',
+        'https://19fd-222-108-73-38.ngrok-free.app/surveys/create',
         surveyData, 
-        { headers: { Authorization: `Bearer ${accessToken}` } }
+        { headers: { Authorization: `${userInfo.accesstoken}` } }
       ).then((response) => {
-        const newSurveyId = response.data.surveyId;
-        setSurveyId(newSurveyId);
+        console.log(response)
+        const newSurveyId = response.data.data;
         // 성공적으로 제출되었을 때 페이지 이동
-        const newPath = "./detail";
+        const newPath = `./details/${newSurveyId}/${topic}`;
         navigate(newPath);
       })
       .catch((error) => {

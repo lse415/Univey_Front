@@ -6,27 +6,40 @@ import ProfileIcon from '../components/icons/ProfileIcon';
 import GoRecord from '../components/my/GoRecord';
 import GoPoint from '../components/my/GoPoint';
 import { GoPencil } from "react-icons/go";
+import { useRecoilState } from "recoil";
+import { userState } from "../recoil/atoms/userState";
 
 export default function My() {
 
   const [userName, setUserName] = useState('');
   const [email, setEmail] = useState('');
-  const [accessToken, setAccessToken] = useState("");
+  const [userInfo,setUserInfo] = useRecoilState(userState)
 
   useEffect(() => {
-    axios.get(
-      '/data/my.json',
-      // /mypage
-        { headers: { Authorization: `Bearer ${accessToken}` } }
-      )
-      .then((response) => {
-        const data = response.data.data;
-        setUserName(data.userName);
-        setEmail(data.email);
-      })
-      .catch((error) => {
-        console.error('데이터를 불러오는 동안 에러 발생:', error);
-      });
+    axios.get('https://353a-222-108-73-38.ngrok-free.app/mypage',
+    { headers: { 
+      'ngrok-skip-browser-warning': '69420',
+      Authorization: `${userInfo.accesstoken}`,
+      'Content-Type': 'application/json'
+    } }
+    )
+    .then((res)=>{
+      setUserName(res.data.data.userName)
+      setEmail(res.data.data.email)
+    })
+    // axios.get(
+    //   '/data/my.json',
+    //   // /mypage
+    //     { headers: { Authorization: `Bearer ${accessToken}` } }
+    //   )
+    //   .then((response) => {
+    //     const data = response.data.data;
+    //     setUserName(data.userName);
+    //     setEmail(data.email);
+    //   })
+    //   .catch((error) => {
+    //     console.error('데이터를 불러오는 동안 에러 발생:', error);
+    //   });
   }, []);
 
 

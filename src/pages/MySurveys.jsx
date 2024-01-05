@@ -10,6 +10,7 @@ export default function MySurveys({}) {
     const [selectedType, setSelectedType] = useState('created'); 
     const [surveys, setSurveys] = useState([]);
 
+    
     const handleItemClick = (type) => {
         setSelectedType(type);
     };
