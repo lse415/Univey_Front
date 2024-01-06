@@ -51,7 +51,7 @@ export default function My() {
       <div className="flex items-center ">
         <MyHomeIcon className="mr-4 text-main_color" />
         <Link to="/main/my">
-          <h1 className="text-main_color text-2xl px-3">마이페이지  </h1>
+          <h1 className="text-main_color text-2xl px-3">마이페이지 > </h1>
         </Link>
       </div>
       <div className='flex mt-10 ml-6 text-main_color'>
