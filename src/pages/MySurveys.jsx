@@ -4,12 +4,14 @@ import { Link } from 'react-router-dom';
 import MySurveyBoard from '../components/my_survey/MySurveyBoard';
 import MyHomeIcon from '../components/icons/MyHomeIcon';
 import { GoPencil } from "react-icons/go";
+import customaxios from '../api/Axios';
 
 export default function MySurveys({}) {
 
     const [selectedType, setSelectedType] = useState('created'); 
     const [surveys, setSurveys] = useState([]);
 
+    
     const handleItemClick = (type) => {
         setSelectedType(type);
     };
@@ -23,7 +25,7 @@ export default function MySurveys({}) {
                 endpoint = '/data/MyCreatedSurvey.json'; ///mypage/surveys?type=participated
             }
         
-            axios
+            customaxios
                 .get(endpoint)
                 .then((response) => {
                 console.log(response.data.data); 

@@ -9,6 +9,7 @@ import { BiSolidQuoteAltRight } from 'react-icons/bi';
 import AddButtonIcon from '../icons/AddButtonIcon';
 
 const UserQuestions = ({
+  surveyId,
   userQuestions,
   setUserQuestions,
   onAddQuestion,
@@ -22,6 +23,23 @@ const UserQuestions = ({
   const [question, setQuestion] = useState('');
   const [answer, setAnswer] = useState(['']); 
   const [accessToken, setAccessToken] = useState("");
+
+  const mock ={    
+    "userQuestions": [        
+    {            
+        "question_num": 1,                      
+        "question": " 인공지능 사용 빈도가 어떻게 되나요?",                       "question_type":"multipleChoice",              
+        "isRequired": true,               "answer": ["매우 자주", "자주", "가끔", "거의 사용하지 않음"
+    ]        
+    },
+    {           
+        "question_num": 2,             
+        "question": " 어떤 종류의 인공지능 기술을 사용하나요?",            
+       "question_type": "shortAnswer",             
+       "isRequired": false,            "answer": []
+    }    
+    ]
+    }
 
   const navigate = useNavigate();
 
@@ -127,9 +145,13 @@ const UserQuestions = ({
   };
 
   const handleSubmit = () => {
-    localStorage.setItem('userQuestions', JSON.stringify({userQuestions}));
 
-    navigate('main/create/qr');
+    console.log(userQuestions)
+    localStorage.setItem('userQuestions', JSON.stringify({userQuestions}));
+    // localStorage.setItem('userQuestions', JSON.stringify(mock));
+    console.log()
+    navigate(`/main/create/qr/${surveyId}`);
+
   };
 
   useEffect(() => {

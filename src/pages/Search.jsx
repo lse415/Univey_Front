@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
+import customaxios from '../api/Axios';
 import BoardItem from '../components/Board/BoardItem';
 
 export default function Search() {  
@@ -10,7 +11,7 @@ export default function Search() {
     },[])
 
     async function dataset(){
-      await fetch('/data/Board.json')
+      await customaxios('/data/Board.json')
       .then((res)=>res.json())
       .then((res)=>setData(res.surveyData))
       .catch((err)=>{

@@ -6,6 +6,7 @@ import MyHomeIcon from '../components/icons/MyHomeIcon';
 import PointIcon from '../components/icons/PointIcon';
 import { GoPencil } from "react-icons/go";
 import { BsLightningChargeFill } from "react-icons/bs";
+import customaxios from '../api/Axios';
 
 export default function Mypoint() {
 
@@ -15,7 +16,7 @@ export default function Mypoint() {
     const [accessToken, setAccessToken] = useState("");
 
     useEffect(() => {
-        axios.get(
+        customaxios.get(
             '/data/my.json',
           // /mypage/points?type=purchase
             { headers: { Authorization: `Bearer ${accessToken}` } }

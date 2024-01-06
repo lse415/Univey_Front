@@ -1,4 +1,6 @@
+import axios from 'axios';
 import React, { useEffect, useRef, useState } from 'react';
+import customaxios from '../api/Axios';
 import BoardItem from '../components/Board/BoardItem';
 
 
@@ -12,7 +14,15 @@ export default function Board2() {
 
 
   useEffect(()=>{
-    fetch(`/surveys/list?category=${category}&postType=${postType}&orderTpye=${orderType}`)
+    customaxios.get(`/list?category=${category}&postType=${postType}&orderTpye=${orderType}`,
+    {
+      headers: {
+          'Content-Type': 'application/json',
+          'ngrok-skip-browser-warning': '69420',
+          'Accept': 'application/json'
+      }
+    }
+    )
     .then((res)=>res.data)
     .then((res)=>setData(res))
 
