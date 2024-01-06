@@ -15,51 +15,27 @@ import { useEffect } from 'react';
 import { useRecoilState } from "recoil";
 import { graphState } from "../recoil/atoms/userState";
 import axios from 'axios';
+import { Link, useParams } from 'react-router-dom';
+import ChartModel from '../components/result/ChartModel';
 
 export default function ResultDetail() {
-    const [graphInfo,setGraphInfo] = useRecoilState(graphState)
+    const [userInfo,setUserInfo] = useRecoilState(graphState)
+    const {questionNum} = useParams();
+    const typeNum = 'type'+questionNum
+    const {surveyId} = useParams();
+    const [graphInfo,setGraphInfo] = useState(['Line','first']);
     const [data,setData]=useState();
     const [color, setColor] = useState([]);
-    
+
     useEffect(()=>{
-        console.log(graphInfo)
-    },[graphInfo])
-    
-    useEffect(()=>{
-        fetchData();
+        const datas = userInfo[questionNum]
+        setData(datas[2])
+        setGraphInfo([datas[0],datas[1]])
     },[])
 
-    function fetchData(){
-        axios('/data/Result.json')
-        .then((res)=>res.data.resultData)
-        .then((res)=>setData(res))
-        }
-        console.log('---------------------------')
-        console.log(data)
-        const answer = []
-        data.answer.forEach((item,index)=>{
-            data.votes &&
-            answer.push({name:item, "응답 수": data.votes[index]})
-        }) 
+    console.log(data)
+    console.log(graphInfo)
 
-    // const data = [
-    //     {
-    //       name: '거의 사용하지 않음',
-    //         "응답 수": 20,
-    //     },
-    //     {
-    //       name: '가끔',
-    //         "응답 수": 30,
-    //     },
-    //     {
-    //       name: '자주',
-    //         "응답 수": 15,
-    //     },
-    //     {
-    //       name: '매우 자주',
-    //         "응답 수": 11,
-    //     }
-    //   ];
   return (
     <div className='w-screen'>
         <header className='mb-10'>
@@ -79,7 +55,7 @@ export default function ResultDetail() {
                 </div>
 
                 <div className='flex mb-6'>
-                    { data && <BarChartModel data={data}/>}
+                    { data && <ChartModel questionNum={typeNum} data={data} type={graphInfo}/>}
                 </div>
             </div>
         </div>
@@ -99,12 +75,12 @@ export default function ResultDetail() {
             <ChartType img={area} type='Area'/>
             <ChartType img={bar} type='Bar'/>
             <ChartType img={composed} type='Composed'/>
-            <ChartType img={scatter} type='Scatter'/>
             <ChartType img={pie} type='Pie'/>
-            <ChartType img={radar} type='Radar'/>
+            {/* <ChartType img={scatter} type='Scatter'/> */}
+            {/* <ChartType img={radar} type='Radar'/> */}
         </div> 
-            <BarList />
-        <button className='w-28 h-10 bg-sub_3 rounded-full font-bold float-right mr-leftxl mt-8 hover:bg-black hover:bg-opacity-20'>확인</button>
+            {/* <BarList /> */}
+        <Link to={`/main/result/${surveyId}`} className='w-28 h-10 bg-sub_3 rounded-full font-bold float-right mr-leftxl mt-8 hover:bg-black hover:bg-opacity-20 flex justify-center items-center'>확인</Link>
     </div>
   )
 }

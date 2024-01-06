@@ -4,20 +4,29 @@ import { useState } from 'react';
 import { useEffect } from 'react'
 import ResultAnswer from '../components/result/ResultAnswer';
 import ResultChart from '../components/result/ResultChart';
+import { useRecoilState } from "recoil";
+import { graphState } from "../recoil/atoms/userState";
+import customaxios from '../api/Axios';
 
 export default function Result() {
     const [data,setData]=useState();
-
+    const [graphInfo,setGraphInfo] = useRecoilState(graphState);
     useEffect(()=>{
         fetchData();
     },[])
 
-    function fetchData(){
-        axios('/data/Result.json')
+    async function fetchData(){
+        await customaxios('/data/Result.json')
         .then((res)=>res.data.resultData)
         .then((res)=>setData(res))
       }
-      console.log(data)
+    
+    {data && data.question.forEach((item)=>{
+      if(item.question_type==='MULTIPLE_CHOICE'){
+        // setGraphInfo({...graphInfo, question_num:['Line','first']})
+      }
+    })}
+      
   return (
     <div>
       <header className='mb-10'>

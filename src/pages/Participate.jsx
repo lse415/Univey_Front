@@ -7,6 +7,7 @@ import { BiSolidQuoteAltLeft } from 'react-icons/bi';
 import { BiSolidQuoteAltRight } from 'react-icons/bi';
 import { useRecoilState } from "recoil";
 import { userState } from "../recoil/atoms/userState";
+import customaxios from '../api/Axios';
 
 const Participate = () => {
   const [userInfo,setUserInfo] = useRecoilState(userState)
@@ -22,7 +23,7 @@ const Participate = () => {
     
 useEffect(() => {
 
-  axios.get(`https://353a-222-108-73-38.ngrok-free.app/surveys/participation/${surveyId}`,
+  customaxios.get(`/surveys/participation/${surveyId}`,
   {
     headers: {
       Authorization: `${userInfo.accesstoken}`,
@@ -126,7 +127,7 @@ useEffect(() => {
 
     console.log('서버에 보낼 응답 데이터:', formattedResponses);
 
-    axios.post(`https://353a-222-108-73-38.ngrok-free.app/surveys/answerSubmit/${surveyId}`, 
+    customaxios.post(`/surveys/answerSubmit/${surveyId}`, 
         answer123,
         { headers: { Authorization: `${userInfo.accesstoken}`,
                       'Accept': 'application/json' } }

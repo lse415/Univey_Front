@@ -8,6 +8,7 @@ import { useRecoilState } from "recoil";
 import { userState } from "../recoil/atoms/userState";
 import { useParams } from 'react-router';
 import axios from 'axios';
+import customaxios from '../api/Axios';
 
 export default function QRcode() {
   const {surveyId} = useParams();
@@ -45,8 +46,8 @@ export default function QRcode() {
 
   function handleCreate(){
     const question = localStorage.getItem('userQuestions')
-    axios.post(
-      `https://353a-222-108-73-38.ngrok-free.app/surveys/submit/${surveyId}`,
+    customaxios.post(
+      `/surveys/submit/${surveyId}`,
       question,
       { headers: { 
         'ngrok-skip-browser-warning': '69420',

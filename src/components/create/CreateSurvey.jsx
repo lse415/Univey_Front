@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import CustomDatePicker from "./CustomDatePicker";
 import { useRecoilState } from "recoil";
 import { userState } from "../../recoil/atoms/userState";
+import customaxios from "../../api/Axios";
 
 const CreateSurvey = () => {
   const [userInfo,setUserInfo] = useRecoilState(userState)
@@ -71,8 +72,8 @@ const CreateSurvey = () => {
       };
       console.log(surveyData);
       console.log(userInfo.accesstoken)
-      axios.post(
-        'https://19fd-222-108-73-38.ngrok-free.app/surveys/create',
+      customaxios.post(
+        '/surveys/create',
         surveyData, 
         { headers: { Authorization: `${userInfo.accesstoken}` } }
       ).then((response) => {

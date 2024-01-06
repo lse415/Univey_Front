@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import robot from '../assets/robot.svg';
 import CloseSurveyModal from './CloseSurveyModal';
+import customaxios from '../../api/Axios'
 
 export default function MySurveyBoard({ surveys, selectedType }) {
     const [showModal, setShowModal] = useState(false);
@@ -21,8 +22,7 @@ export default function MySurveyBoard({ surveys, selectedType }) {
     };
 
     const handleSurveyClose = () => {
-        axios
-            .get(`/mypage/surveys/${selectedSurveyId}/close`)
+        customaxios.get(`/mypage/surveys/${selectedSurveyId}/close`)
             .then((response) => {
                 closeModal();
             })

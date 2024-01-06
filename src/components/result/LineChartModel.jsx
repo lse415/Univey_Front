@@ -1,7 +1,7 @@
 import React from 'react'
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 export default function LineChartModel({data}) {
-  console.log(data)
+  // console.log(data)
   return (
     <div>
         <LineChart width={730} height={250} data={data}

@@ -8,6 +8,7 @@ import GoPoint from '../components/my/GoPoint';
 import { GoPencil } from "react-icons/go";
 import { useRecoilState } from "recoil";
 import { userState } from "../recoil/atoms/userState";
+import customaxios from '../api/Axios';
 
 export default function My() {
 
@@ -16,7 +17,7 @@ export default function My() {
   const [userInfo,setUserInfo] = useRecoilState(userState)
 
   useEffect(() => {
-    axios.get('https://353a-222-108-73-38.ngrok-free.app/mypage',
+    customaxios.get('/mypage',
     { headers: { 
       'ngrok-skip-browser-warning': '69420',
       Authorization: `${userInfo.accesstoken}`,

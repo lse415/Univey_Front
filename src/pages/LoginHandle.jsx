@@ -1,8 +1,10 @@
-import axios from 'axios';
+
 import React, { useEffect } from 'react'
 import { Navigate, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useRecoilState } from "recoil";
 import { userState } from "../recoil/atoms/userState";
+import customaxios from '../api/Axios'
+import axios from 'axios';
 
 export default function LoginHandle() {
     const [userInfo,setUserInfo] = useRecoilState(userState)
@@ -13,7 +15,7 @@ export default function LoginHandle() {
         useEffect(() => {
         const queryParams = new URLSearchParams(location.search);
         const code = queryParams.get('code');
-        axios.get(`https://19fd-222-108-73-38.ngrok-free.app/users/kakao/callback?code=${code}`, 
+        customaxios.get(`/users/kakao/callback?code=${code}`, 
         {
             headers: {
                 'Content-Type': 'application/json',

@@ -10,7 +10,6 @@ import Logo from './Logo';
 export default function Header() {
   const [userInfo,setUserInfo] = useRecoilState(userState)
   const key = process.env.REACT_APP_REST_API_KEY
-  const userInfo_local = localStorage.getItem('userInfo')
   const url = `https://kauth.kakao.com/oauth/authorize?client_id=${key}&redirect_uri=http://localhost:3000/users/kakao/callback&response_type=code`
   console.log(userInfo)
 

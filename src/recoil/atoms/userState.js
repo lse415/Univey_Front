@@ -12,6 +12,6 @@ export const userState = atom({
 
 export const graphState = atom({
   key: "graphState",
-  default:{Type:'Line',Detail:'first'},
+  default:{},
   effects_UNSTABLE: [persistAtom]
 })

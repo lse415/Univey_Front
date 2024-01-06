@@ -5,6 +5,7 @@ import RecommendedQuestions from '../components/create_detail/RecommendedQuestio
 import { useRecoilState } from "recoil";
 import { userState } from "../recoil/atoms/userState";
 import { useParams } from 'react-router';
+import customaxios from '../api/Axios';
 
 const CreateDetail = () => {
   const {surveyId} = useParams();
@@ -39,8 +40,8 @@ const CreateDetail = () => {
     
   }, []);
    function questions(){
-    axios.get(
-      `https://19fd-222-108-73-38.ngrok-free.app/surveys/create/details/${surveyId}`,
+    customaxios.get(
+      `/surveys/create/details/${surveyId}`,
       { headers: { 
         'ngrok-skip-browser-warning': '69420',
         Authorization: `${userInfo.accesstoken}`
@@ -58,7 +59,7 @@ const CreateDetail = () => {
       console.log(surveyTopic)
       const question_topic = {"question":surveyTopic}
 
-    axios.post(`https://19fd-222-108-73-38.ngrok-free.app/chat-gpt/question`,
+      customaxios.post(`/chat-gpt/question`,
       question_topic,
       { headers: {
          Authorization: `${userInfo.accesstoken}`,

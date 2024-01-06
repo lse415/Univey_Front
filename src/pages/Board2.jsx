@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useRef, useState } from 'react';
+import customaxios from '../api/Axios';
 import BoardItem from '../components/Board/BoardItem';
 
 
@@ -13,7 +14,7 @@ export default function Board2() {
 
 
   useEffect(()=>{
-    axios.get(`https://353a-222-108-73-38.ngrok-free.app/surveys/list?category=${category}&postType=${postType}&orderTpye=${orderType}`,
+    customaxios.get(`/list?category=${category}&postType=${postType}&orderTpye=${orderType}`,
     {
       headers: {
           'Content-Type': 'application/json',

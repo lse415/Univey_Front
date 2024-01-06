@@ -29,7 +29,52 @@
         "없음"
         ],
         "votes": null
-        }
+        },
+        {
+        "question_num": 3,
+        "question_type": "MULTIPLE_CHOICE",
+        "question": "3번쨰 질문?",
+        "answer": [
+        "가끔",
+        "매일",
+        "한번도 사용해본 적 없음"
+        ],
+        "votes": [
+        10,
+        1,
+        18
+        ]
+        },
+        {
+            "question_num": 4,
+            "question_type": "MULTIPLE_CHOICE",
+            "question": "4번쨰 질문?",
+            "answer": [
+            "가끔",
+            "매일",
+            "한번도 사용해본 적 없음"
+            ],
+            "votes": [
+            18,
+            2,
+            6
+            ]
+            },
+            {
+                "question_num": 5,
+                "question_type": "MULTIPLE_CHOICE",
+                "question": "5번쨰 질문?",
+                "answer": [
+                "가끔",
+                "매일",
+                "한번도 사용해본 적 없음"
+                ],
+                "votes": [
+                5,
+                7,
+                9
+                ]
+                }
         ]
         }
 
