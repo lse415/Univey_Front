@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { useRecoilState } from "recoil";
 import { userState } from "../recoil/atoms/userState";
-import { useParams } from 'react-router';
+import { useParams,useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import customaxios from '../api/Axios';
 
@@ -25,6 +25,7 @@ export default function QRcode() {
   const [logoStyle, setLogoStyle] = useState('squares')
   const [img, setImg] = useState('');
   const [userInfo,setUserInfo] = useRecoilState(userState)
+  const usenavigate = useNavigate();
   function handleStyle(e){
     e.preventDefault();
     setStyle(e.target.value)
@@ -58,6 +59,7 @@ export default function QRcode() {
       .then((response) => {
         const point = response.data.data
         setUserInfo((prev)=>({...prev, point:point})) 
+        usenavigate('/main')
       })
       .catch((error) => {
         console.error('에러 발생:', error);

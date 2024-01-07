@@ -148,7 +148,6 @@ const UserQuestions = ({
 
     console.log(userQuestions)
     localStorage.setItem('userQuestions', JSON.stringify({userQuestions}));
-    // localStorage.setItem('userQuestions', JSON.stringify(mock));
     console.log()
     navigate(`/main/create/qr/${surveyId}`);
 

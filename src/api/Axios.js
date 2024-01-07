@@ -1,8 +1,9 @@
 import axios from "axios";
 
 const customaxios = axios.create({
-    baseURL: 'https://1c8c-222-108-73-38.ngrok-free.app',
+    baseURL: 'https://2f5a-222-108-73-38.ngrok-free.app',
     headers:{
+        
         'Content-Type': 'application/json',
         'ngrok-skip-browser-warning': '69420',
         'Accept': 'application/json'
