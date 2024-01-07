@@ -5,10 +5,13 @@ import { useEffect } from 'react'
 import ResultAnswer from '../components/result/ResultAnswer';
 import ResultChart from '../components/result/ResultChart';
 import { useRecoilState } from "recoil";
-import { graphState } from "../recoil/atoms/userState";
+import { graphState,userState } from "../recoil/atoms/userState";
 import customaxios from '../api/Axios';
+import { useParams } from 'react-router-dom';
 
 export default function Result() {
+  const [userInfo,setUserInfo] = useRecoilState(userState)
+  const {surveyId} = useParams();
     const [data,setData]=useState();
     const [graphInfo,setGraphInfo] = useRecoilState(graphState);
     useEffect(()=>{
@@ -16,8 +19,12 @@ export default function Result() {
     },[])
 
     async function fetchData(){
-        await customaxios('/data/Result.json')
-        .then((res)=>res.data.resultData)
+        // await customaxios('/data/Result.json')
+        await customaxios(`/surveys/result/${surveyId}`,
+        {
+          headers: {Authorization: `${userInfo.accesstoken}`,}
+        })
+        .then((res)=>res.data.data.resultData)
         .then((res)=>setData(res))
       }
     
@@ -26,7 +33,8 @@ export default function Result() {
         // setGraphInfo({...graphInfo, question_num:['Line','first']})
       }
     })}
-      
+
+
   return (
     <div>
       <header className='mb-10'>

@@ -13,7 +13,7 @@ export default function Trend() {
   },[])
 
   async function dataset(){
-    await customaxios('/data/Board.json')
+    await customaxios('/trends')
     .then((res)=>res.data.surveyData)
     .then((res)=>SetTrend(res))
   }

@@ -19,7 +19,6 @@ export default function Main() {
   console.log(userInfo)
   useEffect(()=>{
     dataset();
-    test()
     // test2()
   },[])
 
@@ -45,18 +44,7 @@ export default function Main() {
         }
       )
   }
-  
 
-
-  async function test(){
-    console.log('start')
-    customaxios.get('/surveys/list?category=경제&postType=activeSurvey&orderType=point')
-    // .then((res)=>res.json())
-    .then((res)=>console.log(res))
-    .catch((err)=>console.error(err))
-
-    console.log('end')
-  }
 
   return (
     <div >

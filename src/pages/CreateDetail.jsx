@@ -100,10 +100,6 @@ const CreateDetail = () => {
 
   }
 
-  async function gptQeustions(){
-   
-  }
-
 
   const handleAddQuestion = (recommendedQuestion) => {
     // 추천질문에서 추출
@@ -163,3 +159,4 @@ const CreateDetail = () => {
 };
 
 export default CreateDetail;
+  
