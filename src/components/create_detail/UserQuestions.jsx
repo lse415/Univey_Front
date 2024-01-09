@@ -50,7 +50,7 @@ const UserQuestions = ({
       console.log("New Question:", newQuestion);
       onAddQuestion(newQuestion); // 직접 newQuestion 전달
 
-      setQuestions("");
+      setQuestion("");
       setAnswer([""]);
     }
 
