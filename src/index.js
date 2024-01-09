@@ -48,7 +48,9 @@ const router = createBrowserRouter([
       { path: "main/my/info", element: <MyInfo /> },
       { path: "main/my/surveys", element: <MySurveys /> },
       { path: "main/my/point", element: <MyPoint /> },
+      // { path: "main/participate", element: <Participate /> },
       { path: "main/participate/:surveyId", element: <Participate /> },
+
       {
         path: "main/participate/:surveyId/complete",
         element: <ParticipateComplete />,
