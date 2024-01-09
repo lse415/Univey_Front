@@ -41,8 +41,10 @@ const router = createBrowserRouter([
         element: <ResultDetail />,
       },
       { path: "main/create", element: <Create /> },
-      // { path: "main/create/details/:surveyId/:surveyTopic", element: <CreateDetail /> },
-      { path: "main/create/details", element: <CreateDetail /> },
+      {
+        path: "main/create/details/:surveyId/:surveyTopic",
+        element: <CreateDetail />,
+      },
       { path: "main/my/info", element: <MyInfo /> },
       { path: "main/my/surveys", element: <MySurveys /> },
       { path: "main/my/point", element: <MyPoint /> },
