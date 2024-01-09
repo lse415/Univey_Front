@@ -89,7 +89,10 @@ const CreateSurvey = () => {
         topic,
         description,
         category,
-        age: [minAge, maxAge],
+        age: {
+          minAge: minAge,
+          maxAge: maxAge,
+        },
         gender,
         deadline,
         targetRespondents,
@@ -283,7 +286,7 @@ const CreateSurvey = () => {
                 <option className="text-text_color" value="" disabled>
                   연령대 선택
                 </option>
-                <option className="text-text_color" value={"all"}>
+                <option className="text-text_color" value={"0"}>
                   전체
                 </option>
                 <option className="text-text_color" value={"10"}>
@@ -315,7 +318,7 @@ const CreateSurvey = () => {
                 <option className="text-text_color" value="" disabled>
                   연령대 선택
                 </option>
-                <option className="text-text_color" value={"all"}>
+                <option className="text-text_color" value={"0"}>
                   전체
                 </option>
                 <option className="text-text_color" value={"10"}>
