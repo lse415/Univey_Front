@@ -21,8 +21,7 @@ export default function Search() {
           'Content-Type': 'application/json'
         } }
       )
-      .then((res)=>console.log(res))
-      .then((res)=>setData(res.surveyData))
+      .then((res)=>setData(res.data.data.content))
       .catch((err)=>{
         console.log(err)
       })
@@ -33,8 +32,7 @@ export default function Search() {
 
 
   return (
-    <div className='item-center'>
-      <div>{value}</div>
+    <div className='item-center '>
       <main className='w-screen flex flex-col items-center mt-3'>
           {(data) && data.map((item)=> (item.topic.includes(value) || item.description.includes(value)) && <BoardItem key={item.id} data={item}/>)}
       </main>

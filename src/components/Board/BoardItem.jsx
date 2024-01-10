@@ -55,7 +55,7 @@ export default function BoardItem({ data }) {
   }
 
   return (
-    <div className="overflow-hidden border-t-2 border-main_color w-line h-full">
+    <div className="overflow-hidden border-y-2 border-main_color w-line h-full">
       <div className=" flex justify-between ml-10">
         <div className="flex flex-col justify-center h-full mt-9">
           <div className="flex">
