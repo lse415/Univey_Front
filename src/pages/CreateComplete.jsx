@@ -17,7 +17,7 @@ export default function CreateComplete() {
   };
 
   const handleReturnCopyClick = () => {
-    navigator.clipboard.writeText('http://localhost:3000/main/participate/13');
+    navigator.clipboard.writeText(`http://localhost:3000/main/participate/${surveyId}`);
     alert('링크가 복사되었습니다')
   };
 

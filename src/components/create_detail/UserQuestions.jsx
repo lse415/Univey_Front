@@ -27,8 +27,9 @@ const UserQuestions = ({
   const [isValid, setIsValid] = useState(
     Array(userQuestions.length).fill(false)
   );
-
+  const Info = JSON.parse(localStorage.getItem('Info'))
   const navigate = useNavigate();
+
 
   const handleAddQuestion = (question) => {
     if (editingIndex !== null) {
@@ -176,11 +177,11 @@ const UserQuestions = ({
       <div className="flex justify-center">
         <BiSolidQuoteAltLeft className="text-main_color" />
         <h2 className="text-2xl font-semibold text-main_color mb-4 px-2">
-          {topic}
+          {Info.topic}
         </h2>
         <BiSolidQuoteAltRight className="text-main_color" />
       </div>
-      <p className="text-center text-sm mb-7">{description}</p>
+      <p className="text-center text-sm mb-7">{Info.description}</p>
 
       {userQuestions.map((userQuestion, index) => (
         <div key={index}>

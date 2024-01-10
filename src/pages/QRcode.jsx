@@ -86,7 +86,8 @@ export default function QRcode() {
         .then((response) => {
           const point = response.data.data
           setUserInfo((prev)=>({...prev, point:point})) 
-          usenavigate(`/main/create/complete`)
+          console.log('hello 여기야~')
+          usenavigate(`/main/create/complete/${id}`)
         })
         .catch((error) => {
           console.error('에러 발생:', error);

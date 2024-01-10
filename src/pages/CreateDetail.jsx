@@ -15,6 +15,7 @@ const CreateDetail = () => {
   const [topic, setTopic] = useState("");
   const [description, setDescription] = useState("");
   const [userInfo, setUserInfo] = useRecoilState(userState);
+  
   console.log("createDetail 페이지임");
   console.log(userInfo);
 

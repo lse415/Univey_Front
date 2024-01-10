@@ -35,7 +35,7 @@ const router = createBrowserRouter([
       { path: "main/search/:value", element: <Search /> },
       { path: "users/kakao/callback", element: <LoginHandle /> },
       { path: "main/create/qr", element: <QRcode /> },
-      { path: "main/create/complete", element: <CreateComplete /> },
+      { path: "main/create/complete/:surveyId", element: <CreateComplete /> },
       { path: "main/result/:surveyId", element: <Result /> },
       {
         path: "main/result/:surveyId/edit/:questionNum",
