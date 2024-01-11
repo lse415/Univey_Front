@@ -34,6 +34,7 @@ export default function MySurveyBoard({ surveys, selectedType }) {
       })
       .then((response) => {
         closeModal();
+        setSurvey(response.data.data);
       })
       .catch((error) => {
         console.error("Error closing survey:", error);

@@ -27,9 +27,8 @@ const UserQuestions = ({
   const [isValid, setIsValid] = useState(
     Array(userQuestions.length).fill(false)
   );
-  const Info = JSON.parse(localStorage.getItem('Info'))
+  const Info = JSON.parse(localStorage.getItem("Info"));
   const navigate = useNavigate();
-
 
   const handleAddQuestion = (question) => {
     if (editingIndex !== null) {
@@ -145,7 +144,7 @@ const UserQuestions = ({
   const handleSubmit = () => {
     const isValidArray = userQuestions.map((userQuestion) => {
       return userQuestion.question_type === "multipleChoice"
-        ? userQuestion.answer.length > 0
+        ? Object.keys(userQuestion.answer).length > 0
         : true;
     });
 
@@ -160,7 +159,11 @@ const UserQuestions = ({
 
   useEffect(() => {
     // 초기에는 모든 질문이 유효하다고 가정...
-    const initialIsValidArray = Array(userQuestions.length).fill(true);
+    const initialIsValidArray = userQuestions.map((userQuestion) => {
+      return userQuestion.question_type === "multipleChoice"
+        ? Object.keys(userQuestion.answer).length > 0
+        : true;
+    });
     setIsValid(initialIsValidArray);
 
     document.addEventListener("mousedown", handleClickOutside);
@@ -171,6 +174,8 @@ const UserQuestions = ({
   }, [creatingQuestion, editingIndex, userQuestions]);
 
   console.log("userQuestions:", userQuestions);
+  console.log("hideValidationMessage in UserQuestions:", false);
+  console.log("isValid array in UserQuestions:", isValid);
 
   return (
     <div className="flex-1 p-4 mt-20">
@@ -208,6 +213,7 @@ const UserQuestions = ({
               onClick={() => handleEditQuestion(index)}
               isEditing={editingIndex !== null}
               isValid={isValid[index]}
+              hideValidationMessage={false}
             />
           )}
         </div>

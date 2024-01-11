@@ -1,38 +1,38 @@
-import React, { useState } from 'react';
-import AddButtonIcon from '../icons/AddButtonIcon';
-import CopyButtonIcon from '../icons/CopyButtonIcon';
-import DeleteButtonIcon from '../icons/DeleteButtonIcon';
-import MultipleChoiceIcon from '../icons/MultipleChoiceIcon';
-import ShortAnswerIcon from '../icons/ShortAnswerIcon';
-import ClickedAnswerIcon from '../icons/ClickedAnswerIcon';
-import CreateCardTopAsset from '../icons/CreateCardTopAsset';
+import React, { useState } from "react";
+import AddButtonIcon from "../icons/AddButtonIcon";
+import CopyButtonIcon from "../icons/CopyButtonIcon";
+import DeleteButtonIcon from "../icons/DeleteButtonIcon";
+import MultipleChoiceIcon from "../icons/MultipleChoiceIcon";
+import ShortAnswerIcon from "../icons/ShortAnswerIcon";
+import ClickedAnswerIcon from "../icons/ClickedAnswerIcon";
+import CreateCardTopAsset from "../icons/CreateCardTopAsset";
 import { IoRadioButtonOff } from "react-icons/io5";
 
 const CreateQuestion = ({ onCancel, onAddQuestion, onCopyCreateQuestion }) => {
-  const [question, setQuestion] = useState(''); // 질문 내용
-  const [questionType, setQuestionType] = useState('multipleChoice'); // 질문 유형
-  const [selectedAnswerIndex, setSelectedAnswerIndex] = useState('');
+  const [question, setQuestion] = useState(""); // 질문 내용
+  const [questionType, setQuestionType] = useState("multipleChoice"); // 질문 유형
+  const [selectedAnswerIndex, setSelectedAnswerIndex] = useState("");
   const [showComponent, setShowComponent] = useState(true);
-  const [answers, setAnswers] = useState(['']); // 객관식일 때 각 응답 옵션
+  const [answers, setAnswers] = useState([""]); // 객관식일 때 각 응답 옵션
   const [isRequired, setIsRequired] = useState(false); // 필수질문 여부
 
   // 질문 추가
   const handleAddQuestion = () => {
     // 질문이 있을 때만 추가
-    if (question.trim() !== '') {
+    if (question.trim() !== "") {
       // 새로운 질문 객체 생성
       const newQuestion = {
         question,
         questionType,
         isRequired,
-        answer: answers.filter(answer => answer.trim() !== ''), // 비어있는 응답은 필터링
+        answer: answers.filter((answer) => answer.trim() !== ""), // 비어있는 응답은 필터링
       };
 
       // 부모 컴포넌트로 새로운 질문 추가
       onAddQuestion(newQuestion);
 
-      setQuestion('');
-      setAnswers(['']);
+      setQuestion("");
+      setAnswers([""]);
     }
   };
 
@@ -43,7 +43,7 @@ const CreateQuestion = ({ onCancel, onAddQuestion, onCopyCreateQuestion }) => {
       question,
       questionType,
       isRequired,
-      answer: answers.filter(answer => answer.trim() !== ''),
+      answer: answers.filter((answer) => answer.trim() !== ""),
     };
 
     // 부모 컴포넌트로 복사된 질문 추가
@@ -66,8 +66,8 @@ const CreateQuestion = ({ onCancel, onAddQuestion, onCopyCreateQuestion }) => {
     updatedAnswers[index] = value;
 
     // 마지막 응답이 비어 있지 않으면 새로운 응답 추가
-    if (index === updatedAnswers.length - 1 && value.trim() !== '') {
-      updatedAnswers.push('');
+    if (index === updatedAnswers.length - 1 && value.trim() !== "") {
+      updatedAnswers.push("");
     }
 
     setSelectedAnswerIndex(index);
@@ -77,7 +77,10 @@ const CreateQuestion = ({ onCancel, onAddQuestion, onCopyCreateQuestion }) => {
   return showComponent ? (
     <div className="flex w-full">
       {/* "+" 버튼 클릭 시 질문 추가 함수 호출 */}
-      <button onClick={handleAddQuestion} className=" text-main_color pr-2 font-bold">
+      <button
+        onClick={handleAddQuestion}
+        className=" text-main_color pr-2 font-bold"
+      >
         <AddButtonIcon />
       </button>
       <div className="flex flex-col items-start">
@@ -94,10 +97,10 @@ const CreateQuestion = ({ onCancel, onAddQuestion, onCopyCreateQuestion }) => {
               <input
                 id="checked"
                 type="checkbox"
-                value={''}
+                value={""}
                 className="mr-1 mt-2 bg-transparent border border-text_color rounded w-4 h-4 "
                 onChange={() => {
-                  console.log('Checkbox clicked. Current value:', !isRequired);
+                  console.log("Checkbox clicked. Current value:", !isRequired);
                   setIsRequired(!isRequired);
                 }}
               />
@@ -120,17 +123,17 @@ const CreateQuestion = ({ onCancel, onAddQuestion, onCopyCreateQuestion }) => {
               </select>
             </div>
           </div>
-          {questionType === 'multipleChoice' && (
+          {questionType === "multipleChoice" && (
             <div className="mt-2">
               {answers.map((answer, index) => (
                 <div key={index} className="flex items-center mt-2">
-                  <div className='flex space-x-1'>
+                  <div className="flex space-x-1">
                     {index === selectedAnswerIndex && <ClickedAnswerIcon />}
                     <IoRadioButtonOff />
-                    </div>
+                  </div>
                   <input
                     className="w-full p-1 outline-none border-none border-question_card_grey bg-transparent text-text_color mr-2"
-                    placeholder={'응답 추가'}
+                    placeholder={"응답 추가"}
                     value={answer}
                     onClick={() => setSelectedAnswerIndex(index)}
                     onChange={(e) => handleUpdateAnswer(index, e.target.value)}
@@ -139,26 +142,23 @@ const CreateQuestion = ({ onCancel, onAddQuestion, onCopyCreateQuestion }) => {
               ))}
             </div>
           )}
-          {questionType === 'shortAnswer' && (
+          {questionType === "shortAnswer" && (
             <div className="mt-4">
               <input
                 type="text"
                 className="w-full p-1 border rounded border-question_card_grey bg-white text-text_color mr-2"
-                placeholder={'주관식 서술 문항입니다. 자유롭게 작성해주세요.'}
-                value={answers['']}
+                placeholder={"주관식 서술 문항입니다. 자유롭게 작성해주세요."}
+                value={answers[""]}
                 disabled
               />
             </div>
           )}
           <hr className="my-4 py-2 border-question_card_grey"></hr>
           <div className="flex justify-end mt-2">
-            <button 
-              className="px-2"
-              onClick={handleCopyCreateQuestion}>
+            <button className="px-2" onClick={handleCopyCreateQuestion}>
               <CopyButtonIcon />
             </button>
-            <button className="pl-2"
-              onClick={handleDelete}>
+            <button className="pl-2" onClick={handleDelete}>
               <DeleteButtonIcon />
             </button>
           </div>

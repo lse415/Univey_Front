@@ -8,6 +8,7 @@ const QuestionCard = ({
   answer,
   onClick,
   isValid,
+  hideValidationMessage,
 }) => {
   const renderAnswer = () => {
     if (!answer) {
@@ -29,7 +30,9 @@ const QuestionCard = ({
     <div className="mb-4">
       <div
         className={`bg-question_card_bg border p-4  rounded cursor-pointer ${
-          question_type === "multipleChoice" && !isValid
+          question_type === "multipleChoice" &&
+          !isValid &&
+          !hideValidationMessage
             ? "border border-red-500"
             : ""
         }`}
@@ -54,7 +57,7 @@ const QuestionCard = ({
         )}
       </div>
       <div>
-        {!isValid && (
+        {!hideValidationMessage && !isValid && (
           <p className="text-red-500 text-left text-sm">
             응답을 추가해 주세요.
           </p>

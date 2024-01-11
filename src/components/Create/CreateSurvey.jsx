@@ -85,7 +85,7 @@ const CreateSurvey = () => {
     // 모두 valid
     if (newValidationStatus.every((status) => status) && isAgeValid) {
       // JSON data creation
-      
+
       const surveyData = {
         topic,
         description,
@@ -98,7 +98,7 @@ const CreateSurvey = () => {
         deadline,
         targetRespondents,
       };
-      localStorage.setItem('Info', JSON.stringify(surveyData))
+      localStorage.setItem("Info", JSON.stringify(surveyData));
       const newPath = `./details/${topic}`;
       navigate(newPath);
     } else {
