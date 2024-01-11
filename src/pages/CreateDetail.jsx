@@ -15,31 +15,15 @@ const CreateDetail = () => {
   const [topic, setTopic] = useState("");
   const [description, setDescription] = useState("");
   const [userInfo, setUserInfo] = useRecoilState(userState);
-  
+
   console.log("createDetail 페이지임");
   console.log(userInfo);
 
   useEffect(() => {
     questions();
   }, []);
-  function questions() {
-    customaxios
-      .get(`/surveys/create/details/${surveyId}`, {
-        headers: {
-          "ngrok-skip-browser-warning": "69420",
-          Authorization: `${userInfo.accesstoken}`,
-        },
-      })
-      .then((response) => {
-        console.log(response);
-        setTopic(response.data.data.topic);
-        setDescription(response.data.data.description);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
 
-    console.log(surveyTopic);
+  function questions() {
     const question_topic = { question: surveyTopic };
 
     customaxios
@@ -51,34 +35,19 @@ const CreateDetail = () => {
         },
       })
       .then((response) => {
-        console.log(response.data.data);
-        const recommendedQuestions = response.data.data;
-        const jsonString = recommendedQuestions
-          .replace(/\[|\]/g, "")
-          .replace(/([^,]+)/g, '"$1"');
+        console.log(response);
+        const gptData = response.data.data;
+        console.log(gptData);
 
-        try {
-          const dataArray = JSON.parse(`[${jsonString}]`);
-          console.log(dataArray[0]); // 첫 번째 배열을 출력
-        } catch (error) {
-          console.error("Error parsing JSON:", error.message);
-        }
-        console.log(Object.keys(recommendedQuestions));
-        console.log(Object.values(recommendedQuestions));
-        const entries = Object.entries(recommendedQuestions);
-        console.log(Array.isArray(entries));
-
-        //response.data.recommendedQuestions -> response.data
-        const flattenedRecommendedQuestions = recommendedQuestions.foreach(
+        const flattenedRecommendedQuestions = gptData.map(
           (recommendedQuestion) => ({
-            question_num: recommendedQuestion[0],
-            question: recommendedQuestion[1],
-            question_type: "multipleChoice",
-            isRequired: true,
-            answer: recommendedQuestion.slice(2),
+            question_num: recommendedQuestion.question_num,
+            question: recommendedQuestion.question,
+            question_type: recommendedQuestion.question_type,
+            isRequired: recommendedQuestion.required,
+            answer: recommendedQuestion.answer,
           })
         );
-
         setRecommendedQuestions(flattenedRecommendedQuestions);
       })
       .catch((error) => {
@@ -86,9 +55,9 @@ const CreateDetail = () => {
       });
   }
 
-  useEffect(()=>{
-    console.log(recommendedQuestions)
-  },recommendedQuestions)
+  useEffect(() => {
+    console.log(recommendedQuestions);
+  }, recommendedQuestions);
 
   const handleAddQuestion = (recommendedQuestion) => {
     // 추천질문에서 추출
