@@ -20,36 +20,34 @@ export default function Board2() {
   const [postType, setPostType] = useState('all')
   const [orderType, setOrderType] = useState('createdAt')
 
-
-
-  useEffect(()=>{
-    customaxios.get(`surveys/list?category=${category}&postType=${postType}&orderType=${orderType}`,
-    {
-      headers: {
-           Authorization: `${userInfo.accesstoken}`,
-          'Content-Type': 'application/json',
-          'ngrok-skip-browser-warning': '69420',
-          'Accept': 'application/json'
-      }
-    }
-    )
-    .then((res)=>res.data.data.content)
-    .then((res)=>{
-      setData(res)
-    })
-
-
-
-    console.log()
-  },[category,postType,orderType])
-
   useEffect(()=>{
     console.log(inView)
+    const pages = page + 1;
     if (inView) {
-        console.log(`${page} 의 데이터들 다 주세요`)
-         setPage((page)=>page+1)
+      customaxios.get(`surveys/list/${pages}?category=${category}&postType=${postType}&orderType=${orderType}`,
+      {
+        headers: {
+             Authorization: `${userInfo.accesstoken}`,
+            'Content-Type': 'application/json',
+            'ngrok-skip-browser-warning': '69420',
+            'Accept': 'application/json'
+        }
+      }
+      )
+      .then((res)=>res.data.data.content)
+      .then((res)=>{
+        console.log('res값')
+        console.log(res)
+        data===null 
+        ?setData(res)
+        :setData(prev=> [...prev, ...res],)
+      })
+         setPage(pages)
+         
       }
   },[inView])
+
+
 
   data ? console.log(data) : console.log('no')
 
@@ -124,7 +122,7 @@ export default function Board2() {
         <hr className='  w-line border-2 border-main_color'/>
       </div>
 
-      <div ref={ref}>hi</div>
+      <div ref={ref}></div>
       </main>
     </div> 
   );

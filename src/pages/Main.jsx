@@ -55,7 +55,7 @@ export default function Main() {
         </div>
       </article>
 
-      <article className='h-screen'>
+      <article className='h-auto'>
         <div id='Trend' className='flex text-xl font-bold ml-left my-5'>
           <FiCheckSquare className='text-3xl text-main_color mt-4'/>
           <div className='flex mt-4'> 
@@ -77,7 +77,7 @@ export default function Main() {
             }
           <hr className='  w-line border-1 border-main_color '/>
           <Link to='/main/trend' className='w-line relative'>
-            <div className=' mt-8 float-right  text-center pt-2 font-semibold text-main_color w-56 h-12 border-1 border-main_color rounded-3xl'>트렌드 전체 보기 &nbsp;&nbsp;	&gt; </div>
+            <div className=' mt-8 float-right  text-center pt-2 font-semibold text-main_color w-56 h-12 border-1 border-main_color rounded-3xl mb-5'>트렌드 전체 보기 &nbsp;&nbsp;	&gt; </div>
           </Link>
         </div>
       </article>
