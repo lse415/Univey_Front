@@ -1,0 +1,27 @@
+@keyframes rotate360 {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  #root:not(:empty) ~ #loading {
+    display: none;
+  }
+  
+  
+  .loadingIcon {
+    width:30rem;
+    animation: rotate360 5s linear infinite; /* 5s 동안 선형으로 360도 회전, 무한 반복 */
+  }
+  
+#loading{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+}
+
+  
