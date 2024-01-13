@@ -22,6 +22,9 @@ import MyPoint from "./pages/MyPoint";
 import ParticipateComplete from "./pages/ParticipateComplete";
 import ResultDetail from "./pages/ResultDetail";
 import CreateComplete from "./pages/CreateComplete";
+import PaymentRequest from "./pages/PaymentRequest";
+import PaymentSuccess from "./pages/PaymentSuccess";
+import PaymentFail from "./pages/PaymentFail";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -53,6 +56,18 @@ const router = createBrowserRouter([
       { path: "main/my/info", element: <MyInfo /> },
       { path: "main/my/surveys", element: <MySurveys /> },
       { path: "main/my/point", element: <MyPoint /> },
+      {
+        path: "main/my/point/charge",
+        element: <PaymentRequest />,
+      },
+      {
+        path: "main/my/point/charge/success",
+        element: <PaymentSuccess />,
+      },
+      {
+        path: "main/my/point/charge/fail",
+        element: <PaymentFail />,
+      },
       { path: "main/participate/:surveyId", element: <Participate /> },
 
       {
