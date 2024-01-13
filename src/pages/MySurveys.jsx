@@ -14,20 +14,48 @@ export default function MySurveys({}) {
   const [surveys, setSurveys] = useState([]);
 
   const handleItemClick = (type) => {
-    setSelectedType(type);
+    if(type==='생성한 설문'){
+      customaxios
+        .get('/mypage/surveys?type=created', {
+          headers: {
+            Authorization: `${userInfo.accesstoken}`,
+          },
+        })
+        .then((response) => {
+          console.log(response.data.data);
+          setSurveys(response.data.data);
+          setSelectedType("created");
+
+        })
+        .catch((error) => {
+          console.error("Error fetching surveys:", error);
+        });
+
+    }
+    else if (type==='참여한 설문'){
+      customaxios
+        .get('/mypage/surveys?type=participated', {
+          headers: {
+            Authorization: `${userInfo.accesstoken}`,
+          },
+        })
+        .then((response) => {
+          console.log(response.data.data);
+          setSurveys(response.data.data);
+          setSelectedType("participated");
+          
+        })
+        .catch((error) => {
+          console.error("Error fetching surveys:", error);
+        });
+        
+    }
   };
 
   useEffect(() => {
-    const mySurveyData = () => {
-      let endpoint;
-      if (selectedType === "created") {
-        endpoint = "/mypage/surveys?type=created"; ///mypage/surveys?type=created
-      } else if (selectedType === "participated") {
-        endpoint = "/mypage/surveys?type=participated"; ///mypage/surveys?type=participated
-      }
 
       customaxios
-        .get(endpoint, {
+        .get("/mypage/surveys?type=created", {
           headers: {
             Authorization: `${userInfo.accesstoken}`,
           },
@@ -40,10 +68,8 @@ export default function MySurveys({}) {
         .catch((error) => {
           console.error("Error fetching surveys:", error);
         });
-    };
 
-    mySurveyData();
-  }, [selectedType]);
+  }, []);
 
   return (
     <div className="lg:mx-56 lg:mt-7 mb-20">
@@ -65,7 +91,7 @@ export default function MySurveys({}) {
                 <li
                   key={index}
                   onClick={() =>
-                    handleItemClick(index === 0 ? "created" : "participated")
+                    handleItemClick(item)
                   }
                   className={`${
                     selectedType === (index === 0 ? "created" : "participated")
