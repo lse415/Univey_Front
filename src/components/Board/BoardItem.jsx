@@ -48,7 +48,7 @@ export default function BoardItem({ data }) {
         navigate(`/main/result/${data.id}`)
         break;
       case 'participated':
-        alert('이미 참여하셨습니다.')
+        navigate(`/main/result/${data.id}`)
         break;
       default: return
   }
@@ -85,7 +85,7 @@ export default function BoardItem({ data }) {
         <div className='flex'>
           <div className="text-main_color">
           <button onClick={()=>handlePart()} className='h-full flex items-start pb-10 flex-col justify-end'>
-            <div className="border-2 w-12 h-6 flex justify-center items-center text-s rounded-xl border-main_color">{data.point==null ? '10' : data.point}p</div>
+            <div className="border-1 w-12 h-6 flex justify-center items-center text-s rounded-xl border-main_color">{data.point==null ? '10' : data.point}p</div>
             <div className="flex items-center">
             <span>설문 참여하러 가기  &nbsp; </span> 
             <span className=''><SlArrowRight/></span> 

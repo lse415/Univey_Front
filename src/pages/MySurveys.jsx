@@ -35,6 +35,7 @@ export default function MySurveys({}) {
         .then((response) => {
           console.log(response.data.data);
           setSurveys(response.data.data);
+          
         })
         .catch((error) => {
           console.error("Error fetching surveys:", error);

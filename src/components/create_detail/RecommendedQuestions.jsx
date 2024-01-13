@@ -6,6 +6,8 @@ const RecommendedQuestions = ({
   onAddQuestion,
   onAddAllQuestions,
 }) => {
+
+  console.log(recommendedQuestions==false)
   return (
     <div className="flex-1 p-4 mt-12">
       <div className="text-xl font-semibold text-main_color mb-4">추천질문</div>
@@ -24,7 +26,8 @@ const RecommendedQuestions = ({
         </button>
       </div>
       <div className="overflow-x-hidden">
-        {recommendedQuestions.map((recommendedQuestion) => (
+        {recommendedQuestions
+        ? recommendedQuestions.map((recommendedQuestion) => (
           <QuestionCard
             key={recommendedQuestion?.question_num}
             question_num={recommendedQuestion?.question_num?.toString()}
@@ -34,7 +37,9 @@ const RecommendedQuestions = ({
             onClick={() => onAddQuestion(recommendedQuestion)}
             hideValidationMessage={true}
           />
-        ))}
+        ))
+        :<div>GPT 데이터를 불러오고 있습니다...</div>
+        }
       </div>
     </div>
   );

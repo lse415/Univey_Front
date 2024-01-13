@@ -6,7 +6,7 @@ export default function TrendBoard({data}) {
   console.log(data)
 
   return (
-    <div className='w-1/4 border-1 border-main_color mx-5 rounded-2xl flex flex-col items-center'>
+    <div className='w-1/3 border-1 border-main_color mx-5 rounded-2xl flex flex-col items-center'>
       <div className='h-1/2 pt-8'>
         <img src={trend} alt="" />
       </div>

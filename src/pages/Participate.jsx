@@ -37,6 +37,11 @@ useEffect(() => {
   }
   })
   .then((res)=>{
+        if(res.data.status===409){
+          alert('이미 참여한 설문조사입니다')
+          navigate(-1)
+        }
+        else{
     console.log(res)
 
     const surveyData=res.data.data.surveyData
@@ -51,6 +56,11 @@ useEffect(() => {
       // 초기에 모든 질문에 대한 경고를 숨기도록 빈 배열로 초기화
       setShowWarning(Array(flattenedUserQuestions.length).fill(false));
       setUserQuestions(flattenedUserQuestions)
+    }
+  }
+  })
+  .catch(err=>{
+    if(err.response.data.status===401){
     }
   })
 
@@ -144,6 +154,7 @@ useEffect(() => {
         },
       })
       .then((res) => {
+        if(res.data.status!==409){
         const surveyData = res.data.data.surveyData;
         const flattenedUserQuestions = res.data.data.surveyData.userQuestions;
 
@@ -157,7 +168,14 @@ useEffect(() => {
           setShowWarning(Array(flattenedUserQuestions.length).fill(false));
           setUserQuestions(flattenedUserQuestions);
         }
-      });
+        }
+      })
+      .catch(err=>{
+        if(err.response.data.status===401){
+          alert('로그인이 필요합니다!')
+          navigate('/')
+        }
+      })
 
     /*   axios
         .get(
@@ -248,9 +266,13 @@ useEffect(() => {
         const newPath = "./complete";
         navigate(newPath);
       })
-      .catch((error) => {
-        console.error("에러 발생:", error);
-      });
+      .catch(err=>{
+        console.log('3번째')
+        if(err.response.data.status===401){
+          alert('로그인이 필요합니다!')
+          navigate('/')
+        }
+      })
   };
 
   return (

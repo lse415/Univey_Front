@@ -5,23 +5,43 @@ import BoardItem from '../components/Board/BoardItem';
 import { useRecoilState } from "recoil";
 import { userState } from "../recoil/atoms/userState";
 import { useInView } from 'react-intersection-observer';
+import useDidMountEffect from '../hook/useDidMountEffect';
 
 
 export default function Board2() {
-  const [page, setPage] =useState(0);
+  const [page, setPage] =useState(1);
   const [ref, inView] = useInView();
   const [userInfo,setUserInfo] = useRecoilState(userState)
   const [data,setData]=useState(null);
-  const [status,setStatus]=useState(['전체','전체']);
-  const [boardData, setboardData] = useState(data);
   
   const [category2, setCategory2] = useState('전체');
   const [category, setCategory] = useState('all');
   const [postType, setPostType] = useState('all')
   const [orderType, setOrderType] = useState('createdAt')
 
+
   useEffect(()=>{
-    console.log(inView)
+    console.log('nomal')
+    customaxios.get(`surveys/list/1?category=${category}&postType=${postType}&orderType=${orderType}`,
+    {
+      headers: {
+           Authorization: `${userInfo.accesstoken}`,
+          'Content-Type': 'application/json',
+          'ngrok-skip-browser-warning': '69420',
+          'Accept': 'application/json'
+      }
+    }
+    )
+    .then((res)=>res.data.data.content)
+    .then((res)=>{
+      setData(res)
+    })
+    setPage(1)
+  },[category,postType,orderType])
+
+  useDidMountEffect(()=>{
+    console.log('inView')
+    console.log(page)
     const pages = page + 1;
     if (inView) {
       customaxios.get(`surveys/list/${pages}?category=${category}&postType=${postType}&orderType=${orderType}`,
@@ -46,6 +66,10 @@ export default function Board2() {
          
       }
   },[inView])
+  
+  function infinite(){
+
+  }
 
 
 
@@ -78,6 +102,8 @@ export default function Board2() {
         setCategory2('문화')
     }
 }
+
+console.log(data)
 
   return (
     <div>
@@ -127,4 +153,3 @@ export default function Board2() {
     </div> 
   );
 }
-// {(index+1)%10==0 ? <BoardItem key={item.id} data={item} ref={ref}/> :<BoardItem key={item.id} data={item}  />}

@@ -8,6 +8,10 @@ import EditQuestion from "./EditQuestion";
 import { BiSolidQuoteAltLeft } from "react-icons/bi";
 import { BiSolidQuoteAltRight } from "react-icons/bi";
 import AddButtonIcon from "../icons/AddButtonIcon";
+import customaxios from "../../api/Axios";
+import { useRecoilState } from "recoil";
+import { userState } from "../../recoil/atoms/userState";
+import { useQueries } from "react-query";
 
 const UserQuestions = ({
   userQuestions,
@@ -18,12 +22,12 @@ const UserQuestions = ({
   description,
 }) => {
   const { surveyId } = useParams();
+  const [userInfo,setUserInfo] = useRecoilState(userState)
   const [creatingQuestion, setCreatingQuestion] = useState(false);
   const [editingIndex, setEditingIndex] = useState(null);
   const inputRef = useRef(null);
   const [question, setQuestion] = useState("");
   const [answer, setAnswer] = useState([""]);
-  const [accessToken, setAccessToken] = useState("");
   const [isValid, setIsValid] = useState(
     Array(userQuestions.length).fill(false)
   );
@@ -152,9 +156,55 @@ const UserQuestions = ({
 
     // 유효성이 모두 true일 경우에만 submit 처리
     if (isValidArray.every((isValid) => isValid)) {
-      localStorage.setItem("userQuestions", JSON.stringify({ userQuestions }));
-      navigate(`../main/create/qr`);
+      const Info = localStorage.getItem('Info')
+
+      if(userInfo.point<(userQuestions.length)*10){
+        alert('포인트가 부족합니다!')
+      }
+      else{
+      customaxios.post(
+        `/surveys/create`,
+        Info,
+        { headers: { 
+          'ngrok-skip-browser-warning': '69420',
+          Authorization: `${userInfo.accesstoken}`,
+          'Content-Type': 'application/json'
+        } }
+        ) 
+        .then((response) => {
+          console.log(userQuestions)
+          const id = response.data.data
+          if(userQuestions.length===0){
+            alert('질문을 입력해주세요')
+          }
+          else{
+          customaxios.post(
+            `/surveys/submit/${id}`,
+            {userQuestions},
+            { headers: { 
+              'ngrok-skip-browser-warning': '69420',
+              Authorization: `${userInfo.accesstoken}`,
+              'Content-Type': 'application/json'
+            } }
+            ) 
+            .then((response) => {
+              const point = response.data.data
+              setUserInfo((prev)=>({...prev, point:point}))
+              navigate(`../main/create/qr/${id}`);
+            })
+            .catch((error) => {
+              console.error('에러 발생:', error);
+            })
+            }
+
+        })
+        .catch((error) => {
+          console.error('에러 발생:', error);
+        })
+      }
     }
+
+    
   };
 
   useEffect(() => {
