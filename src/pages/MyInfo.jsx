@@ -17,6 +17,12 @@ export default function MyInfo({ name, nickName, email, phoneNumber }) {
   const [category, setCategory] = useState("");
   const [accessToken, setAccessToken] = useState("");
   const [isNickNameValid, setIsNickNameValid] = useState(true);
+  const [profileImage, setProfileImage] = useState(null);
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    setProfileImage(file);
+  };
 
   useEffect(() => {
     customaxios
@@ -41,7 +47,7 @@ export default function MyInfo({ name, nickName, email, phoneNumber }) {
     customaxios
       .get(`/mypage/info/${nickNameValue}/exists`, {
         headers: { Authorization: `${userInfo.accesstoken}` },
-      }) //`/mypage/info/${value}/exists` /data/Nickname.json
+      })
       .then((response) => {
         const isAvailable = response.data.data;
         setIsNickNameValid(isAvailable);
@@ -57,12 +63,16 @@ export default function MyInfo({ name, nickName, email, phoneNumber }) {
       email: emailValue,
       nickName: nickNameValue,
       phoneNumber: phoneNumberValue,
-      //   category: category,
+      // 프로필 이미지가 선택되었다면 FormData에 추가
+      if(profileImage) {
+        formData.append("profileImage", profileImage, profileImage.name);
+      },
     };
 
     customaxios
       .patch("/mypage/info", formData, {
         headers: { Authorization: `${userInfo.accesstoken}` },
+        "Content-Type": "multipart/form-data", // 파일 업로드를 위한 콘텐츠 타입 설정
       })
       .then((response) => {
         console.log("서버 응답:", response.data);
@@ -80,7 +90,7 @@ export default function MyInfo({ name, nickName, email, phoneNumber }) {
       <div className="flex items-center">
         <MyHomeIcon className="mr-4 text-main_color" />
         <Link to="/main/my">
-          <h1 className="text-main_color text-2xl px-3">마이페이지 > </h1>
+          <h1 className="text-main_color text-2xl px-3">마이페이지 &gt; </h1>
         </Link>
         <div className="text-main_color pt-1 text-3xl font-thin">
           <GoPencil />
@@ -88,12 +98,29 @@ export default function MyInfo({ name, nickName, email, phoneNumber }) {
         <h1 className="text-main_color text-3xl px-3">개인정보 수정 </h1>
       </div>
       <div className="mt-10 flex justify-center">
-        <div className="items-center">
-          <div>
-            <ProfileIcon />
+        <label htmlFor="profileImageInput" className="cursor-pointer">
+          <div className="items-center">
+            <div>
+              {profileImage ? (
+                <img
+                  src={URL.createObjectURL(profileImage)}
+                  alt="프로필"
+                  className="w-20 h-20 object-cover rounded-full"
+                />
+              ) : (
+                <ProfileIcon />
+              )}
+            </div>
+            <p className="text-sm mt-1">프로필 사진 변경</p>
           </div>
-          <p className="text-sm mt-1">프로필 사진 변경</p>
-        </div>
+        </label>
+        <input
+          id="profileImageInput"
+          type="file"
+          accept="image/*"
+          className="hidden"
+          onChange={handleFileChange}
+        />
       </div>
 
       <div className="items-center mx-40 mt-3">
