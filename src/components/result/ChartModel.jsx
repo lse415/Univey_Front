@@ -1,7 +1,5 @@
 import React, { useState } from 'react'
-import { useEffect } from 'react'
 import BarChartModel from './BarChart/BarChartModel'
-import SimpleBar from './BarChart/SimpleBar'
 import LineChartModel from './LineChartModel'
 import { useRecoilState } from "recoil";
 import { graphState } from "../../recoil/atoms/userState";
