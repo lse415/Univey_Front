@@ -14,6 +14,9 @@ export default function MySurveyBoard({ surveys, selectedType }) {
   const [selectedSurveyId, setSelectedSurveyId] = useState(null);
   const [showWarning, setShowWarning] = useState(false);
 
+  console.log(selectedType)
+  console.log(survey)
+
   const openModal = (surveyId) => {
     setSelectedSurveyId(surveyId);
     setShowModal(true);

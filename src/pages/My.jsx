@@ -9,8 +9,10 @@ import { GoPencil } from "react-icons/go";
 import { useRecoilState } from "recoil";
 import { userState } from "../recoil/atoms/userState";
 import customaxios from "../api/Axios";
+import {useNavigate} from 'react-router-dom'
 
 export default function My() {
+  const navigate = useNavigate();
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [userInfo, setUserInfo] = useRecoilState(userState);
@@ -25,9 +27,17 @@ export default function My() {
         },
       })
       .then((res) => {
+
         setUserName(res.data.data.userName);
         setEmail(res.data.data.email);
-      });
+      
+      })
+      .catch(err=>{
+        if(err.response.data.status===401){
+          alert('로그인이 필요합니다!')
+          navigate('/')
+        }
+      })
     // axios.get(
     //   '/data/my.json',
     //   // /mypage

@@ -2,8 +2,29 @@ import React from "react";
 
 import CreateSurvey from "../components/Create/CreateSurvey"
 import { GoPencil } from "react-icons/go";
+import { useEffect } from "react";
+import customaxios from "../api/Axios";
+import { useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import { userState } from "../recoil/atoms/userState";
 
 const Create = () => {
+  const [userInfo,setUserInfo] = useRecoilState(userState)
+  const navigate = useNavigate();
+  useEffect(()=>{
+    customaxios('/surveys/create',
+    { headers: { 
+      'ngrok-skip-browser-warning': '69420',
+      Authorization: `${userInfo.accesstoken}`,
+      'Content-Type': 'application/json'
+    } })
+    .catch(err=>{
+      if(err.response.data.status===401){
+        alert('로그인이 필요합니다!')
+        navigate('/')
+      }
+    })
+  },[])
   return (
     <div>
       <div>

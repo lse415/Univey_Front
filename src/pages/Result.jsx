@@ -16,6 +16,7 @@ export default function Result() {
     const [graphInfo,setGraphInfo] = useRecoilState(graphState);
     useEffect(()=>{
         fetchData();
+        setGraphInfo('')
     },[])
 
     async function fetchData(){

@@ -57,43 +57,10 @@ export default function QRcode() {
     const combinedObject = Object.assign({}, ...combinedArray);
     console.log(combinedArray)
     console.log(combinedObject)
-    customaxios.post(
-      `/surveys/create`,
-      Info,
-      { headers: { 
-        'ngrok-skip-browser-warning': '69420',
-        Authorization: `${userInfo.accesstoken}`,
-        'Content-Type': 'application/json'
-      } }
-      ) 
-      .then((response) => {
-        const id = response.data.data
-        handleSubmit(id)
-      })
-      .catch((error) => {
-        console.error('에러 발생:', error);
-      })
-    function handleSubmit(id){
-      customaxios.post(
-        `/surveys/submit/${id}`,
-        question,
-        { headers: { 
-          'ngrok-skip-browser-warning': '69420',
-          Authorization: `${userInfo.accesstoken}`,
-          'Content-Type': 'application/json'
-        } }
-        ) 
-        .then((response) => {
-          const point = response.data.data
-          setUserInfo((prev)=>({...prev, point:point})) 
-          console.log('hello 여기야~')
-          usenavigate(`/main/create/complete/${id}`)
-        })
-        .catch((error) => {
-          console.error('에러 발생:', error);
-        })
-    }
-    
+
+
+        usenavigate(`/main/create/complete/${surveyId}`)
+      
     
 
       if (!qrRef.current) return;
@@ -142,7 +109,7 @@ export default function QRcode() {
           <div className='w-80 h-80 bg-gray-400 flex justify-center items-center mb-12 overflow-hidden border-1 border-black'
           ref={qrRef}>
               <QRCode 
-                  value={"https://picturesofpeoplescanningqrcodes.tumblr.com/"}
+                  value={`http://localhost:3000/main/participate/${surveyId}`}
                   size={qrCode.size}
                   quietZone={qrCode.quietZone}
                   fgColor={qrCode.fgColor}

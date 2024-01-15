@@ -51,7 +51,6 @@ const CreateDetail = () => {
         setRecommendedQuestions(flattenedRecommendedQuestions);
       })
       .catch((error) => {
-        console.error("Error fetching data:", error);
       });
   }
 

@@ -37,7 +37,7 @@ const router = createBrowserRouter([
       { path: "main/trend", element: <Trend /> },
       { path: "main/search/:value", element: <Search /> },
       { path: "users/kakao/callback", element: <LoginHandle /> },
-      { path: "main/create/qr", element: <QRcode /> },
+      { path: "main/create/qr/:surveyId", element: <QRcode /> },
       { path: "main/create/complete/:surveyId", element: <CreateComplete /> },
       { path: "main/result/:surveyId", element: <Result /> },
       {
@@ -75,10 +75,6 @@ const router = createBrowserRouter([
         element: <ParticipateComplete />,
       },
     ],
-  },
-  {
-    path: "/login",
-    element: <Trend />,
   },
 ]);
 const root = ReactDOM.createRoot(document.getElementById("root"));
