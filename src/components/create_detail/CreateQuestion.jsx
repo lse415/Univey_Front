@@ -83,7 +83,7 @@ const CreateQuestion = ({ onCancel, onAddQuestion, onCopyCreateQuestion }) => {
       >
         <AddButtonIcon />
       </button>
-      <div className="flex flex-col items-start">
+      <div className="flex flex-col items-start w-full">
         <CreateCardTopAsset />
         <div className="mb-2 w-full rounded p-5 bg-question_card_bg">
           <div className="flex items-center space-x-4">
