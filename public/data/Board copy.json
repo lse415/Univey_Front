@@ -1,0 +1,23 @@
+{
+    "surveyData": [
+        {
+            "id": 1,
+            "topic": "CHAT - GPT 활용 실태 조사",
+            "description": "과연 사람들은 얼마나 CHAT-GPT를 활용하고 있는가",
+            "category": "IT",
+            "age": [
+                20,
+                30
+            ],
+            "targetResponden": 82,
+            "target_targetResponden": 120,
+            "point": 100,
+            "hash": [
+                "대학생",
+                "얼마나써?",
+                "gpt 믿어?",
+                "#제발 해줘"
+            ]
+        }
+    ]
+}
