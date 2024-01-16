@@ -69,9 +69,10 @@ export default function MyInfo({ name, nickName, email, phoneNumber }) {
     formData.append("email", emailValue);
     formData.append("nickName", nickNameValue);
     formData.append("phoneNumber", phoneNumberValue);
-    if (profileImage) {
-      formData.append("profileImage", profileImage, profileImage.name);
-    }
+    // if (profileImage instanceof File) {
+    //   formData.append("profileImage", profileImage, profileImage.name);
+    // }
+    formData.append("profileImage", profileImage);
 
     // 콘솔에 formData 확인 로그 추가
     for (let pair of formData.entries()) {
@@ -79,12 +80,12 @@ export default function MyInfo({ name, nickName, email, phoneNumber }) {
     }
 
     customaxios
-      .post("/mypage/info", formData, {
+      .patch("/mypage/info", formData, {
         headers: { Authorization: `${userInfo.accesstoken}` },
         "Content-Type": "multipart/form-data", // 파일 업로드를 위한 콘텐츠 타입 설정
       })
       .then((response) => {
-        console.log("서버 응답:", response.data);
+        console.log("요청:", formData);
         alert("개인정보가 수정되었습니다.");
       })
       .catch((error) => {
