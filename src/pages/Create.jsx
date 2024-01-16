@@ -1,18 +1,6 @@
-<<<<<<< HEAD
-import React from 'react';
-
-export default function Create() {
-  return (
-    <div>
-      Create
-    </div>
-  );
-}
-
-=======
 import React from "react";
 
-import CreateSurvey from "../components/Create/CreateSurvey"
+import CreateSurvey from "../components/Create/CreateSurvey";
 import { GoPencil } from "react-icons/go";
 import { useEffect } from "react";
 import customaxios from "../api/Axios";
@@ -21,22 +9,22 @@ import { useRecoilState } from "recoil";
 import { userState } from "../recoil/atoms/userState";
 
 const Create = () => {
-  const [userInfo,setUserInfo] = useRecoilState(userState)
+  const [userInfo, setUserInfo] = useRecoilState(userState);
   const navigate = useNavigate();
-  useEffect(()=>{
-    customaxios('/surveys/create',
-    { headers: { 
-      'ngrok-skip-browser-warning': '69420',
-      Authorization: `${userInfo.accesstoken}`,
-      'Content-Type': 'application/json'
-    } })
-    .catch(err=>{
-      if(err.response.data.status===401){
-        alert('로그인이 필요합니다!')
-        navigate('/')
+  useEffect(() => {
+    customaxios("/surveys/create", {
+      headers: {
+        "ngrok-skip-browser-warning": "69420",
+        Authorization: `${userInfo.accesstoken}`,
+        "Content-Type": "application/json",
+      },
+    }).catch((err) => {
+      if (err.response.data.status === 401) {
+        alert("로그인이 필요합니다!");
+        navigate("/");
       }
-    })
-  },[])
+    });
+  }, []);
   return (
     <div>
       <div>
@@ -55,11 +43,10 @@ const Create = () => {
         <hr className="mt-5"></hr>
       </div>
       <div>
-      <CreateSurvey />
+        <CreateSurvey />
       </div>
     </div>
   );
 };
 
 export default Create;
->>>>>>> 767cdb5e29cb71aeb34c578af0b8969989f27290
